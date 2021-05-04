@@ -1,5 +1,3 @@
-import godisnjadoba.GodisnjaDoba;
-
 public class MainClass {
 
   public static void main(String[] args) {
