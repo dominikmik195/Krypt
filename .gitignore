@@ -1,3 +1,6 @@
+# Java files
+target
+
 # Compiled class file
 *.class
 
@@ -21,6 +24,7 @@
 
 # IntelliJ
 .idea
+.gradle
 *.iml
 *.classpath
 *.factorypath
