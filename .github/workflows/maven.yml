@@ -21,5 +21,7 @@ jobs:
           distribution: 'adopt'
       - name: Maven Package
         run: mvn -B clean package -DskipTests
-      - name: Maven Verify
-        run: mvn -B clean verify
+      - name: Unit Test
+        run: mvn -B clean test
+      - name: Integration Test
+        run: mvn -B clean integration-test
