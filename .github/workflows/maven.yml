@@ -22,6 +22,6 @@ jobs:
       - name: Maven Package
         run: mvn -B clean package -DskipTests
       - name: Unit Test
-        run: mvn -B clean test
+        run: mvn clean test -P unit-test
       - name: Integration Test
-        run: mvn -B clean integration-test
+        run: mvn clean verify -P integration-test

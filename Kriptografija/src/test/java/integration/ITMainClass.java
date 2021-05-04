@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class MainClassIntegrationTest {
+public class ITMainClass {
 
     @Test
     public void blank_integrationTest() {
