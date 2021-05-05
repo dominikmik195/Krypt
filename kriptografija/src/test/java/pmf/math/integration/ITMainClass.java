@@ -1,4 +1,4 @@
-package integration;
+package pmf.math.integration;
 
 import org.junit.Test;
 
