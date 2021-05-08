@@ -56,10 +56,10 @@ public class MainWindow extends JPanel implements ActionListener {
   private static void createAndShowGui() {
     myFrame = new JFrame("Krypt");
     myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    myFrame.setLocation(30, 30);
     myPanel = new MainWindow();
     myFrame.add(myPanel.mainPanel);
     myFrame.pack();
+    myFrame.setLocationRelativeTo(null);
     myFrame.setVisible(true);
   }
 

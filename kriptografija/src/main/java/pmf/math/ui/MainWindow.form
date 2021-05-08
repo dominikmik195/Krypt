@@ -25,7 +25,7 @@
         <children>
           <component id="1dc32" class="javax.swing.JButton" binding="cezarovaSifraButton">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <borderPainted value="false"/>
@@ -40,7 +40,7 @@
           </component>
           <component id="d2229" class="javax.swing.JButton" binding="supstitucijskaSifraButton">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <alignmentY value="0.0"/>
@@ -52,7 +52,7 @@
           </component>
           <component id="6db17" class="javax.swing.JButton" binding="hillovaSifraButton">
             <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <focusPainted value="false"/>
@@ -63,7 +63,7 @@
           </component>
           <component id="b5748" class="javax.swing.JButton" binding="vigenerovaSifraButton">
             <constraints>
-              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <focusPainted value="false"/>
@@ -74,7 +74,7 @@
           </component>
           <component id="b554b" class="javax.swing.JButton" binding="playfairovaSifraButton">
             <constraints>
-              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <focusPainted value="false"/>
@@ -85,7 +85,7 @@
           </component>
           <component id="bcab" class="javax.swing.JButton" binding="stupčanaTranspozicijaButton" default-binding="true">
             <constraints>
-              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <focusPainted value="false"/>
@@ -96,7 +96,7 @@
           </component>
           <component id="9dfce" class="javax.swing.JButton" binding="RSAButton" default-binding="true">
             <constraints>
-              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <focusPainted value="false"/>
@@ -107,7 +107,7 @@
           </component>
           <component id="52c8f" class="javax.swing.JButton" binding="elGamalovaSifraButton">
             <constraints>
-              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <focusPainted value="false"/>
@@ -144,79 +144,6 @@
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
-            </children>
-          </grid>
-          <grid id="4e3b2" layout-manager="CardLayout" hgap="0" vgap="0">
-            <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="2e778" class="javax.swing.JTextArea" binding="konzolaTextArea" default-binding="true">
-                <constraints>
-                  <card name="Card1"/>
-                </constraints>
-                <properties>
-                  <caretColor color="-16777216"/>
-                  <editable value="false"/>
-                  <font name="JetBrains Mono"/>
-                  <maximumSize width="280" height="2147483647"/>
-                  <minimumSize width="100" height="16"/>
-                  <preferredSize width="280" height="17"/>
-                  <text value="Konzola..."/>
-                </properties>
-              </component>
-            </children>
-          </grid>
-          <grid id="9a23d" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="8" fill="2" indent="0" use-parent-layout="false">
-                <minimum-size width="50" height="-1"/>
-                <preferred-size width="280" height="-1"/>
-                <maximum-size width="280" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="b463b" class="javax.swing.JTextPane" binding="opisTextPane">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <editable value="false"/>
-                  <font name="JetBrains Mono"/>
-                  <text value="U kriptografiji, Cezarova šifra jedan je od najjednostavnijih i najrasprostranjenijih načina šifriranja. To je tip šifre zamjene (supstitucije), u kome se svako slovo otvorenog teksta zamjenjuje odgovarajućim slovom abecede, pomaknutim za određeni broj mjesta. Na primjer, s pomakom 3, A se zamjenjuje slovom D, B slovom E itd. Ova metoda je dobila ime po Juliju Cezaru, koji ju je koristio za razmjenu poruka sa svojim generalima. "/>
-                </properties>
-              </component>
-              <component id="5b92" class="javax.swing.JTextPane" binding="uputeTextPane">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <editable value="false"/>
-                  <font name="JetBrains Mono"/>
-                  <text value="//Ovdje stoje upute za korištenje kalkulatora"/>
-                </properties>
-              </component>
-              <component id="be42f" class="javax.swing.JTextPane" binding="extraTextPane">
-                <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <editable value="false"/>
-                  <font name="JetBrains Mono"/>
-                  <text value="Mjesto za još nešto..."/>
-                </properties>
-              </component>
               <grid id="22b1a" layout-manager="FormLayout">
                 <rowspec value="center:d:noGrow"/>
                 <rowspec value="top:4dlu:noGrow"/>
@@ -237,7 +164,7 @@
                 <colspec value="left:4dlu:noGrow"/>
                 <colspec value="fill:d:grow"/>
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="line" title="Kalkulator"/>
@@ -390,6 +317,79 @@
                   </component>
                 </children>
               </grid>
+            </children>
+          </grid>
+          <grid id="4e3b2" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="2e778" class="javax.swing.JTextArea" binding="konzolaTextArea" default-binding="true">
+                <constraints>
+                  <card name="Card1"/>
+                </constraints>
+                <properties>
+                  <caretColor color="-16777216"/>
+                  <editable value="false"/>
+                  <font name="JetBrains Mono"/>
+                  <maximumSize width="280" height="2147483647"/>
+                  <minimumSize width="100" height="16"/>
+                  <preferredSize width="280" height="17"/>
+                  <text value="Konzola..."/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="9a23d" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="8" fill="2" indent="0" use-parent-layout="false">
+                <minimum-size width="50" height="-1"/>
+                <preferred-size width="280" height="-1"/>
+                <maximum-size width="280" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="b463b" class="javax.swing.JTextPane" binding="opisTextPane">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                  <font name="JetBrains Mono"/>
+                  <text value="U kriptografiji, Cezarova šifra jedan je od najjednostavnijih i najrasprostranjenijih načina šifriranja. To je tip šifre zamjene (supstitucije), u kome se svako slovo otvorenog teksta zamjenjuje odgovarajućim slovom abecede, pomaknutim za određeni broj mjesta. Na primjer, s pomakom 3, A se zamjenjuje slovom D, B slovom E itd. Ova metoda je dobila ime po Juliju Cezaru, koji ju je koristio za razmjenu poruka sa svojim generalima. "/>
+                </properties>
+              </component>
+              <component id="5b92" class="javax.swing.JTextPane" binding="uputeTextPane">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                  <font name="JetBrains Mono"/>
+                  <text value="//Ovdje stoje upute za korištenje kalkulatora"/>
+                </properties>
+              </component>
+              <component id="be42f" class="javax.swing.JTextPane" binding="extraTextPane">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                  <font name="JetBrains Mono"/>
+                  <text value="Mjesto za još nešto..."/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>
