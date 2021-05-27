@@ -126,7 +126,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="50ca" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="50ca" binding="kalkulatorPanel" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -182,7 +182,7 @@
                       <text value="Pomak"/>
                     </properties>
                   </component>
-                  <component id="6ca9f" class="javax.swing.JSpinner" binding="spinner1" default-binding="true">
+                  <component id="6ca9f" class="javax.swing.JSpinner" binding="pomakSpinner">
                     <constraints>
                       <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                       <forms defaultalign-horz="false"/>
@@ -204,7 +204,7 @@
                       <text value="Ključ"/>
                     </properties>
                   </component>
-                  <component id="164e9" class="javax.swing.JTextArea" binding="textArea2" default-binding="true">
+                  <component id="164e9" class="javax.swing.JTextArea" binding="otvoreniTekstArea">
                     <constraints>
                       <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="50"/>
@@ -234,7 +234,7 @@
                       <verticalTextPosition value="1"/>
                     </properties>
                   </component>
-                  <component id="2d459" class="javax.swing.JTextArea" binding="textArea3" default-binding="true">
+                  <component id="2d459" class="javax.swing.JTextArea" binding="šifratArea">
                     <constraints>
                       <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="50"/>
@@ -267,14 +267,14 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="b1ffe" class="javax.swing.JButton" binding="vButton" default-binding="true">
+                      <component id="b1ffe" class="javax.swing.JButton" binding="šifrirajButton">
                         <constraints/>
                         <properties>
                           <preferredSize width="60" height="40"/>
                           <text value="↓"/>
                         </properties>
                       </component>
-                      <component id="adb0f" class="javax.swing.JButton" binding="button2" default-binding="true">
+                      <component id="adb0f" class="javax.swing.JButton" binding="dešifrirajButton">
                         <constraints/>
                         <properties>
                           <preferredSize width="60" height="40"/>
@@ -283,7 +283,7 @@
                       </component>
                     </children>
                   </grid>
-                  <component id="ecc7e" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                  <component id="ecc7e" class="javax.swing.JTextField" binding="kljucnaRijecTextField">
                     <constraints>
                       <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -302,17 +302,17 @@
                     </constraints>
                     <properties>
                       <font name="JetBrains Mono" size="14"/>
-                      <text value="A B C D E F G H I J K L M N O P Q R S T U W X Y Z"/>
+                      <text value="A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"/>
                     </properties>
                   </component>
-                  <component id="5b676" class="javax.swing.JLabel">
+                  <component id="5b676" class="javax.swing.JLabel" binding="permutacijaLabel">
                     <constraints>
                       <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                       <forms/>
                     </constraints>
                     <properties>
                       <font name="JetBrains Mono" size="14"/>
-                      <text value="A B C D E F G H I J K L M N O P Q R S T U W X Y Z"/>
+                      <text value="A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"/>
                     </properties>
                   </component>
                 </children>
