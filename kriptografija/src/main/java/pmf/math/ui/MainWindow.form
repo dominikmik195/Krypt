@@ -180,6 +180,7 @@
                       <horizontalAlignment value="4"/>
                       <preferredSize width="120" height="21"/>
                       <text value="Pomak"/>
+                      <visible value="true"/>
                     </properties>
                   </component>
                   <component id="6ca9f" class="javax.swing.JSpinner" binding="spinner1" default-binding="true">
@@ -338,6 +339,8 @@
                 <colspec value="fill:d:noGrow"/>
                 <colspec value="left:4dlu:noGrow"/>
                 <colspec value="fill:d:grow"/>
+                <colspec value="left:4dlu:noGrow"/>
+                <colspec value="fill:max(d;4px):noGrow"/>
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -361,7 +364,7 @@
                   </component>
                   <component id="8e00b" class="javax.swing.JTextArea" binding="otvoreniTekstArea">
                     <constraints>
-                      <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                      <grid row="10" column="2" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="50"/>
                       </grid>
                       <forms top="0" left="0" bottom="0" right="30" defaultalign-horz="false" defaultalign-vert="false"/>
@@ -391,7 +394,7 @@
                   </component>
                   <component id="66c8" class="javax.swing.JTextArea" binding="šifratArea">
                     <constraints>
-                      <grid row="14" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                      <grid row="14" column="2" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="50"/>
                       </grid>
                       <forms top="0" left="0" bottom="0" right="30" defaultalign-horz="false" defaultalign-vert="false"/>
@@ -416,7 +419,7 @@
                   </component>
                   <grid id="f4a9c" layout-manager="FlowLayout" hgap="20" vgap="5" flow-align="1">
                     <constraints>
-                      <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <grid row="12" column="2" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                       <forms top="0" left="0" bottom="0" right="30"/>
                     </constraints>
                     <properties/>
@@ -475,7 +478,7 @@
                       <text value="Tajni ključ"/>
                     </properties>
                   </component>
-                  <component id="e6902" class="javax.swing.JCheckBox">
+                  <component id="e6902" class="javax.swing.JCheckBox" binding="alfaCheckBox">
                     <constraints>
                       <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                       <forms top="0" left="0" bottom="0" right="5" defaultalign-horz="false"/>
@@ -488,7 +491,7 @@
                       <text value="Alfa"/>
                     </properties>
                   </component>
-                  <component id="8f766" class="javax.swing.JCheckBox">
+                  <component id="8f766" class="javax.swing.JCheckBox" binding="betaCheckBox">
                     <constraints>
                       <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                       <forms top="0" left="0" bottom="0" right="5" defaultalign-horz="false"/>

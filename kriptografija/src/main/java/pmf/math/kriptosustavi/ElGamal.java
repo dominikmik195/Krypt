@@ -1,83 +1,81 @@
 package pmf.math.kriptosustavi;
 
 import java.lang.Math;
+import java.math.BigInteger;
+import pmf.math.algoritmi.TeorijaBrojeva;
 
 public class ElGamal {
   public int prostBroj, alfa, beta;
-  private int tajniKljuč;
-  public int[] šifrat = new int[2];
+  private int tajniKljuc;
+  public int[] sifrat = new int[2];
 
   public ElGamal() {
     prostBroj = 7;
-    tajniKljuč = 3;
+    tajniKljuc = 3;
     postaviAlfa();
     postaviBeta();
-    System.out.println("alfa " + alfa);
-    System.out.println("beta " + beta);
   }
 
   public ElGamal(int pB, int tK) {
     prostBroj = pB;
-    tajniKljuč = tK;
+    tajniKljuc = tK;
     postaviAlfa();
     postaviBeta();
-    System.out.println("alfa " + alfa);
-    System.out.println("beta " + beta);
   }
 
-  public void šifriraj(int broj, int tajniBroj) {
-    šifrat[0] = (int) (Math.pow(alfa, tajniBroj) % prostBroj);
-    šifrat[1] = (broj * (int) Math.pow(beta, tajniBroj)) % prostBroj;
+  public ElGamal(int pB, int tK, int al) {
+    prostBroj = pB;
+    tajniKljuc = tK;
+    alfa = al;
+    postaviBeta();
   }
 
-  public int dešifriraj() {
-    int temp = (šifrat[0] ^ tajniKljuč) % prostBroj;
-    return (inverz(temp, prostBroj) * šifrat[1]) % prostBroj;
+  public ElGamal(int pB, int tK, int al, int be) {
+    prostBroj = pB;
+    tajniKljuc = tK;
+    alfa = al;
+    beta = be;
+  }
+
+  public void sifriraj(int broj, int tajniBroj) {
+    BigInteger br = new BigInteger(String.valueOf(broj));
+    BigInteger pB = new BigInteger(String.valueOf(prostBroj));
+    sifrat[0] = TeorijaBrojeva.velikiModulo(alfa, tajniBroj, prostBroj);
+    sifrat[1] = (br.mod(pB).multiply(new BigInteger(String.valueOf(TeorijaBrojeva.velikiModulo(beta, tajniBroj, prostBroj))))).mod(pB).intValue();
+  }
+
+  public int desifriraj() {
+    int temp = TeorijaBrojeva.velikiModulo(sifrat[0], tajniKljuc, prostBroj);
+    return (TeorijaBrojeva.inverz(temp, prostBroj) * sifrat[1]) % prostBroj;
   }
 
   private void postaviAlfa() {
-    alfa = primitivniKorijen(prostBroj);
+    alfa = TeorijaBrojeva.najmanjiPrimitivniKorijen(prostBroj);
   }
 
   private void postaviBeta() {
-    beta = (int) (Math.pow(tajniKljuč, alfa)) % prostBroj;
+    beta = (int) (Math.pow(alfa, tajniKljuc)) % prostBroj;
+    beta = TeorijaBrojeva.velikiModulo(alfa, tajniKljuc, prostBroj);
   }
 
-  private int redElementa(int element, int modulo) {
-    int red = 1;
-    int ostatak = (int) Math.pow(element, red) % modulo;
-    while (ostatak != 1) {
-      red++;
-      ostatak = (int) Math.pow(element, red) % modulo;
-    }
-    return red;
+  public String vratiSifrat() {
+    return "(" + sifrat[0] + ", " + sifrat[1] + ")";
   }
 
-  private int primitivniKorijen(int modulo) {
-    int korijen = 1;
-    int red = redElementa(korijen, modulo);
-    while (red != modulo - 1) {
-      korijen++;
-      red = redElementa(korijen, modulo);
-    }
-    return korijen;
-  }
-
-  private int inverz(int broj, int modulo) {
-    for (int i = 0; i < (modulo * modulo); i++) {
-      if (i * broj % modulo == 1) return i;
-    }
-    return -1;
-  }
-
-  public String vratiŠifrat() {
-    return "(" + šifrat[0] + ", " + šifrat[1] + ")";
-  }
-
-  public void pohraniŠifrat(String tekst) {
+  public void pohraniSifrat(String tekst) {
     String novi = tekst.substring(1, tekst.length() - 1);
     String[] lista = novi.split(",");
-    šifrat[0] = Integer.parseInt(lista[0].strip());
-    šifrat[1] = Integer.parseInt(lista[1].strip());
+    sifrat[0] = Integer.parseInt(lista[0].strip());
+    sifrat[1] = Integer.parseInt(lista[1].strip());
+  }
+
+  public static boolean provjeriAlfa(int _alfa, int _pB) {
+    return TeorijaBrojeva.primitivniKorijen(_alfa, _pB);
+  }
+
+  public static boolean provjeriBeta(int _alfa, int _betica, int _pB, int _tK) {
+    BigInteger _beta = new BigInteger(String.valueOf(_betica));
+    BigInteger _ostatak = _beta.mod(new BigInteger(String.valueOf(_pB)));
+    return _ostatak.intValue() == TeorijaBrojeva.velikiModulo(_alfa, _tK, _pB);
   }
 }
