@@ -17,9 +17,7 @@ public class Supstitucijska {
       šifrat += novoSlovo;
     }
 
-    return šifrat;
-
-    // TODO: Dodati razmake svako peto slovo.
+    return šifrat.replaceAll("(.{5})", "$0 "); // Razmak svako peto slovo.
   }
   // Dešifrira šifrat i vraća otvoreni tekst.
   public String dešifriraj(String šifrat) {
@@ -30,15 +28,12 @@ public class Supstitucijska {
       otvoreniTekst += novoSlovo;
     }
 
-    return otvoreniTekst;
-
-    // TODO: Dodati razmake svako peto slovo.
+    return otvoreniTekst.replaceAll("(.{5})", "$0 "); // Razmak svako peto slovo.
   }
 
   public char[] dohvatiPermutacijuSlova() {
     char[] slova = new char[26];
-    for (int i = 0; i < 26; i++)
-      slova[i] = Abeceda.uSlovo(permutacija[i]);
+    for (int i = 0; i < 26; i++) slova[i] = Abeceda.uSlovo(permutacija[i]);
 
     return slova;
   }

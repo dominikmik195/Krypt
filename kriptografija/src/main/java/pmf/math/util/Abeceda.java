@@ -5,7 +5,6 @@ public class Abeceda {
   private static final char[] charAbeceda = abeceda.toCharArray();
 
   public static int uBroj(char slovo) {
-    // TODO: Što ako to nije dozvoljeno slovo?
     return abeceda.indexOf(Character.toUpperCase(slovo));
   }
 
