@@ -1,17 +1,12 @@
 package pmf.math.kriptosustavi;
 
-import pmf.math.util.Abeceda;
+import pmf.math.algoritmi.Abeceda;
 
 import java.util.Arrays;
 
 public class CezarKljucnaRijec extends Supstitucijska {
   // Ključ = (ključna riječ, mjesto od koje počinje)
-  private String ključnaRiječ;
-  int pomak;
-
-  public CezarKljucnaRijec(String ključnaRiječ, int pomak) {
-    this.ključnaRiječ = ključnaRiječ;
-    this.pomak = pomak % 26;
+  public CezarKljucnaRijec(String kljucnaRijec, int pomak) {
     boolean[] iskoristeni = new boolean[26];
     Arrays.fill(iskoristeni, false);
 
@@ -21,7 +16,7 @@ public class CezarKljucnaRijec extends Supstitucijska {
 
     // Upisujemo slova ključne riječi.
     int j = pomak;
-    for (char slovo : ključnaRiječ.toCharArray()) {
+    for (char slovo : kljucnaRijec.toCharArray()) {
       int broj = Abeceda.uBroj(slovo);
       if (!iskoristeni[broj]) {
         permutacija[j % 26] = broj;

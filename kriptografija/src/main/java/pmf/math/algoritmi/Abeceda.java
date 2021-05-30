@@ -1,4 +1,4 @@
-package pmf.math.util;
+package pmf.math.algoritmi;
 
 public class Abeceda {
   private static final String abeceda = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

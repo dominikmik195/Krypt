@@ -1,34 +1,35 @@
 package pmf.math.kriptosustavi;
 
-import pmf.math.util.Abeceda;
+import pmf.math.algoritmi.Abeceda;
 
 public class Supstitucijska {
   // Permutacije se koriste kod (de)šifriranja svih supstitucijskih šifri, a računaju
-  // se na različit način ovisno o šiframa (koje nasljeđuju ovu klasu).
+  // se na različit način ovisno o šiframa (koje nasljeđuju ovu klasu). Tajni ključ supstitucijskih
+  // šifri se koristi za računanje ovih permutacija i nije ga potrebno čuvati.
   protected int[] permutacija;
   protected int[] inverznaPermutacija;
 
   // Šifrira otvoreni tekst i vraća šifrat.
-  public String šifriraj(String otvoreniTekst) {
-    String šifrat = "";
+  public String sifriraj(String otvoreniTekst) {
+    StringBuilder sifrat = new StringBuilder();
 
     for (char slovo : otvoreniTekst.toCharArray()) {
       char novoSlovo = Abeceda.uSlovo(permutacija[Abeceda.uBroj(slovo)]);
-      šifrat += novoSlovo;
+      sifrat.append(novoSlovo);
     }
 
-    return šifrat.replaceAll("(.{5})", "$0 "); // Razmak svako peto slovo.
+    return sifrat.toString().replaceAll("(.{5})", "$0 "); // Razmak svako peto slovo.
   }
   // Dešifrira šifrat i vraća otvoreni tekst.
-  public String dešifriraj(String šifrat) {
-    String otvoreniTekst = "";
+  public String desifriraj(String sifrat) {
+    StringBuilder otvoreniTekst = new StringBuilder();
 
-    for (char slovo : šifrat.toCharArray()) {
+    for (char slovo : sifrat.toCharArray()) {
       char novoSlovo = Abeceda.uSlovo(inverznaPermutacija[Abeceda.uBroj(slovo)]);
-      otvoreniTekst += novoSlovo;
+      otvoreniTekst.append(novoSlovo);
     }
 
-    return otvoreniTekst.replaceAll("(.{5})", "$0 "); // Razmak svako peto slovo.
+    return otvoreniTekst.toString().replaceAll("(.{5})", "$0 "); // Razmak svako peto slovo.
   }
 
   public char[] dohvatiPermutacijuSlova() {

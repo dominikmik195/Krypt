@@ -3,7 +3,6 @@ package pmf.math.ui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
 import java.util.Locale;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -116,7 +115,7 @@ public class MainWindow extends JPanel implements ActionListener {
             if (!myPanel.kljucCheckBox.isSelected()) {
               int pomak = (Integer) myPanel.pomakSpinner.getValue() % 26;
               Cezar stroj = new Cezar(pomak);
-              myPanel.šifratArea.setText(stroj.šifriraj(otvoreniTekst));
+              myPanel.šifratArea.setText(stroj.sifriraj(otvoreniTekst));
             }
             // Cezarova šifra s ključnom riječi.
             else {
@@ -130,7 +129,7 @@ public class MainWindow extends JPanel implements ActionListener {
                       .toUpperCase(Locale.ROOT);
               // Pomak određuje početak ključne riječi.
               CezarKljucnaRijec stroj = new CezarKljucnaRijec(ključnaRiječ, pomak);
-              myPanel.šifratArea.setText(stroj.šifriraj(otvoreniTekst));
+              myPanel.šifratArea.setText(stroj.sifriraj(otvoreniTekst));
             }
           }
         });
@@ -153,7 +152,7 @@ public class MainWindow extends JPanel implements ActionListener {
             if (!myPanel.kljucCheckBox.isSelected()) {
               int pomak = (Integer) myPanel.pomakSpinner.getValue() % 26;
               Cezar stroj = new Cezar(pomak);
-              myPanel.otvoreniTekstArea.setText(stroj.dešifriraj(šifrat));
+              myPanel.otvoreniTekstArea.setText(stroj.desifriraj(šifrat));
             }
             // Cezarova šifra s ključnom riječi.
             else {
@@ -173,7 +172,7 @@ public class MainWindow extends JPanel implements ActionListener {
               }
               // Pomak određuje početak ključne riječi.
               CezarKljucnaRijec stroj = new CezarKljucnaRijec(ključnaRiječ, pomak);
-              myPanel.otvoreniTekstArea.setText(stroj.dešifriraj(šifrat));
+              myPanel.otvoreniTekstArea.setText(stroj.desifriraj(šifrat));
             }
           }
         });
