@@ -2,14 +2,14 @@ package pmf.math.unit;
 
 import org.junit.Test;
 import org.junit.Before;
-import pmf.math.kriptosustavi.ElGamal;
+import pmf.math.kriptosustavi.ElGamalKriptosustav;
 
 public class ElGamalTest{
-  private ElGamal stroj;
+  private ElGamalKriptosustav stroj;
 
     @Before
     public void setUp() throws Exception {
-        stroj = new ElGamal();
+        stroj = new ElGamalKriptosustav();
     }
 
     @Test

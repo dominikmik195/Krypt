@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import pmf.math.algoritmi.TeorijaBrojeva;
-import pmf.math.kriptosustavi.ElGamal;
+import pmf.math.kriptosustavi.ElGamalKriptosustav;
 
 public class MainWindow extends JPanel implements ActionListener {
   private static MainWindow myPanel;
@@ -101,13 +101,13 @@ public class MainWindow extends JPanel implements ActionListener {
     } else {
       if (myPanel.alfaCheckBox.isSelected()) {
         int _alfa = Integer.parseInt(myPanel.alfaField.getText());
-        if (!ElGamal.provjeriAlfa(_alfa, pB)) {
+        if (!ElGamalKriptosustav.provjeriAlfa(_alfa, pB)) {
           myPanel.konzolaTextArea.setText("Alfa je pogrešno postavljena!");
           OK = false;
         }
         if (myPanel.betaCheckBox.isSelected() && OK) {
           int _beta = Integer.parseInt(myPanel.betaField.getText());
-          if (!ElGamal.provjeriBeta(_alfa, _beta, pB, tK)) {
+          if (!ElGamalKriptosustav.provjeriBeta(_alfa, _beta, pB, tK)) {
             myPanel.konzolaTextArea.setText("Beta je pogrešno postavljen!");
             OK = false;
           }
@@ -117,21 +117,21 @@ public class MainWindow extends JPanel implements ActionListener {
     return OK;
   }
 
-  private ElGamal stvoriStroj() {
+  private ElGamalKriptosustav stvoriStroj() {
     int pB = Integer.parseInt(myPanel.prostBrojField.getText());
     int tK = Integer.parseInt(myPanel.tajniKljučField.getText());
-    ElGamal stroj;
+    ElGamalKriptosustav stroj;
       if (myPanel.alfaCheckBox.isSelected()) {
         int _alfa = Integer.parseInt(myPanel.alfaField.getText());
         if (myPanel.betaCheckBox.isSelected()) {
           int _beta = Integer.parseInt(myPanel.betaField.getText());
-          stroj = new ElGamal(pB, tK, _alfa, _beta);
+          stroj = new ElGamalKriptosustav(pB, tK, _alfa, _beta);
         }
         else {
-          stroj = new ElGamal(pB, tK, _alfa);
+          stroj = new ElGamalKriptosustav(pB, tK, _alfa);
         }
       }
-      else stroj = new ElGamal(pB, tK);
+      else stroj = new ElGamalKriptosustav(pB, tK);
       return stroj;
   }
 
@@ -156,7 +156,7 @@ public class MainWindow extends JPanel implements ActionListener {
               int tB = Integer.parseInt(myPanel.tajniBrojField.getText());
               int broj = Integer.parseInt(myPanel.otvoreniTekstArea.getText());
               if (provjereUnosa()) {
-                ElGamal stroj = stvoriStroj();
+                ElGamalKriptosustav stroj = stvoriStroj();
                 stroj.sifriraj(broj, tB);
                 myPanel.šifratArea.setText(stroj.vratiSifrat());
                 myPanel.konzolaTextArea.setText("");
@@ -182,7 +182,7 @@ public class MainWindow extends JPanel implements ActionListener {
                 return;
               }
               if (provjereUnosa()) {
-                ElGamal stroj = stvoriStroj();
+                ElGamalKriptosustav stroj = stvoriStroj();
                 stroj.pohraniSifrat(šifra);
                 //stroj.desifriraj();
                 myPanel.otvoreniTekstArea.setText(String.valueOf(stroj.desifriraj()));
