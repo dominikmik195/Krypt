@@ -4,33 +4,33 @@ import java.lang.Math;
 import java.math.BigInteger;
 import pmf.math.algoritmi.TeorijaBrojeva;
 
-public class ElGamal {
+public class ElGamalKriptosustav {
   public int prostBroj, alfa, beta;
   private int tajniKljuc;
   public int[] sifrat = new int[2];
 
-  public ElGamal() {
+  public ElGamalKriptosustav() {
     prostBroj = 7;
     tajniKljuc = 3;
     postaviAlfa();
     postaviBeta();
   }
 
-  public ElGamal(int pB, int tK) {
+  public ElGamalKriptosustav(int pB, int tK) {
     prostBroj = pB;
     tajniKljuc = tK;
     postaviAlfa();
     postaviBeta();
   }
 
-  public ElGamal(int pB, int tK, int al) {
+  public ElGamalKriptosustav(int pB, int tK, int al) {
     prostBroj = pB;
     tajniKljuc = tK;
     alfa = al;
     postaviBeta();
   }
 
-  public ElGamal(int pB, int tK, int al, int be) {
+  public ElGamalKriptosustav(int pB, int tK, int al, int be) {
     prostBroj = pB;
     tajniKljuc = tK;
     alfa = al;
