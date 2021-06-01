@@ -5,23 +5,26 @@ import java.math.BigInteger;
 
 public class TeorijaBrojeva {
     public static boolean prost(int broj) {
+        if(broj == 1) return false;
         for(int i = 2; i < Math.floor(Math.sqrt(broj))+1; i++) {
             if(broj % i == 0) return false;
         }
         return true;
     }
-    public static int velikiModulo(int baza, int exp, int prost) {
+    public static int velikiModulo(int baza, int exp, int modulo) {
         BigInteger br = new BigInteger(String.valueOf(baza));
-        BigInteger pB = new BigInteger(String.valueOf(prost));
-        BigInteger x = br.mod(pB);
+        BigInteger mod = new BigInteger(String.valueOf(modulo));
+        BigInteger x = br.mod(mod);
+        System.out.println("x - bigInt " + x);
         int potencija = 2;
         while (potencija <= exp) {
-            x = x.pow(2).mod(pB);
+            System.out.println("x  " + x);
+            x = x.pow(2).mod(mod);
             potencija *= 2;
         }
         potencija /= 2;
         for(int i = potencija; i < exp; i++) {
-            x = x.multiply(br.mod(pB)).mod(pB);
+            x = x.multiply(br.mod(mod)).mod(mod);
         }
         return x.intValue();
     }
@@ -61,5 +64,25 @@ public class TeorijaBrojeva {
             }
         }
         return -1;
+    }
+
+    public static boolean relativnoProsti(int broj1, int broj2) {
+        for (int i = 2; i < Math.max(broj1, broj2); i++) {
+            if(broj1%i == 0 && broj2%i == 0) return false;
+        }
+        return true;
+    }
+
+    public static int eulerovaFunkcija(int broj) {
+        int kolicina = 0;
+        for(int i = 1; i <= broj; i++) {
+            if(relativnoProsti(i, broj)) kolicina++;
+        }
+        return kolicina;
+    }
+
+    public static int posebnaEulerovaFunkcija(int n, int prost1, int prost2) {
+        if(n == prost1*prost2) return n-prost1-prost2+1;
+        else return -1;
     }
 }

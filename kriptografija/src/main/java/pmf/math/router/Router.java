@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import pmf.math.kalkulatori.ElGamalKalkulator;
+import pmf.math.kalkulatori.RSAKalkulator;
 import pmf.math.konstante.ImenaKalkulatora;
 import pmf.math.konstante.OpisiKalkulatora;
 
@@ -32,7 +33,8 @@ public class Router extends JPanel implements ActionListener {
 
   private final Konzola konzola = new Konzola();
   private final Opis opis = new Opis();
-  private final ElGamalKalkulator elGamalKalkulator = new ElGamalKalkulator();
+  private final ElGamalKalkulator elGamalKalkulator = new ElGamalKalkulator(konzola);
+  private final RSAKalkulator RSAkalkulator = new RSAKalkulator(konzola);
 
 
   public void Main() {
@@ -78,7 +80,7 @@ public class Router extends JPanel implements ActionListener {
     //srednjiStupac.add(ImenaKalkulatora.VIGENEROVA_SIFRA.toString(), );
     //srednjiStupac.add(ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString(), );
     //srednjiStupac.add(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString(), );
-    //srednjiStupac.add(ImenaKalkulatora.RSA_SIFRA.toString(), );
+    srednjiStupac.add(ImenaKalkulatora.RSA_SIFRA.toString(), RSAkalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString(), elGamalKalkulator.glavniPanel);
   }
 
@@ -88,6 +90,11 @@ public class Router extends JPanel implements ActionListener {
       case EL_GAMALOVA_SIFRA:
         prikaz.show(srednjiStupac, ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString());
         opis.postaviTekst("", OpisiKalkulatora.EL_GAMAL_OPIS, "");
+        break;
+
+      case RSA_SIFRA:
+        prikaz.show(srednjiStupac, ImenaKalkulatora.RSA_SIFRA.toString());
+        opis.postaviTekst("", OpisiKalkulatora.RSA_OPIS, "");
         break;
 
       default:
