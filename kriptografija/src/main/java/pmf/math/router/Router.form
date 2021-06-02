@@ -6,7 +6,7 @@
     </constraints>
     <properties>
       <minimumSize width="24" height="24"/>
-      <preferredSize width="1024" height="600"/>
+      <preferredSize width="1366" height="768"/>
     </properties>
     <border type="none"/>
     <children>
@@ -118,7 +118,7 @@
           <grid id="c63b1" binding="desniStupac" layout-manager="CardLayout" hgap="0" vgap="0">
             <constraints border-constraint="East"/>
             <properties>
-              <preferredSize width="200" height="24"/>
+              <preferredSize width="300" height="24"/>
             </properties>
             <border type="none"/>
             <children/>

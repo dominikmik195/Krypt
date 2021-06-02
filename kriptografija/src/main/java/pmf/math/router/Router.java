@@ -10,6 +10,7 @@ import javax.swing.SwingUtilities;
 
 import pmf.math.kalkulatori.CezarKalkulator;
 import pmf.math.kalkulatori.ElGamalKalkulator;
+import pmf.math.kalkulatori.PlayfairKalkulator;
 import pmf.math.konstante.ImenaKalkulatora;
 import pmf.math.konstante.OpisiKalkulatora;
 
@@ -34,6 +35,7 @@ public class Router extends JPanel implements ActionListener {
 
   private final Konzola konzola = new Konzola();
   private final Opis opis = new Opis();
+  private final PlayfairKalkulator playfairKalkulator = new PlayfairKalkulator(konzola);
   private final ElGamalKalkulator elGamalKalkulator = new ElGamalKalkulator();
   private final CezarKalkulator cezarKalkulator = new CezarKalkulator(konzola);
 
@@ -74,12 +76,13 @@ public class Router extends JPanel implements ActionListener {
 
   private void postaviKalkulator() {
     srednjiStupac.add("NULL", new JPanel());
+
     srednjiStupac.add(ImenaKalkulatora.CEZAROVA_SIFRA.toString(), cezarKalkulator.kalkulatorPanel);
     //srednjiStupac.add(ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString(), );
     //srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), );
     //srednjiStupac.add(ImenaKalkulatora.HILLOVA_SIFRA.toString(), );
     //srednjiStupac.add(ImenaKalkulatora.VIGENEROVA_SIFRA.toString(), );
-    //srednjiStupac.add(ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString(), );
+    srednjiStupac.add(ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString(), playfairKalkulator.glavniPanel);
     //srednjiStupac.add(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString(), );
     //srednjiStupac.add(ImenaKalkulatora.RSA_SIFRA.toString(), );
     srednjiStupac.add(ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString(), elGamalKalkulator.glavniPanel);
@@ -87,20 +90,26 @@ public class Router extends JPanel implements ActionListener {
 
   private void postaviKalkulator(ImenaKalkulatora imeKalkulatora) {
     CardLayout prikaz = (CardLayout) srednjiStupac.getLayout();
-    switch(imeKalkulatora) {
-      case EL_GAMALOVA_SIFRA:
+    switch (imeKalkulatora) {
+      case PLAYFAIROVA_SIFRA -> {
+        prikaz.show(srednjiStupac, ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString());
+        opis.postaviTekst("", OpisiKalkulatora.PLAYFAIR_OPIS, "");
+      }
+
+      case EL_GAMALOVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString());
         opis.postaviTekst("", OpisiKalkulatora.EL_GAMAL_OPIS, "");
-        break;
+      }
 
-      case CEZAROVA_SIFRA:
+      case CEZAROVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.CEZAROVA_SIFRA.toString());
         opis.postaviTekst("", OpisiKalkulatora.CEZAR_OPIS, "");
-        break;
+      }
 
-      default:
+      default -> {
         prikaz.show(srednjiStupac, "NULL");
         opis.postaviTekst("", "", "");
+      }
     }
     myFrame.revalidate();
   }
