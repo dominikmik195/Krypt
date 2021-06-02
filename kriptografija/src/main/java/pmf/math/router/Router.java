@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import pmf.math.kalkulatori.CezarKalkulator;
 import pmf.math.kalkulatori.ElGamalKalkulator;
 import pmf.math.kalkulatori.RSAKalkulator;
 import pmf.math.konstante.ImenaKalkulatora;
@@ -35,6 +37,7 @@ public class Router extends JPanel implements ActionListener {
   private final Opis opis = new Opis();
   private final ElGamalKalkulator elGamalKalkulator = new ElGamalKalkulator(konzola);
   private final RSAKalkulator RSAkalkulator = new RSAKalkulator(konzola);
+  private final CezarKalkulator cezarKalkulator = new CezarKalkulator(konzola);
 
 
   public void Main() {
@@ -73,7 +76,7 @@ public class Router extends JPanel implements ActionListener {
 
   private void postaviKalkulator() {
     srednjiStupac.add("NULL", new JPanel());
-    //srednjiStupac.add(ImenaKalkulatora.CEZAROVA_SIFRA.toString(), );
+    srednjiStupac.add(ImenaKalkulatora.CEZAROVA_SIFRA.toString(), cezarKalkulator.kalkulatorPanel);
     //srednjiStupac.add(ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString(), );
     //srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), );
     //srednjiStupac.add(ImenaKalkulatora.HILLOVA_SIFRA.toString(), );
@@ -95,6 +98,11 @@ public class Router extends JPanel implements ActionListener {
       case RSA_SIFRA:
         prikaz.show(srednjiStupac, ImenaKalkulatora.RSA_SIFRA.toString());
         opis.postaviTekst("", OpisiKalkulatora.RSA_OPIS, "");
+        break;
+
+      case CEZAROVA_SIFRA:
+        prikaz.show(srednjiStupac, ImenaKalkulatora.CEZAROVA_SIFRA.toString());
+        opis.postaviTekst("", OpisiKalkulatora.CEZAR_OPIS, "");
         break;
 
       default:

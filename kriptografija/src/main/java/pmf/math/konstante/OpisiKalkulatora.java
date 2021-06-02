@@ -2,9 +2,14 @@ package pmf.math.konstante;
 
 public class OpisiKalkulatora {
 
-  public static final String CEZAR_OPIS ="""
-  
-  """;
+  public static final String CEZAR_OPIS = """
+Za šifriranje pomoću Cezarove šifre dovoljno je unijeti pomak (broj).
+Za šifriranje pomoću Cezarove šifre s ključnom riječi, treba označiti
+odgovarajuću kućicu te unijeti ključnu riječ i pomak (broj), koji označava
+mjesto od koje ključna riječ počinje u abecedi šifrata.
+Sav uneseni tekst smije sadržavati isključivo slova engleske abecede.
+Za pokretanje postupka, pritisnuti odgovarajuću strjelicu.
+""";
 
   public static final String SUPSTITUCIJA_OPIS ="""
   

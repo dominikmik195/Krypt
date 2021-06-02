@@ -21,23 +21,17 @@ public class MainWindow extends JPanel implements ActionListener {
   private JButton hillovaSifraButton;
   private JButton supstitucijskaSifraButton;
   private JButton cezarovaSifraButton;
-  private JSpinner spinner1;
-  private JCheckBox kljucCheckBox;
   private JProgressBar progressBar1;
-  private JTextArea textArea2;
+  private JTextArea otvoreniTekstArea;
   private JTextPane opisTextPane;
   private JTextPane uputeTextPane;
   private JTextPane extraTextPane;
-  private JTextArea textArea3;
-  private JButton vButton;
-  private JButton button2;
-  private JTextField textField1;
-  private JTextArea konzolaTextArea;
-  private JPanel elGamalPanel;
-  private JTextArea otvoreniTekstArea;
   private JTextArea šifratArea;
   private JButton šifrirajButton;
   private JButton dešifrirajButton;
+  private JTextField kljucnaRijecTextField;
+  private JTextArea konzolaTextArea;
+  private JPanel elGamalPanel;
   private JTextField tajniKljučField;
   private JTextField prostBrojField;
   private JTextField alfaField;
@@ -46,6 +40,9 @@ public class MainWindow extends JPanel implements ActionListener {
   private JPanel kalkulatorPanel;
   private JCheckBox alfaCheckBox;
   private JCheckBox betaCheckBox;
+  private JLabel permutacijaLabel;
+  private JSpinner pomakSpinner;
+  private JCheckBox kljucCheckBox;
 
   public static void Main() {
     SwingUtilities.invokeLater(
