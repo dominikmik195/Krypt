@@ -15,11 +15,7 @@ logike aplikacije izvan datoteka koje pripadaju formama.
 public class ObradaUnosa {
   public static boolean kriviUnos(String tekst) {
     // Dozvoljena su samo slova engleske abecede i bjeline (koje se čiste).
-    if (!tekst.matches("^[a-zA-Z\s]*$")) {
-      // TODO: Ispis u konzolu.
-      System.out.println("Tekst smije sadržavati samo slova engleske abecede");
-      return true;
-    } else return false;
+    return !tekst.matches("^[a-zA-Z\s]*$");
   }
 
   public static String ocisti(String tekst) {

@@ -1,7 +1,9 @@
 package pmf.math.kalkulatori;
 
+import pmf.math.obradaunosa.ObradaUnosa;
 import pmf.math.obradaunosa.ObradaUnosaCezar;
 import pmf.math.obradaunosa.ObradaUnosaCezarKljucnaRijec;
+import pmf.math.router.Konzola;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -10,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CezarKalkulator extends JPanel {
+  public JPanel kalkulatorPanel;
+
   private JSpinner pomakSpinner;
   private JCheckBox kljucCheckBox;
   private JTextArea otvoreniTekstArea;
@@ -18,25 +22,19 @@ public class CezarKalkulator extends JPanel {
   private JButton desifrirajButton;
   private JTextField kljucnaRijecTextField;
   private JLabel permutacijaLabel;
-  private JPanel kalkulatorPanel;
 
-  // FIXME: Za testiranje. Maknuti kasnije.
-  public static void main(String[] args) {
-    JFrame frame = new JFrame("Cezar");
-    frame.setContentPane(new CezarKalkulator().kalkulatorPanel);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.pack();
-    frame.setVisible(true);
-  }
+  private final Konzola konzola; // Za ispis greške.
 
-  public CezarKalkulator() {
+  public CezarKalkulator(Konzola konzola) {
+    this.konzola = konzola;
+
     sifrirajButton.addActionListener(new Sifriraj());
     desifrirajButton.addActionListener(new Desifriraj());
 
     // -----------------------------------------------------------------------------------------------------------------
     // Prikaz supstitucije u UI-ju.
     pomakSpinner.addChangeListener(e -> (new Permutacija()).azuriraj());
-    kljucCheckBox.addChangeListener(e -> (new Permutacija()).azuriraj());
+    kljucCheckBox.addItemListener(e -> (new Permutacija()).azuriraj());
     kljucnaRijecTextField
         .getDocument()
         .addDocumentListener(
@@ -71,11 +69,25 @@ public class CezarKalkulator extends JPanel {
       String otvoreniTekst = otvoreniTekstArea.getText();
       String kljucnaRijec = kljucnaRijecTextField.getText();
 
+      // Provjeri unose (zbog ispisa poruka).
+      boolean greska = false;
+      if (ObradaUnosa.kriviUnos(otvoreniTekst)) {
+        konzola.ispisiGresku("Otvoreni tekst smije sadržavati samo slova engleske abecede!");
+        greska = true;
+      }
+      if (ObradaUnosa.kriviUnos(kljucnaRijec) && kljucCheckBox.isSelected()) {
+        konzola.ispisiGresku("Ključna riječ smije sadržavati samo slova engleske abecede!");
+        greska = true;
+      }
+
       String sifrat;
       if (!kljucCheckBox.isSelected()) sifrat = ObradaUnosaCezar.sifriraj(pomak, otvoreniTekst);
       else sifrat = ObradaUnosaCezarKljucnaRijec.sifriraj(pomak, kljucnaRijec, otvoreniTekst);
 
-      sifratArea.setText(sifrat);
+      if (!greska) {
+        sifratArea.setText(sifrat);
+        konzola.ispisiPoruku("Poruka uspješno šifrirana Cezarovom šifrom.");
+      }
     }
   }
 
@@ -86,11 +98,25 @@ public class CezarKalkulator extends JPanel {
       String sifrat = sifratArea.getText();
       String kljucnaRijec = kljucnaRijecTextField.getText();
 
+      // Provjeri unose (zbog ispisa poruka).
+      boolean greska = false;
+      if (ObradaUnosa.kriviUnos(sifrat)) {
+        konzola.ispisiGresku("Šifrat smije sadržavati samo slova engleske abecede!");
+        greska = true;
+      }
+      if (ObradaUnosa.kriviUnos(kljucnaRijec) && kljucCheckBox.isSelected()) {
+        konzola.ispisiGresku("Ključna riječ smije sadržavati samo slova engleske abecede!");
+        greska = true;
+      }
+
       String otvoreniTekst;
       if (!kljucCheckBox.isSelected()) otvoreniTekst = ObradaUnosaCezar.desifriraj(pomak, sifrat);
       else otvoreniTekst = ObradaUnosaCezarKljucnaRijec.desifriraj(pomak, kljucnaRijec, sifrat);
 
-      otvoreniTekstArea.setText(otvoreniTekst);
+      if (!greska) {
+        otvoreniTekstArea.setText(otvoreniTekst);
+        konzola.ispisiPoruku("Poruka uspješno dešifrirana Cezarovom šifrom.");
+      }
     }
   }
   // Za prikaz supstitucije u UI-ju.
@@ -100,6 +126,9 @@ public class CezarKalkulator extends JPanel {
       String kljucnaRijec = kljucnaRijecTextField.getText();
 
       String novaPermutacija;
+
+      if (ObradaUnosa.kriviUnos(kljucnaRijec) && kljucCheckBox.isSelected())
+        konzola.ispisiGresku("Ključna riječ smije sadržavati samo slova engleske abecede!");
 
       if (!kljucCheckBox.isSelected()) novaPermutacija = ObradaUnosaCezar.permutacija(pomak);
       else novaPermutacija = ObradaUnosaCezarKljucnaRijec.permutacija(pomak, kljucnaRijec);
