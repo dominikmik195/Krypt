@@ -66,6 +66,7 @@ public class RSAKriptosustav {
 
     public static int provjeriD(int _p, int _q, int _n, int _d) {
         int fi = TeorijaBrojeva.posebnaEulerovaFunkcija(_n, _p, _q);
+        if(!TeorijaBrojeva.relativnoProsti(_d, fi)) return 0;
         if(fi == 0) return 0;
         int _e = 1;
         int granica = _n*_n;
