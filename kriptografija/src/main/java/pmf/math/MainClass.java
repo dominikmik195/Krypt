@@ -1,10 +1,11 @@
 package pmf.math;
 
-import pmf.math.ui.MainWindow;
+import pmf.math.router.Router;
 
 public class MainClass {
 
   public static void main(String[] args) {
-    MainWindow.Main();
+    Router router = new Router();
+    router.Main();
   }
 }
