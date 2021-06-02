@@ -2,7 +2,7 @@ package pmf.math.kriptosustavi;
 
 import pmf.math.algoritmi.Abeceda;
 
-public class Supstitucijska {
+public class SupstitucijskaKriptosustav {
   // Permutacije se koriste kod (de)šifriranja svih supstitucijskih šifri, a računaju
   // se na različit način ovisno o šiframa (koje nasljeđuju ovu klasu). Tajni ključ supstitucijskih
   // šifri se koristi za računanje ovih permutacija i nije ga potrebno čuvati.

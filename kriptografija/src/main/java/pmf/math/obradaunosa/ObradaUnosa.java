@@ -1,4 +1,4 @@
-package pmf.math.kalkulatori;
+package pmf.math.obradaunosa;
 
 import java.util.Locale;
 
@@ -14,8 +14,8 @@ logike aplikacije izvan datoteka koje pripadaju formama.
 
 public class ObradaUnosa {
   public static boolean kriviUnos(String tekst) {
-    // Dozvoljena su samo slova engleske abecede.
-    if (!tekst.matches("^[a-zA-Z]*$")) {
+    // Dozvoljena su samo slova engleske abecede i bjeline (koje se čiste).
+    if (!tekst.matches("^[a-zA-Z\s]*$")) {
       // TODO: Ispis u konzolu.
       System.out.println("Tekst smije sadržavati samo slova engleske abecede");
       return true;
@@ -23,6 +23,6 @@ public class ObradaUnosa {
   }
 
   public static String ocisti(String tekst) {
-    return tekst.replaceAll("\\s+", "").toUpperCase(Locale.ROOT);
+    return tekst.replaceAll("\s+", "").toUpperCase(Locale.ROOT);
   }
 }

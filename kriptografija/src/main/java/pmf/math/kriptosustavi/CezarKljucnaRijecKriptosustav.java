@@ -4,9 +4,9 @@ import pmf.math.algoritmi.Abeceda;
 
 import java.util.Arrays;
 
-public class CezarKljucnaRijec extends Supstitucijska {
+public class CezarKljucnaRijecKriptosustav extends SupstitucijskaKriptosustav {
   // Ključ = (ključna riječ, mjesto od koje počinje)
-  public CezarKljucnaRijec(String kljucnaRijec, int pomak) {
+  public CezarKljucnaRijecKriptosustav(String kljucnaRijec, int pomak) {
     boolean[] iskoristeni = new boolean[26];
     Arrays.fill(iskoristeni, false);
 

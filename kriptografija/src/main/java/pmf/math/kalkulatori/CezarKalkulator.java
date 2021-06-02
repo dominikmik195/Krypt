@@ -1,12 +1,15 @@
 package pmf.math.kalkulatori;
 
+import pmf.math.obradaunosa.ObradaUnosaCezar;
+import pmf.math.obradaunosa.ObradaUnosaCezarKljucnaRijec;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Cezar extends JPanel {
+public class CezarKalkulator extends JPanel {
   private JSpinner pomakSpinner;
   private JCheckBox kljucCheckBox;
   private JTextArea otvoreniTekstArea;
@@ -20,13 +23,13 @@ public class Cezar extends JPanel {
   // FIXME: Za testiranje. Maknuti kasnije.
   public static void main(String[] args) {
     JFrame frame = new JFrame("Cezar");
-    frame.setContentPane(new Cezar().kalkulatorPanel);
+    frame.setContentPane(new CezarKalkulator().kalkulatorPanel);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.pack();
     frame.setVisible(true);
   }
 
-  public Cezar() {
+  public CezarKalkulator() {
     sifrirajButton.addActionListener(new Sifriraj());
     desifrirajButton.addActionListener(new Desifriraj());
 

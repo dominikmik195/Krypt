@@ -3,15 +3,7 @@ package pmf.math.ui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import pmf.math.kriptosustavi.Cezar;
-import pmf.math.kriptosustavi.CezarKljucnaRijec;
 
 public class MainWindow extends JPanel implements ActionListener {
   private static MainWindow myPanel;
