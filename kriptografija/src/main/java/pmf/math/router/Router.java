@@ -13,11 +13,13 @@ import pmf.math.kalkulatori.ElGamalKalkulator;
 import pmf.math.kalkulatori.PlayfairKalkulator;
 import pmf.math.konstante.ImenaKalkulatora;
 import pmf.math.konstante.OpisiKalkulatora;
+import pmf.math.konstante.UputeKalkulatora;
 
 public class Router extends JPanel implements ActionListener {
   private static JFrame myFrame;
 
   private JButton cezarButton;
+  private JButton afinaButton;
   private JButton supstitucijskaButton;
   private JButton hillovaButton;
   private JButton vigenerovaButton;
@@ -31,7 +33,6 @@ public class Router extends JPanel implements ActionListener {
   private JPanel lijeviStupac;
   private JPanel desniStupac;
   private JPanel srednjiStupac;
-  private JButton afinaButton;
 
   private final Konzola konzola = new Konzola();
   private final Opis opis = new Opis();
@@ -93,22 +94,22 @@ public class Router extends JPanel implements ActionListener {
     switch (imeKalkulatora) {
       case PLAYFAIROVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString());
-        opis.postaviTekst("", OpisiKalkulatora.PLAYFAIR_OPIS, "");
+        opis.postaviTekst(OpisiKalkulatora.PLAYFAIR_OPIS, UputeKalkulatora.PLAYFAIR_UPUTE);
       }
 
       case EL_GAMALOVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString());
-        opis.postaviTekst("", OpisiKalkulatora.EL_GAMAL_OPIS, "");
+        opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS, UputeKalkulatora.EL_GAMAL_UPUTE);
       }
 
       case CEZAROVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.CEZAROVA_SIFRA.toString());
-        opis.postaviTekst("", OpisiKalkulatora.CEZAR_OPIS, "");
+        opis.postaviTekst(OpisiKalkulatora.CEZAR_OPIS, UputeKalkulatora.CEZAR_UPUTE);
       }
 
       default -> {
         prikaz.show(srednjiStupac, "NULL");
-        opis.postaviTekst("", "", "");
+        opis.postaviTekst("", "");
       }
     }
     myFrame.revalidate();

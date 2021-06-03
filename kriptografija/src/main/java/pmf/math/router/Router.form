@@ -110,7 +110,7 @@
           <grid id="74cea" binding="lijeviStupac" layout-manager="CardLayout" hgap="0" vgap="0">
             <constraints border-constraint="West"/>
             <properties>
-              <preferredSize width="250" height="24"/>
+              <preferredSize width="360" height="24"/>
             </properties>
             <border type="none"/>
             <children/>
@@ -118,7 +118,7 @@
           <grid id="c63b1" binding="desniStupac" layout-manager="CardLayout" hgap="0" vgap="0">
             <constraints border-constraint="East"/>
             <properties>
-              <preferredSize width="300" height="24"/>
+              <preferredSize width="240" height="24"/>
             </properties>
             <border type="none"/>
             <children/>
