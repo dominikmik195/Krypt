@@ -1,6 +1,10 @@
 package pmf.math.kriptosustavi;
 
 import pmf.math.algoritmi.Abeceda;
+import pmf.math.kalkulatori.SupstitucijskaKalkulator;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SupstitucijskaKriptosustav {
   // Permutacije se koriste kod (de)šifriranja svih supstitucijskih šifri, a računaju
@@ -8,6 +12,17 @@ public class SupstitucijskaKriptosustav {
   // šifri se koristi za računanje ovih permutacija i nije ga potrebno čuvati.
   protected int[] permutacija;
   protected int[] inverznaPermutacija;
+
+  public SupstitucijskaKriptosustav() {}
+
+  public SupstitucijskaKriptosustav(int[] permutacija) {
+    this.permutacija = permutacija;
+
+    // Sami računamo inverznu permutaciju.
+    inverznaPermutacija = new int[26];
+    Arrays.fill(inverznaPermutacija, -1);
+    for (int i = 0; i < 26; i++) if (permutacija[i] != -1) inverznaPermutacija[permutacija[i]] = i;
+  }
 
   // Šifrira otvoreni tekst i vraća šifrat.
   public String sifriraj(String otvoreniTekst) {
