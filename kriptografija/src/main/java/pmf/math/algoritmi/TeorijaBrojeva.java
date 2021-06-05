@@ -11,7 +11,7 @@ public class TeorijaBrojeva {
         }
         return true;
     }
-    public static int velikiModulo(int baza, int exp, int modulo) {
+    public static int modularnoPotenciranje(int baza, int exp, int modulo) {
         BigInteger br = new BigInteger(String.valueOf(baza));
         BigInteger mod = new BigInteger(String.valueOf(modulo));
         BigInteger x = br.mod(mod);
@@ -31,10 +31,10 @@ public class TeorijaBrojeva {
 
     public static int redElementa(int element, int modulo) {
         int red = 1;
-        int ostatak = velikiModulo(element, red, modulo);
+        int ostatak = modularnoPotenciranje(element, red, modulo);
         while (ostatak != 1) {
             red++;
-            ostatak = velikiModulo(element, red, modulo);
+            ostatak = modularnoPotenciranje(element, red, modulo);
         }
         return red;
     }
@@ -58,7 +58,9 @@ public class TeorijaBrojeva {
     }
 
     public static int inverz(int broj, int modulo) {
-        for (int i = 0; i < (modulo * modulo); i++) {
+        int granica = modulo*modulo;
+        if(granica < 0) granica = Integer.MAX_VALUE;
+        for (int i = 0; i < granica; i++) {
             if ((i * broj) % modulo == 1) {
                 return i;
             }
@@ -81,8 +83,7 @@ public class TeorijaBrojeva {
         return kolicina;
     }
 
-    public static int posebnaEulerovaFunkcija(int n, int prost1, int prost2) {
-        if(n == prost1*prost2) return n-prost1-prost2+1;
-        else return -1;
+    public static int posebnaEulerovaFunkcija(int prost1, int prost2) {
+        return prost1*prost2-prost1-prost2+1;
     }
 }

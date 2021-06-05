@@ -40,12 +40,12 @@ public class ElGamalKriptosustav {
   public void sifriraj(int broj, int tajniBroj) {
     BigInteger br = new BigInteger(String.valueOf(broj));
     BigInteger pB = new BigInteger(String.valueOf(prostBroj));
-    sifrat[0] = TeorijaBrojeva.velikiModulo(alfa, tajniBroj, prostBroj);
-    sifrat[1] = (br.mod(pB).multiply(new BigInteger(String.valueOf(TeorijaBrojeva.velikiModulo(beta, tajniBroj, prostBroj))))).mod(pB).intValue();
+    sifrat[0] = TeorijaBrojeva.modularnoPotenciranje(alfa, tajniBroj, prostBroj);
+    sifrat[1] = (br.mod(pB).multiply(new BigInteger(String.valueOf(TeorijaBrojeva.modularnoPotenciranje(beta, tajniBroj, prostBroj))))).mod(pB).intValue();
   }
 
   public int desifriraj() {
-    int temp = TeorijaBrojeva.velikiModulo(sifrat[0], tajniKljuc, prostBroj);
+    int temp = TeorijaBrojeva.modularnoPotenciranje(sifrat[0], tajniKljuc, prostBroj);
     return (TeorijaBrojeva.inverz(temp, prostBroj) * sifrat[1]) % prostBroj;
   }
 
@@ -55,7 +55,7 @@ public class ElGamalKriptosustav {
 
   private void postaviBeta() {
     beta = (int) (Math.pow(alfa, tajniKljuc)) % prostBroj;
-    beta = TeorijaBrojeva.velikiModulo(alfa, tajniKljuc, prostBroj);
+    beta = TeorijaBrojeva.modularnoPotenciranje(alfa, tajniKljuc, prostBroj);
   }
 
   public String vratiSifrat() {
@@ -76,6 +76,6 @@ public class ElGamalKriptosustav {
   public static boolean provjeriBeta(int _alfa, int _betica, int _pB, int _tK) {
     BigInteger _beta = new BigInteger(String.valueOf(_betica));
     BigInteger _ostatak = _beta.mod(new BigInteger(String.valueOf(_pB)));
-    return _ostatak.intValue() == TeorijaBrojeva.velikiModulo(_alfa, _tK, _pB);
+    return _ostatak.intValue() == TeorijaBrojeva.modularnoPotenciranje(_alfa, _tK, _pB);
   }
 }

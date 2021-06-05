@@ -40,7 +40,6 @@ public class Router extends JPanel implements ActionListener {
   private final ElGamalKalkulator elGamalKalkulator = new ElGamalKalkulator(konzola);
   private final RSAKalkulator RSAkalkulator = new RSAKalkulator(konzola);
   private final PlayfairKalkulator playfairKalkulator = new PlayfairKalkulator(konzola);
-  private final ElGamalKalkulator elGamalKalkulator = new ElGamalKalkulator();
   private final CezarKalkulator cezarKalkulator = new CezarKalkulator(konzola);
 
 
@@ -102,14 +101,14 @@ public class Router extends JPanel implements ActionListener {
 
       case EL_GAMALOVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString());
-        opis.postaviTekst("", OpisiKalkulatora.EL_GAMAL_OPIS, "");
+        opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS, "");
         break;
+        }
 
-      case RSA_SIFRA:
+      case RSA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.RSA_SIFRA.toString());
-        opis.postaviTekst("", OpisiKalkulatora.RSA_OPIS, "");
+        opis.postaviTekst(OpisiKalkulatora.RSA_OPIS, "");
         break;
-        opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS, UputeKalkulatora.EL_GAMAL_UPUTE);
       }
 
       case CEZAROVA_SIFRA -> {
