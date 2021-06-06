@@ -63,8 +63,7 @@ public class Router extends JPanel implements ActionListener {
     myFrame.add(glavniPanel);
     myFrame.pack();
     myFrame.setLocationRelativeTo(null);
-    // myFrame.setResizable(false);
-    // FIXME: Odkomentirati ovo.
+    myFrame.setResizable(false);
     myFrame.setVisible(true);
 
     konzola.ispisiPoruku("Uspješno pokrenuta aplikacija!");

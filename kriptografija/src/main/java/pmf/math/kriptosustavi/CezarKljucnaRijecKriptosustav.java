@@ -22,6 +22,7 @@ public class CezarKljucnaRijecKriptosustav extends SupstitucijskaKriptosustav {
       return;
     }
 
+    pomak = ((pomak % 26) + 26) % 26; // Da ne ispadne negativan.
     // Upisujemo slova ključne riječi.
     int j = pomak;
     for (char slovo : kljucnaRijec.toCharArray()) {

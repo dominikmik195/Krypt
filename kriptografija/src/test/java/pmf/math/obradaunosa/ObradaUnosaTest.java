@@ -10,6 +10,15 @@ public class ObradaUnosaTest extends TestCase {
 
     assertTrue(ObradaUnosa.kriviUnos(kriviTekst));
     assertFalse(ObradaUnosa.kriviUnos(tocanTekst));
+
+    int[] krivaPermutacija = new int[26];
+    int[] tocnaPermutacija = new int[26];
+    for (int i = 0; i < 26; i++) krivaPermutacija[i] = tocnaPermutacija[i] = i;
+    krivaPermutacija[0] = 5;
+    tocnaPermutacija[0] = tocnaPermutacija[1] = -1;
+
+    assertTrue(ObradaUnosa.kriviUnos(krivaPermutacija));
+    assertFalse(ObradaUnosa.kriviUnos(tocnaPermutacija));
   }
 
   public void testOcisti() {
