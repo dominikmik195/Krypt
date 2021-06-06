@@ -10,14 +10,18 @@ import javax.swing.SwingUtilities;
 
 import pmf.math.kalkulatori.CezarKalkulator;
 import pmf.math.kalkulatori.ElGamalKalkulator;
+import pmf.math.kalkulatori.RSAKalkulator;
+import pmf.math.kalkulatori.PlayfairKalkulator;
 import pmf.math.kalkulatori.SupstitucijskaKalkulator;
 import pmf.math.konstante.ImenaKalkulatora;
 import pmf.math.konstante.OpisiKalkulatora;
+import pmf.math.konstante.UputeKalkulatora;
 
 public class Router extends JPanel implements ActionListener {
   private static JFrame myFrame;
 
   private JButton cezarButton;
+  private JButton afinaButton;
   private JButton supstitucijskaButton;
   private JButton hillovaButton;
   private JButton vigenerovaButton;
@@ -31,11 +35,12 @@ public class Router extends JPanel implements ActionListener {
   private JPanel lijeviStupac;
   private JPanel desniStupac;
   private JPanel srednjiStupac;
-  private JButton afinaButton;
 
   private final Konzola konzola = new Konzola();
   private final Opis opis = new Opis();
-  private final ElGamalKalkulator elGamalKalkulator = new ElGamalKalkulator();
+  private final ElGamalKalkulator elGamalKalkulator = new ElGamalKalkulator(konzola);
+  private final RSAKalkulator RSAkalkulator = new RSAKalkulator(konzola);
+  private final PlayfairKalkulator playfairKalkulator = new PlayfairKalkulator(konzola);
   private final CezarKalkulator cezarKalkulator = new CezarKalkulator(konzola);
   private final SupstitucijskaKalkulator supstitucijskaKalkulator =
       new SupstitucijskaKalkulator(konzola);
@@ -76,39 +81,52 @@ public class Router extends JPanel implements ActionListener {
 
   private void postaviKalkulator() {
     srednjiStupac.add("NULL", new JPanel());
+
     srednjiStupac.add(ImenaKalkulatora.CEZAROVA_SIFRA.toString(), cezarKalkulator.kalkulatorPanel);
     srednjiStupac.add(
         ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString(), supstitucijskaKalkulator.glavniPanel);
     // srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), );
     // srednjiStupac.add(ImenaKalkulatora.HILLOVA_SIFRA.toString(), );
     // srednjiStupac.add(ImenaKalkulatora.VIGENEROVA_SIFRA.toString(), );
-    // srednjiStupac.add(ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString(), );
-    // srednjiStupac.add(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString(), );
-    // srednjiStupac.add(ImenaKalkulatora.RSA_SIFRA.toString(), );
+    srednjiStupac.add(ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString(), playfairKalkulator.glavniPanel);
+    //srednjiStupac.add(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString(), );
+    srednjiStupac.add(ImenaKalkulatora.RSA_SIFRA.toString(), RSAkalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString(), elGamalKalkulator.glavniPanel);
   }
 
   private void postaviKalkulator(ImenaKalkulatora imeKalkulatora) {
     CardLayout prikaz = (CardLayout) srednjiStupac.getLayout();
     switch (imeKalkulatora) {
-      case EL_GAMALOVA_SIFRA:
-        prikaz.show(srednjiStupac, ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString());
-        opis.postaviTekst("", OpisiKalkulatora.EL_GAMAL_OPIS, "");
-        break;
+      case PLAYFAIROVA_SIFRA -> {
+        prikaz.show(srednjiStupac, ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString());
+        opis.postaviTekst(OpisiKalkulatora.PLAYFAIR_OPIS, UputeKalkulatora.PLAYFAIR_UPUTE);
+      }
 
-      case CEZAROVA_SIFRA:
-        prikaz.show(srednjiStupac, ImenaKalkulatora.CEZAROVA_SIFRA.toString());
-        opis.postaviTekst("", OpisiKalkulatora.CEZAR_OPIS, "");
+      case EL_GAMALOVA_SIFRA -> {
+        prikaz.show(srednjiStupac, ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString());
+        opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS, UputeKalkulatora.EL_GAMAL_UPUTE);
         break;
+        }
+
+      case RSA_SIFRA -> {
+        prikaz.show(srednjiStupac, ImenaKalkulatora.RSA_SIFRA.toString());
+        opis.postaviTekst(OpisiKalkulatora.RSA_OPIS, UputeKalkulatora.RSA_UPUTE);
+      }
 
       case SUPSTITUCIJSKA_SIFRA:
         prikaz.show(srednjiStupac, ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString());
         opis.postaviTekst("", OpisiKalkulatora.SUPSTITUCIJA_OPIS, "");
         break;
 
-      default:
+      case CEZAROVA_SIFRA -> {
+        prikaz.show(srednjiStupac, ImenaKalkulatora.CEZAROVA_SIFRA.toString());
+        opis.postaviTekst(OpisiKalkulatora.CEZAR_OPIS, UputeKalkulatora.CEZAR_UPUTE);
+      }
+
+      default -> {
         prikaz.show(srednjiStupac, "NULL");
-        opis.postaviTekst("", "", "");
+        opis.postaviTekst("", "");
+      }
     }
     myFrame.revalidate();
   }
@@ -135,69 +153,60 @@ public class Router extends JPanel implements ActionListener {
   }
 
   private void postaviTipke() {
-    cezarButton.addActionListener(
-        e -> {
-          omoguciSveTipke();
-          cezarButton.setEnabled(false);
-          cezarButton.setFocusable(false);
-          postaviKalkulator(ImenaKalkulatora.CEZAROVA_SIFRA);
-        });
-    supstitucijskaButton.addActionListener(
-        e -> {
-          omoguciSveTipke();
-          supstitucijskaButton.setEnabled(false);
-          supstitucijskaButton.setFocusable(false);
-          postaviKalkulator(ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA);
-        });
-    afinaButton.addActionListener(
-        e -> {
-          omoguciSveTipke();
-          afinaButton.setEnabled(false);
-          afinaButton.setFocusable(false);
-          postaviKalkulator(ImenaKalkulatora.AFINA_SIFRA);
-        });
-    hillovaButton.addActionListener(
-        e -> {
-          omoguciSveTipke();
-          hillovaButton.setEnabled(false);
-          hillovaButton.setFocusable(false);
-          postaviKalkulator(ImenaKalkulatora.HILLOVA_SIFRA);
-        });
-    vigenerovaButton.addActionListener(
-        e -> {
-          omoguciSveTipke();
-          vigenerovaButton.setEnabled(false);
-          vigenerovaButton.setFocusable(false);
-          postaviKalkulator(ImenaKalkulatora.VIGENEROVA_SIFRA);
-        });
-    playfairovaButton.addActionListener(
-        e -> {
-          omoguciSveTipke();
-          playfairovaButton.setEnabled(false);
-          playfairovaButton.setFocusable(false);
-          postaviKalkulator(ImenaKalkulatora.PLAYFAIROVA_SIFRA);
-        });
-    stupcanaButton.addActionListener(
-        e -> {
-          omoguciSveTipke();
-          stupcanaButton.setEnabled(false);
-          stupcanaButton.setFocusable(false);
-          postaviKalkulator(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA);
-        });
-    rsaButton.addActionListener(
-        e -> {
-          omoguciSveTipke();
-          rsaButton.setEnabled(false);
-          rsaButton.setFocusable(false);
-          postaviKalkulator(ImenaKalkulatora.RSA_SIFRA);
-        });
-    elgamalButton.addActionListener(
-        e -> {
-          omoguciSveTipke();
-          elgamalButton.setEnabled(false);
-          elgamalButton.setFocusable(false);
-          postaviKalkulator(ImenaKalkulatora.EL_GAMALOVA_SIFRA);
-        });
+    cezarButton.addActionListener(e -> {
+      omoguciSveTipke();
+      cezarButton.setEnabled(false);
+      cezarButton.setFocusable(false);
+      postaviKalkulator(ImenaKalkulatora.CEZAROVA_SIFRA);
+    });
+    supstitucijskaButton.addActionListener(e -> {
+      omoguciSveTipke();
+      supstitucijskaButton.setEnabled(false);
+      supstitucijskaButton.setFocusable(false);
+      postaviKalkulator(ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA);
+    });
+    afinaButton.addActionListener(e -> {
+      omoguciSveTipke();
+      afinaButton.setEnabled(false);
+      afinaButton.setFocusable(false);
+      postaviKalkulator(ImenaKalkulatora.AFINA_SIFRA);
+    });
+    hillovaButton.addActionListener(e -> {
+      omoguciSveTipke();
+      hillovaButton.setEnabled(false);
+      hillovaButton.setFocusable(false);
+      postaviKalkulator(ImenaKalkulatora.HILLOVA_SIFRA);
+    });
+    vigenerovaButton.addActionListener(e -> {
+      omoguciSveTipke();
+      vigenerovaButton.setEnabled(false);
+      vigenerovaButton.setFocusable(false);
+      postaviKalkulator(ImenaKalkulatora.VIGENEROVA_SIFRA);
+    });
+    playfairovaButton.addActionListener(e -> {
+      omoguciSveTipke();
+      playfairovaButton.setEnabled(false);
+      playfairovaButton.setFocusable(false);
+      postaviKalkulator(ImenaKalkulatora.PLAYFAIROVA_SIFRA);
+    });
+    stupcanaButton.addActionListener(e -> {
+      omoguciSveTipke();
+      stupcanaButton.setEnabled(false);
+      stupcanaButton.setFocusable(false);
+      postaviKalkulator(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA);
+    });
+    rsaButton.addActionListener(e -> {
+      omoguciSveTipke();
+      rsaButton.setEnabled(false);
+      rsaButton.setFocusable(false);
+      postaviKalkulator(ImenaKalkulatora.RSA_SIFRA);
+    });
+    elgamalButton.addActionListener(e -> {
+      omoguciSveTipke();
+      elgamalButton.setEnabled(false);
+      elgamalButton.setFocusable(false);
+      postaviKalkulator(ImenaKalkulatora.EL_GAMALOVA_SIFRA);
+    });
   }
 
   public void actionPerformed(ActionEvent ae) {
