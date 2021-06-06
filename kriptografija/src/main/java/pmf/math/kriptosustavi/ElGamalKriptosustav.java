@@ -1,6 +1,5 @@
 package pmf.math.kriptosustavi;
 
-import java.lang.Math;
 import java.math.BigInteger;
 import pmf.math.algoritmi.TeorijaBrojeva;
 
@@ -10,52 +9,42 @@ public class ElGamalKriptosustav {
   public int[] sifrat = new int[2];
 
   public ElGamalKriptosustav() {
-    prostBroj = 7;
-    tajniKljuc = 3;
-    postaviAlfa();
-    postaviBeta();
+    prostBroj = -1;
+    tajniKljuc = -1;
+    alfa = -1;
+    beta = -1;
   }
 
-  public ElGamalKriptosustav(int pB, int tK) {
+  public ElGamalKriptosustav(int pB, int al, int be) {
     prostBroj = pB;
-    tajniKljuc = tK;
-    postaviAlfa();
-    postaviBeta();
-  }
-
-  public ElGamalKriptosustav(int pB, int tK, int al) {
-    prostBroj = pB;
-    tajniKljuc = tK;
-    alfa = al;
-    postaviBeta();
-  }
-
-  public ElGamalKriptosustav(int pB, int tK, int al, int be) {
-    prostBroj = pB;
-    tajniKljuc = tK;
     alfa = al;
     beta = be;
+  }
+
+  public void setTajniKljuc(int tK) {
+    tajniKljuc = tK;
   }
 
   public void sifriraj(int broj, int tajniBroj) {
     BigInteger br = new BigInteger(String.valueOf(broj));
     BigInteger pB = new BigInteger(String.valueOf(prostBroj));
-    sifrat[0] = TeorijaBrojeva.velikiModulo(alfa, tajniBroj, prostBroj);
-    sifrat[1] = (br.mod(pB).multiply(new BigInteger(String.valueOf(TeorijaBrojeva.velikiModulo(beta, tajniBroj, prostBroj))))).mod(pB).intValue();
+    sifrat[0] = TeorijaBrojeva.modularnoPotenciranje(alfa, tajniBroj, prostBroj);
+    sifrat[1] = (br.mod(pB).multiply(new BigInteger(String.valueOf(TeorijaBrojeva.modularnoPotenciranje(beta, tajniBroj, prostBroj))))).mod(pB).intValue();
   }
 
   public int desifriraj() {
-    int temp = TeorijaBrojeva.velikiModulo(sifrat[0], tajniKljuc, prostBroj);
+    int temp = TeorijaBrojeva.modularnoPotenciranje(sifrat[0], tajniKljuc, prostBroj);
     return (TeorijaBrojeva.inverz(temp, prostBroj) * sifrat[1]) % prostBroj;
   }
 
-  private void postaviAlfa() {
-    alfa = TeorijaBrojeva.najmanjiPrimitivniKorijen(prostBroj);
+  public static int noviAlfa(int pB) {
+    // Funkcija koja računa najmanji alfa koji je primtivni korijen danog prostog broja.
+    return TeorijaBrojeva.najmanjiPrimitivniKorijen(pB);
   }
 
-  private void postaviBeta() {
-    beta = (int) (Math.pow(alfa, tajniKljuc)) % prostBroj;
-    beta = TeorijaBrojeva.velikiModulo(alfa, tajniKljuc, prostBroj);
+  public static int noviBeta(int pB, int a, int tK) {
+    // Funkcija koja računa pripadni broj beta za dane varijable.
+    return TeorijaBrojeva.modularnoPotenciranje(a, tK, pB);
   }
 
   public String vratiSifrat() {
@@ -67,15 +56,5 @@ public class ElGamalKriptosustav {
     String[] lista = novi.split(",");
     sifrat[0] = Integer.parseInt(lista[0].strip());
     sifrat[1] = Integer.parseInt(lista[1].strip());
-  }
-
-  public static boolean provjeriAlfa(int _alfa, int _pB) {
-    return TeorijaBrojeva.primitivniKorijen(_alfa, _pB);
-  }
-
-  public static boolean provjeriBeta(int _alfa, int _betica, int _pB, int _tK) {
-    BigInteger _beta = new BigInteger(String.valueOf(_betica));
-    BigInteger _ostatak = _beta.mod(new BigInteger(String.valueOf(_pB)));
-    return _ostatak.intValue() == TeorijaBrojeva.velikiModulo(_alfa, _tK, _pB);
   }
 }
