@@ -20,7 +20,7 @@ import pmf.math.router.Konzola;
 
 public class PlayfairKalkulator {
 
-  private static PlayfairKriptosustav playfairKriptosustav = new PlayfairKriptosustav();
+  private static final PlayfairKriptosustav playfairKriptosustav = new PlayfairKriptosustav();
 
   public JPanel glavniPanel;
   public Konzola mojaKonzola;
@@ -80,14 +80,16 @@ public class PlayfairKalkulator {
     sifrirajTipka.addActionListener(e -> {
       try {
         sifratTextArea.setText(playfairKriptosustav.sifriraj(otvoreniTekstTextArea.getText()));
+        mojaKonzola.ispisiPoruku("Šifriranje dovršeno.");
       }
       catch(Exception exception) { mojaKonzola.ispisiGresku("Pogreška pri šifriranju."); }
     });
     desifrirajTipka.addActionListener(e -> {
       try {
         otvoreniTekstTextArea.setText(playfairKriptosustav.desifriraj(sifratTextArea.getText()));
+        mojaKonzola.ispisiPoruku("Dešifriranje dovršeno.");
       }
-      catch(Exception exception) { mojaKonzola.ispisiGresku("Pogreška pri šifriranju."); }
+      catch(Exception exception) { mojaKonzola.ispisiGresku("Pogreška pri dešifriranju."); }
     });
 
     // Sanitizacija unosa
@@ -162,7 +164,7 @@ public class PlayfairKalkulator {
     }
     if (!izlaz.toString().equals(textArea.getText())
         && textArea.getText().replaceAll(" ", "").length() % 2 != 0) {
-      mojaKonzola.ispisiGresku("OPREZ! Unos mora biti parne duljine.");
+      mojaKonzola.ispisiGresku("OPREZ! Unos mora biti parne duljine. Zadnje slovo neće biti izmijenjeno.");
     }
 
     textArea.setText(izlaz.toString());

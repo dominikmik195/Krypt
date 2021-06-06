@@ -20,7 +20,19 @@ public class UputeKalkulatora {
       """;
 
   public static final String HILL_UPUTE = """
-        
+      Hillov kriptosustav ima mogućnost šifriranja i dešifriranja ovisno o zadanom ključu (matrici).
+      
+      Šifriranje odnosno dešifriranje se vrši množenjem vektora induciranim pojedinom m-torkom slova iz teksta sa matricom ključa.
+      Rezultirani vektor zatim se preslikava natrag u slova.
+      
+      Za šifriranje i dešifriranje je potrebno da je matrica ključa K regularna.
+      Za dešifriranje je dodatno potrebno da je matrica ključa INVOLUIRANA odnosno da vrijedi K = K^-1, jer će u protivnom doći do nepoželjnih rezultata.
+      
+      Ćelije matrice mogu biti peteroznamenkasti brojevi sa ili bez predznaka. Dimenzije matrice također se mogu mijenjati (m je od 2 do 5).
+      Kljuc je moguće i zaključati kako bi se izbjegao slučajan gubitak podataka.
+      
+      Ako je unesen otvoreni tekst i šifrat jednakih i ispravnih duljina (length % m == 0), onda je moguće pokušati odgonetnuti ključ.
+      OPREZ: vrlo je teško pronaći validan ključ za veći unos. Preporučljivo je unositi maksimalno m m-torki.
       """;
 
   public static final String VIGENERE_UPUTE = """
