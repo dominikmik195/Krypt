@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.ParseException;
+import java.util.Arrays;
 
 public class SupstitucijskaKalkulator {
   public JPanel glavniPanel;
@@ -49,6 +50,9 @@ public class SupstitucijskaKalkulator {
   private JFormattedTextField textField25;
   private JButton ocistiButton;
   private JLabel preostalaLabel;
+  private JButton identitetaButton;
+  private JButton ocistiSveButton;
+  private JLabel iskoristenaLabel;
 
   private final JFormattedTextField[] textFields = new JFormattedTextField[26];
 
@@ -62,11 +66,13 @@ public class SupstitucijskaKalkulator {
     sifrirajButton.addActionListener(new Sifriraj());
     desifrirajButton.addActionListener(new Desifriraj());
 
-    // Brisanje ključa.
-    ocistiButton.addActionListener(
+    // Brisanje unosa i postavljanje na identitetu.
+    ocistiButton.addActionListener(e -> ocistiKljuc());
+    ocistiSveButton.addActionListener(e -> ocistiPolja());
+    identitetaButton.addActionListener(
         e -> {
-          for (int i = 0; i < 26; i++) textFields[i].setValue(null);
-          preostalaLabel.setText("A B C D E F G H I J K L M N O P Q R S T U V W X Y Z");
+          for (int i = 0; i < 26; i++) textFields[i].setValue(Abeceda.uSlovo(i));
+          azurirajSlovaLabele();
         });
 
     // Sva napisana slova se automatski prebacuju u velika. Ažuriramo label preostalih slova.
@@ -82,15 +88,33 @@ public class SupstitucijskaKalkulator {
             @Override
             public void keyReleased(KeyEvent e) {
               tf.setText(tf.getText().toUpperCase());
-
-              String noviLabel = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-              int[] permutacija = dohvatiTextFields();
-              for (int i = 0; i < 26; i++)
-                noviLabel = noviLabel.replace(String.valueOf(Abeceda.uSlovo(permutacija[i])), "");
-              preostalaLabel.setText(noviLabel.replaceAll("([A-Z])", "$0 "));
+              azurirajSlovaLabele();
             }
           });
     }
+  }
+
+  private void ocistiKljuc() {
+    for (int i = 0; i < 26; i++) textFields[i].setValue(null);
+    azurirajSlovaLabele();
+  }
+
+  private void ocistiPolja() {
+    otvoreniTekstArea.setText("");
+    sifratArea.setText("");
+  }
+
+  private void azurirajSlovaLabele() {
+    String novaPreostala = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    String novaIskoristena = "";
+    int[] permutacija = dohvatiTextFields();
+    Arrays.sort(permutacija);
+    for (int i = 0; i < 26; i++) {
+      novaPreostala = novaPreostala.replace(String.valueOf(Abeceda.uSlovo(permutacija[i])), "");
+      if (permutacija[i] != -1) novaIskoristena += String.valueOf(Abeceda.uSlovo(permutacija[i]));
+    }
+    preostalaLabel.setText(novaPreostala.replaceAll("([A-Z])", "$0 "));
+    iskoristenaLabel.setText(novaIskoristena.replaceAll("([A-Z])", "$0 "));
   }
 
   // -----------------------------------------------------------------------------------------------------------------
