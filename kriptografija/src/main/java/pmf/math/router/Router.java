@@ -105,7 +105,6 @@ public class Router extends JPanel implements ActionListener {
       case EL_GAMALOVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS, UputeKalkulatora.EL_GAMAL_UPUTE);
-        break;
         }
 
       case RSA_SIFRA -> {
@@ -113,10 +112,10 @@ public class Router extends JPanel implements ActionListener {
         opis.postaviTekst(OpisiKalkulatora.RSA_OPIS, UputeKalkulatora.RSA_UPUTE);
       }
 
-      case SUPSTITUCIJSKA_SIFRA:
+      case SUPSTITUCIJSKA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString());
-        opis.postaviTekst("", OpisiKalkulatora.SUPSTITUCIJA_OPIS, "");
-        break;
+        opis.postaviTekst(OpisiKalkulatora.SUPSTITUCIJA_OPIS, UputeKalkulatora.SUPSTITUCIJA_UPUTE);
+      }
 
       case CEZAROVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.CEZAROVA_SIFRA.toString());

@@ -104,7 +104,7 @@ public class SupstitucijskaKalkulator {
       // Provjeri unose (zbog ispisa poruka).
       boolean greska = false;
       if (ObradaUnosa.kriviUnos(permutacija)) {
-        konzola.ispisiGresku("Niti jedna dva slova se ne smiju preslikati u isto!");
+        konzola.ispisiGresku("Niti jedna dva slova ključa ne smiju biti ista!");
         greska = true;
       }
       if (ObradaUnosa.kriviUnos(otvoreniTekst)) {

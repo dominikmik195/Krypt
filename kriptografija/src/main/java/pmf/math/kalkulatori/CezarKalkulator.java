@@ -10,6 +10,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 
 public class CezarKalkulator extends JPanel {
   public JPanel kalkulatorPanel;
@@ -31,10 +32,16 @@ public class CezarKalkulator extends JPanel {
     sifrirajButton.addActionListener(new Sifriraj());
     desifrirajButton.addActionListener(new Desifriraj());
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // O(ne)mogućavanje unosa ključne riječi.
+    kljucCheckBox.addItemListener(
+        e -> {
+          kljucnaRijecTextField.setEditable(e.getStateChange() != ItemEvent.DESELECTED);
+        });
+
     // Prikaz supstitucije u UI-ju.
     pomakSpinner.addChangeListener(e -> (new Permutacija()).azuriraj());
     kljucCheckBox.addItemListener(e -> (new Permutacija()).azuriraj());
+
     kljucnaRijecTextField
         .getDocument()
         .addDocumentListener(
@@ -145,24 +152,3 @@ public class CezarKalkulator extends JPanel {
     }
   }
 }
-
-// -----------------------------------------------------------------------------------------------------------------
-// Tekst u lijevom stupcu.
-// -----------------------------------------------------------------------------------------------------------------
-/*
-String upute =
-        "Za šifriranje pomoću Cezarove šifre dovoljno je unijeti pomak (broj).\n"
-                + "Za šifriranje pomoću Cezarove šifre s ključnom riječi, treba označiti "
-                + "odgovarajuću kućicu te unijeti ključnu riječ i pomak (broj), koji označava "
-                + "mjesto od koje ključna riječ počinje u abecedi šifrata.\n"
-                + "Sav uneseni tekst smije sadržavati isključivo slova engleske abecede.\n"
-                + "Za pokretanje postupka, pritisnuti odgovarajuću strjelicu."
-
-String opis =
-        "U kriptografiji, Cezarova šifra jedan je od najjednostavnijih"
-                + " i najrasprostranjenijih načina šifriranja. To je tip šifre zamjene (supstitucije),"
-                + " u kome se svako slovo otvorenog teksta zamjenjuje odgovarajućim slovom abecede, "
-                + "pomaknutim za određeni broj mjesta. Na primjer, s pomakom 3, A se zamjenjuje slovom D, "
-                + "B slovom E itd. Ova metoda je dobila ime po Juliju Cezaru, koji ju je koristio za "
-                + "razmjenu poruka sa svojim generalima. "
-*/
