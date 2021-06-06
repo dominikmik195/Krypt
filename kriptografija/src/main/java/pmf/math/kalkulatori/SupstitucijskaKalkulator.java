@@ -1,21 +1,17 @@
 package pmf.math.kalkulatori;
 
 import pmf.math.algoritmi.Abeceda;
+import pmf.math.kriptosustavi.SupstitucijskaKriptosustav;
 import pmf.math.obradaunosa.ObradaUnosa;
-import pmf.math.obradaunosa.ObradaUnosaCezar;
-import pmf.math.obradaunosa.ObradaUnosaCezarKljucnaRijec;
-import pmf.math.obradaunosa.ObradaUnosaSupstitucijska;
 import pmf.math.router.Konzola;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.ParseException;
 
 public class SupstitucijskaKalkulator {
@@ -52,8 +48,9 @@ public class SupstitucijskaKalkulator {
   private JFormattedTextField textField24;
   private JFormattedTextField textField25;
   private JButton ocistiButton;
+  private JLabel preostalaLabel;
 
-  private JFormattedTextField[] textFields = new JFormattedTextField[26];
+  private final JFormattedTextField[] textFields = new JFormattedTextField[26];
 
   private final Konzola konzola; // Za ispis greške.
 
@@ -65,28 +62,35 @@ public class SupstitucijskaKalkulator {
     sifrirajButton.addActionListener(new Sifriraj());
     desifrirajButton.addActionListener(new Desifriraj());
 
-    /*textField0.addPropertyChangeListener(
-    new PropertyChangeListener() {
-      @Override
-      public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("Value changed " + evt.getNewValue());
-        char newChar = evt.getNewValue().toString().charAt(0);
-        if (Character.isLowerCase(newChar))
-          textField0.setValue(Character.toUpperCase(newChar));
-        // textField0.setText(new StringBuilder(Character.toUpperCase(newChar)).toString());
-      }
-    });*/
-
-    // TODO: Napisati ovo malo ljepše.
+    // Brisanje ključa.
     ocistiButton.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            for (int i = 0; i < 26; i++) {
-              textFields[i].setValue(null);
-            }
-          }
+        e -> {
+          for (int i = 0; i < 26; i++) textFields[i].setValue(null);
+          preostalaLabel.setText("A B C D E F G H I J K L M N O P Q R S T U V W X Y Z");
         });
+
+    // Sva napisana slova se automatski prebacuju u velika. Ažuriramo label preostalih slova.
+    for (JFormattedTextField tf : textFields) {
+      tf.addKeyListener(
+          new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+              tf.setText(tf.getText().toUpperCase());
+
+              String noviLabel = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+              int[] permutacija = dohvatiTextFields();
+              for (int i = 0; i < 26; i++)
+                noviLabel = noviLabel.replace(String.valueOf(Abeceda.uSlovo(permutacija[i])), "");
+              preostalaLabel.setText(noviLabel.replaceAll("([A-Z])", "$0 "));
+            }
+          });
+    }
   }
 
   // -----------------------------------------------------------------------------------------------------------------
@@ -99,7 +103,7 @@ public class SupstitucijskaKalkulator {
 
       // Provjeri unose (zbog ispisa poruka).
       boolean greska = false;
-      if (ObradaUnosaSupstitucijska.kriviUnos(permutacija)) {
+      if (ObradaUnosa.kriviUnos(permutacija)) {
         konzola.ispisiGresku("Niti jedna dva slova se ne smiju preslikati u isto!");
         greska = true;
       }
@@ -108,8 +112,9 @@ public class SupstitucijskaKalkulator {
         greska = true;
       }
 
+      // Šifriraj (ako je moguće).
       if (!greska) {
-        String sifrat = ObradaUnosaSupstitucijska.sifriraj(permutacija, otvoreniTekst);
+        String sifrat = (new SupstitucijskaKriptosustav(permutacija)).sifriraj(otvoreniTekst);
         sifratArea.setText(sifrat);
         konzola.ispisiPoruku("Poruka uspješno šifrirana općom supstitucijskom šifrom.");
       }
@@ -124,7 +129,7 @@ public class SupstitucijskaKalkulator {
 
       // Provjeri unose (zbog ispisa poruka).
       boolean greska = false;
-      if (ObradaUnosaSupstitucijska.kriviUnos(permutacija)) {
+      if (ObradaUnosa.kriviUnos(permutacija)) {
         konzola.ispisiGresku("Niti jedna dva slova se ne smiju preslikati u isto!");
         greska = true;
       }
@@ -133,14 +138,16 @@ public class SupstitucijskaKalkulator {
         greska = true;
       }
 
+      // Dešifriraj (ako je moguće).
       if (!greska) {
-        String otvoreniTekst = ObradaUnosaSupstitucijska.desifriraj(permutacija, sifrat);
+        String otvoreniTekst = (new SupstitucijskaKriptosustav(permutacija)).desifriraj(sifrat);
         otvoreniTekstArea.setText(otvoreniTekst);
-        konzola.ispisiPoruku("Poruka uspješno dešifrirana Cezarovom šifrom.");
+        konzola.ispisiPoruku("Poruka uspješno dešifrirana općom supstitucijskom šifrom.");
       }
     }
   }
 
+  // Dohvaća vrijednost text fieldova i vraća pripadnu permutaciju (s brojevima).
   private int[] dohvatiTextFields() {
     int[] vrijednosti = new int[26];
 
@@ -151,29 +158,18 @@ public class SupstitucijskaKalkulator {
 
   private void postaviTextFields() {
     try {
-      // Jedno uppercase slovo.
-      // FIXME: Trenutno prihvaća znakove Č, Ć itd.
+      // Postavi dozvoljena slova za unos.
       MaskFormatter mask = new MaskFormatter("*");
       mask.setPlaceholderCharacter('_');
       mask.setValidCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_");
       DefaultFormatterFactory factory = new DefaultFormatterFactory(mask);
       for (int i = 0; i < 26; i++) {
         textFields[i].setFormatterFactory(factory);
-        textFields[i].setValue(Abeceda.uSlovo(i));
+        textFields[i].setValue(Abeceda.uSlovo(i)); // Na početku je zadana permutacija identiteta.
       }
     } catch (ParseException e) {
       e.printStackTrace();
     }
-  }
-
-  // FIXME: Za testiranje.
-  public static void main(String[] args) {
-    Konzola konzola = new Konzola();
-    JFrame frame = new JFrame("SupstitucijskaKalkulator");
-    frame.setContentPane(new SupstitucijskaKalkulator(konzola).glavniPanel);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.pack();
-    frame.setVisible(true);
   }
 
   private void napuniTextFields() {

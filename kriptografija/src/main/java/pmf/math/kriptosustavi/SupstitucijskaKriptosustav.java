@@ -1,9 +1,8 @@
 package pmf.math.kriptosustavi;
 
 import pmf.math.algoritmi.Abeceda;
-import pmf.math.kalkulatori.SupstitucijskaKalkulator;
+import pmf.math.obradaunosa.ObradaUnosa;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SupstitucijskaKriptosustav {
@@ -20,14 +19,18 @@ public class SupstitucijskaKriptosustav {
 
     // Sami računamo inverznu permutaciju.
     inverznaPermutacija = new int[26];
-    Arrays.fill(inverznaPermutacija, -1);
+    Arrays.fill(inverznaPermutacija, -1); // -1 = nije zadano
     for (int i = 0; i < 26; i++) if (permutacija[i] != -1) inverznaPermutacija[permutacija[i]] = i;
   }
 
   // Šifrira otvoreni tekst i vraća šifrat.
   public String sifriraj(String otvoreniTekst) {
-    StringBuilder sifrat = new StringBuilder();
+    // Provjeri unos.
+    otvoreniTekst = ObradaUnosa.ocisti(otvoreniTekst);
+    if (ObradaUnosa.kriviUnos(otvoreniTekst) || ObradaUnosa.kriviUnos(permutacija)) return "";
 
+    // Šifriraj.
+    StringBuilder sifrat = new StringBuilder();
     for (char slovo : otvoreniTekst.toCharArray()) {
       char novoSlovo = Abeceda.uSlovo(permutacija[Abeceda.uBroj(slovo)]);
       sifrat.append(novoSlovo);
@@ -37,8 +40,12 @@ public class SupstitucijskaKriptosustav {
   }
   // Dešifrira šifrat i vraća otvoreni tekst.
   public String desifriraj(String sifrat) {
-    StringBuilder otvoreniTekst = new StringBuilder();
+    // Provjeri unos.
+    sifrat = ObradaUnosa.ocisti(sifrat);
+    if (ObradaUnosa.kriviUnos(sifrat) || ObradaUnosa.kriviUnos(permutacija)) return "";
 
+    // Dešifriraj.
+    StringBuilder otvoreniTekst = new StringBuilder();
     for (char slovo : sifrat.toCharArray()) {
       char novoSlovo = Abeceda.uSlovo(inverznaPermutacija[Abeceda.uBroj(slovo)]);
       otvoreniTekst.append(novoSlovo);
@@ -52,5 +59,11 @@ public class SupstitucijskaKriptosustav {
     for (int i = 0; i < 26; i++) slova[i] = Abeceda.uSlovo(permutacija[i]);
 
     return slova;
+  }
+
+  public String dohvatiPermutacijuString() {
+    StringBuilder slova = new StringBuilder();
+    for (int i = 0; i < 26; i++) slova.append(Abeceda.uSlovo(permutacija[i]));
+    return slova.toString();
   }
 }

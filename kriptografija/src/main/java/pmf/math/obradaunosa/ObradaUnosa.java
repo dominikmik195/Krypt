@@ -21,4 +21,13 @@ public class ObradaUnosa {
   public static String ocisti(String tekst) {
     return tekst.replaceAll("\s+", "").toUpperCase(Locale.ROOT);
   }
+
+  public static boolean kriviUnos(int[] permutacija) {
+    // Niti jedan broj u permutaciji (osim -1) se ne smije pojaviti dvaput.
+    int[] counts = new int[26];
+    for (int i = 0; i < 26; i++) if (permutacija[i] != -1) counts[permutacija[i]]++;
+    for (int i = 0; i < 26; i++) if (counts[i] > 1) return true;
+
+    return false;
+  }
 }
