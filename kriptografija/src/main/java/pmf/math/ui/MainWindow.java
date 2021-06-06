@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import pmf.math.algoritmi.TeorijaBrojeva;
 import pmf.math.kriptosustavi.ElGamalKriptosustav;
+import pmf.math.obradaunosa.ObradaUnosaElGamal;
 
 public class MainWindow extends JPanel implements ActionListener {
   private static MainWindow myPanel;
@@ -98,13 +99,13 @@ public class MainWindow extends JPanel implements ActionListener {
     } else {
       if (myPanel.alfaCheckBox.isSelected()) {
         int _alfa = Integer.parseInt(myPanel.alfaField.getText());
-        if (!ElGamalKriptosustav.provjeriAlfa(_alfa, pB)) {
+        if (!ObradaUnosaElGamal.provjeriAlfa(_alfa, pB)) {
           myPanel.konzolaTextArea.setText("Alfa je pogrešno postavljena!");
           OK = false;
         }
         if (myPanel.betaCheckBox.isSelected() && OK) {
           int _beta = Integer.parseInt(myPanel.betaField.getText());
-          if (!ElGamalKriptosustav.provjeriBeta(_alfa, _beta, pB, tK)) {
+          if (!ObradaUnosaElGamal.provjeriBeta(_alfa, _beta, pB, tK)) {
             myPanel.konzolaTextArea.setText("Beta je pogrešno postavljen!");
             OK = false;
           }
@@ -117,18 +118,18 @@ public class MainWindow extends JPanel implements ActionListener {
   private ElGamalKriptosustav stvoriStroj() {
     int pB = Integer.parseInt(myPanel.prostBrojField.getText());
     int tK = Integer.parseInt(myPanel.tajniKljučField.getText());
-    ElGamalKriptosustav stroj;
+    ElGamalKriptosustav stroj = new ElGamalKriptosustav(1, 2, 3);
       if (myPanel.alfaCheckBox.isSelected()) {
         int _alfa = Integer.parseInt(myPanel.alfaField.getText());
         if (myPanel.betaCheckBox.isSelected()) {
           int _beta = Integer.parseInt(myPanel.betaField.getText());
-          stroj = new ElGamalKriptosustav(pB, tK, _alfa, _beta);
+          //stroj = new ElGamalKriptosustav(pB, tK, _alfa, _beta);
         }
         else {
-          stroj = new ElGamalKriptosustav(pB, tK, _alfa);
+          //stroj = new ElGamalKriptosustav(pB, tK, _alfa);
         }
       }
-      else stroj = new ElGamalKriptosustav(pB, tK);
+      //else stroj = new ElGamalKriptosustav(pB, tK);
       return stroj;
   }
 

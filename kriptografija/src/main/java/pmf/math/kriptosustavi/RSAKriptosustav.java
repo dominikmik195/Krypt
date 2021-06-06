@@ -1,6 +1,7 @@
 package pmf.math.kriptosustavi;
 
 import pmf.math.algoritmi.TeorijaBrojeva;
+import pmf.math.obradaunosa.ObradaUnosaRSA;
 
 public class RSAKriptosustav {
   private int p, q, d;
@@ -18,6 +19,7 @@ public class RSAKriptosustav {
   }
 
   public RSAKriptosustav(int _p, int _q) {
+    // Konstruktor koji postavlja p, q i n. Ostale varijable postavljaju se 'ručno' po potebi.
     p = _p;
     q = _q;
     n = _p * _q;
@@ -51,24 +53,18 @@ public class RSAKriptosustav {
     return TeorijaBrojeva.modularnoPotenciranje(sifrat, d, n);
   }
 
-  public static boolean provjeriDiE(int _p, int _q, int _d, int _e) {
-    return (_d * _e) % TeorijaBrojeva.posebnaEulerovaFunkcija(_p, _q) == 1;
-  }
-
-  public static boolean provjeriD(int _p, int _q, int _d) {
-    int fi = TeorijaBrojeva.posebnaEulerovaFunkcija(_p, _q);
-    return TeorijaBrojeva.relativnoProsti(_d, fi);
-  }
-
   public static int nadjiDiliE(int zadani, int _p, int _q) {
+    // Budući da su d i e u istoj svezi i da ih možemo birati na jednak način,
+    // imamo funkciju koja samo računa d ukoliko je zadan e tražeći pripadni inverz ili obratno.
     return TeorijaBrojeva.inverz(zadani, TeorijaBrojeva.posebnaEulerovaFunkcija(_p, _q));
   }
 
   public static int[] nadjiDiE(int _p, int _q) {
+    // Funkcija koja za zadani p i q nalazi najmanji d i pripadni e koji zadovoljavaju uvjete sustava.
     int[] de = {-1, -1};
     int _d = 2;
     while (true) {
-      if (provjeriD(_p, _q, _d)) break;
+      if (ObradaUnosaRSA.provjeriD(_p, _q, _d)) break;
       _d++;
     }
     de[0] = _d;
@@ -77,6 +73,8 @@ public class RSAKriptosustav {
   }
 
   public static int[] rastaviNNaPiQ(int _n) {
+    // Funckija koja broj n rastavlja na njegova dva prosta faktora (ukoliko je moguće
+    // - povjeru ne izvršavamo u ovoj funkciji jer budemo je izvršavali prije poziva.).
     int[] pq = {-1, -1};
     for (int _p = 2; _p < _n; _p++) {
       if (_n % _p == 0 && TeorijaBrojeva.prost(_p)) {

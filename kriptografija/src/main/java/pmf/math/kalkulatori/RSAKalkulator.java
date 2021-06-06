@@ -13,11 +13,8 @@ public class RSAKalkulator extends JDialog {
   private final Konzola konzola;
   public JPanel glavniPanel;
   private JTextField pBrojField;
-  private JCheckBox brojECheckBox;
-  private JLabel otvoreniTekstLabel;
   private JTextArea otvoreniTekstArea;
   private JTextArea sifratArea;
-  private JLabel sifratLabel;
   private JButton sifrirajButton;
   private JButton desifrirajButton;
   private JTextField qBrojField;
@@ -25,8 +22,9 @@ public class RSAKalkulator extends JDialog {
   private JTextField dBrojField;
   private JTextField eBrojField;
   private JButton provjeriIIspraviPodatkeButton;
-  private JCheckBox brojNCheckBox;
-  private JButton buttonOK;
+  private JButton ocistiPoljaButton;
+  private JLabel otvoreniTekstLabel;
+  private JLabel sifratLabel;
 
   public RSAKalkulator(Konzola _konzola) {
     konzola = _konzola;
@@ -36,29 +34,18 @@ public class RSAKalkulator extends JDialog {
           @Override
           public void actionPerformed(ActionEvent ev) {
             int broj = PQDEBrojSifrat(4);
-            if(broj < 0) {
+            if (broj < 0) {
               konzola.ispisiGresku("Uneseni otvoreni tekst nije ispravan.");
               return;
             }
-            int p = PQDEBrojSifrat(0);
-            int q = PQDEBrojSifrat(1);
-            ispisGresaka(0, p);
-            ispisGresaka(1, q);
-            int n = -1;
-            if(p < 0 || q < 0) {
-              n = probajN(true);
-              if(n < 0) {
-                ispisGresaka(2, n);
-                return;
-              }
-              else {
-                int[] pq = RSAKriptosustav.rastaviNNaPiQ(n);
-                p = pq[0];
-                q = pq[1];
-              }
-            }
+            int[] npq = dohvatiNPQ();
+            if (npq[3] == 0) return;
+            // Nama su bitni p i q, jer računanje pomoću njih je puno lakše.
+            // Ako p i q nisu uneseni, oni se izračunaju obzirom na uneseni n (ako je ispravan, dakako).
+            int p = npq[1];
+            int q = npq[2];
             int e = PQDEBrojSifrat(3);
-            if(e < 0) ispisGresaka(3, e);
+            if (e < 0) ispisGresaka(3, e);
             else {
               RSAKriptosustav stroj = new RSAKriptosustav(p, q);
               stroj.e = e;
@@ -73,29 +60,16 @@ public class RSAKalkulator extends JDialog {
           @Override
           public void actionPerformed(ActionEvent ev) {
             int sifrat = PQDEBrojSifrat(5);
-            if(sifrat < 0) {
+            if (sifrat < 0) {
               konzola.ispisiGresku("Uneseni šifrat nije ispravan.");
               return;
             }
-            int p = PQDEBrojSifrat(0);
-            int q = PQDEBrojSifrat(1);
-            ispisGresaka(0, p);
-            ispisGresaka(1, q);
-            int n = -1;
-            if(p < 0 || q < 0) {
-              n = probajN(true);
-              if(n < 0) {
-                ispisGresaka(2, n);
-                return;
-              }
-              else {
-                int[] pq = RSAKriptosustav.rastaviNNaPiQ(n);
-                p = pq[0];
-                q = pq[1];
-              }
-            }
+            int[] npq = dohvatiNPQ();
+            if (npq[3] == 0) return;
+            int p = npq[1];
+            int q = npq[2];
             int d = PQDEBrojSifrat(2);
-            if(d < 0) ispisGresaka(2, d);
+            if (d < 0) ispisGresaka(2, d);
             else {
               RSAKriptosustav stroj = new RSAKriptosustav(p, q);
               stroj.setD(d);
@@ -106,20 +80,51 @@ public class RSAKalkulator extends JDialog {
           }
         });
     provjeriIIspraviPodatkeButton.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            provjeriIspravi();
-          }
-        });
+            e -> provjeriIspravi());
+    ocistiPoljaButton.addActionListener(
+            e -> {
+              pBrojField.setText("");
+              qBrojField.setText("");
+              nBrojField.setText("");
+              dBrojField.setText("");
+              eBrojField.setText("");
+              otvoreniTekstArea.setText("");
+              sifratArea.setText("");
+            });
   }
 
-  private int probajN(boolean flagUmnozak) {
-    int n = -1;
+  private int[] dohvatiNPQ() {
+    // Funckija koja objedinjuje nekoliko donjih funkcija te dohvaća n, p i q.
+    // Definirana je kako bi se skratio kod, jer je i za šifriranje i dešifriranje potreban isti postupak.
+    // Funkciju implementiramo na taj način da je dovoljno unijeti valjani p i q ili valjani n za nastavak procesa.
+    // Ukoliko su unesene sve tri varijable, uzimaju se p i q ako su ispravni (bez obzira na n).
+    int[] npq = {-1, -1, -1, 1};
+    npq[1] = PQDEBrojSifrat(0);
+    npq[2] = PQDEBrojSifrat(1);
+    if (npq[1] < 0 || npq[2] < 0) {
+      npq[0] = probajN();
+      if (npq[0] < 0) {
+        ispisGresaka(0, npq[1]);
+        ispisGresaka(1, npq[2]);
+        ispisGresaka(2, npq[0]);
+        npq[3] = 0;
+      } else {
+        int[] pq = RSAKriptosustav.rastaviNNaPiQ(npq[0]);
+        npq[1] = pq[0];
+        npq[2] = pq[1];
+      }
+    }
+    return npq;
+  }
+
+  private int probajN() {
+    // Funkcija koja pokušava dohvatiti n. Ako je neuspjelo, vraća -1 (ako ulaz nije broj ili ulaza nema),
+    // -2 (ako je ulaz negativan) ili -3 (ako ulaz nije umnožak dvaju prostih brojeva). Inače vraća dohvaćeni broj.
+    int n;
     try {
       n = Integer.parseInt(nBrojField.getText());
       if (n < 0) return -2;
-      if (flagUmnozak && !ObradaUnosaRSA.provjeriNUmnozakProstih(n)) return -3;
+      if (!ObradaUnosaRSA.provjeriNUmnozakProstih(n)) return -3;
     } catch (NumberFormatException ex) {
       return -1;
     }
@@ -127,6 +132,12 @@ public class RSAKalkulator extends JDialog {
   }
 
   private int PQDEBrojSifrat(int kod) {
+    // Funkcija koja, ovisno o kodu varijable, dohvaća pripadnu varijablu.
+    // Vraća negativni cijeli broj ako je dohvaćanje neuspješno:
+    // ako je rezultat -1, to znači da unosa nema ili nije broj
+    // ako je rezultat -2, znači da je unos negativan broj
+    // ako je unos -3, znači da ulaz nije prost(p ili q).
+    // Inače, vraća pročitani broj.
     int trazeni = -1;
     try {
       if (kod == 0) trazeni = Integer.parseInt(pBrojField.getText());
@@ -144,24 +155,15 @@ public class RSAKalkulator extends JDialog {
   }
 
   private void ispisGresaka(int kod, int rezultat) {
-    String slovo = "";
-    switch (kod) {
-      case 0:
-        slovo = "p";
-        break;
-      case 1:
-        slovo = "q";
-        break;
-      case 2:
-        slovo = "n";
-        break;
-      case 3:
-        slovo = "d";
-        break;
-      case 4:
-        slovo = "e";
-        break;
-    }
+    // Funkcija koja ispisuje greške ovisno o kodu varijable i rezultatu dohvaćanja varijable.
+    String slovo = switch (kod) {
+      case 0 -> "p";
+      case 1 -> "q";
+      case 2 -> "n";
+      case 3 -> "d";
+      case 4 -> "e";
+      default -> "";
+    };
     if (rezultat == -1) {
       if (kod == 2)
         konzola.ispisiGresku("Broj n nije ispravnog formata! Daljnji postupak nije moguć.");
@@ -178,6 +180,7 @@ public class RSAKalkulator extends JDialog {
   }
 
   private void postaviDiE(int p, int q) {
+    // Funkcija koja računa d i e za dane p i q i postavlja ih u odgovarajuća polja.
     int[] de = RSAKriptosustav.nadjiDiE(p, q);
     dBrojField.setText(String.valueOf(de[0]));
     eBrojField.setText(String.valueOf(de[1]));
@@ -185,18 +188,22 @@ public class RSAKalkulator extends JDialog {
   }
 
   private void provjeriIspravi() {
-    int p = -1, q = -1, n = -1, d = -1, e = -1;
-    int[] de = {-1, -1}, pq = {-1, -1};
+    // Funkcija koja izvršava provjere unesenih brojeva i, po mogućnosti, ispravlja unose.
+    int p, q, n, d, e;
+    int[] pq = {-1, -1};
     p = PQDEBrojSifrat(0);
     q = PQDEBrojSifrat(1);
     if (p < 0 || q < 0) {
+      // U slučaju da p ili q nisu u redu, ispisujemo greške i dohvaćamo n.
       ispisGresaka(0, p);
       ispisGresaka(1, q);
-      n = probajN(true);
+      n = probajN();
       if (n < 0) {
+        // Ako niti n nije u redu, ne možemo više ništa.
         ispisGresaka(2, n);
         return;
       } else {
+        // Ako je n u redu, postavljamo nove p i q.
         pq = RSAKriptosustav.rastaviNNaPiQ(n);
         p = pq[0];
         q = pq[1];
@@ -205,7 +212,8 @@ public class RSAKalkulator extends JDialog {
         konzola.ispisiPoruku("Postavljeni su novi p i q.");
       }
     } else {
-      n = probajN(true);
+      // Ako su i p i q u redu, dohvaćamo n i provjeravamo je li u redu te ga ispravljamo po potrebi.
+      n = probajN();
       if (n > 0 && n == p * q)
         ;
       else {
@@ -220,8 +228,11 @@ public class RSAKalkulator extends JDialog {
     ispisGresaka(2, d);
     ispisGresaka(3, e);
     if (d < 0 && e < 0) {
+      // Ako niti d niti e nisu u redu postavljeni, postavljamo ih.
       postaviDiE(p, q);
     } else if (e < 0) {
+      // Ako samo e nije u redu postavljen, provjeravamo je li dobro postavljen d te,
+      // ako je, postavljamo odgovarajući e, a ako nije, postavljamo novi d i e.
       if (ObradaUnosaRSA.provjeriD(p, q, d)) {
         e = RSAKriptosustav.nadjiDiliE(d, p, q);
         eBrojField.setText(String.valueOf(e));
@@ -231,6 +242,7 @@ public class RSAKalkulator extends JDialog {
         postaviDiE(p, q);
       }
     } else if (d < 0) {
+      // ANalogno kao i u prethodnom slučaju.
       if (ObradaUnosaRSA.provjeriD(p, q, e)) {
         d = RSAKriptosustav.nadjiDiliE(e, p, q);
         dBrojField.setText(String.valueOf(d));
@@ -240,11 +252,12 @@ public class RSAKalkulator extends JDialog {
         postaviDiE(p, q);
       }
     } else {
+      // Ako su oba broja dobrog formata, provjeravamo odgovaraju li jedan drugome i po potrebi ispravljamo.
       if (ObradaUnosaRSA.provjeriDiE(p, q, d, e))
         ;
       else {
         konzola.ispisiGresku(
-            "Uneseni d i e nisu kongruentnis  jedan modulo Euler(n)! Ispravljam...");
+            "Uneseni d i e nisu kongruentni s  jedan modulo Euler(n)! Ispravljam...");
         if (ObradaUnosaRSA.provjeriD(p, q, d)) {
           eBrojField.setText(String.valueOf(RSAKriptosustav.nadjiDiliE(d, p, q)));
         } else if (ObradaUnosaRSA.provjeriD(p, q, e)) {
@@ -254,5 +267,6 @@ public class RSAKalkulator extends JDialog {
         }
       }
     }
+    konzola.ispisiPoruku("Podatci su kompatibilni.");
   }
 }

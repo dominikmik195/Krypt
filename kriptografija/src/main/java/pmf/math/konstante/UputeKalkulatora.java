@@ -48,16 +48,16 @@ public class UputeKalkulatora {
       """;
 
   public static final String RSA_UPUTE = """
-        
+      Za šifriranje je potrebno unijeti broj n (ili p i q), i broj e.
+      Za dešifriranje je potrebno unijeti broj n (ili p i q), i broj d.
+      Ukoliko želite provjeriti jesu li vaši podatci valjani, tj. međusobno kompatibilni, pritisnite odgovarajuću tipku.
+      Ako podatci nisu u redu, tim postupkom će biti ispravljeni. Da bi to bilo moguće, potrebno je unijeti barem prost broj i tajni ključ.
       """;
 
   public static final String EL_GAMAL_UPUTE = """
-      Za šifriranje je dovoljno unijeti prost broj, tajni ključ, tajni broj i otvoreni tekst - svugdje po JEDAN broj.
-      U tom slučaju će se alfa i beta izračunati automatski.
-      Ukoliko želite ručno unijeti alfa ili beta, označite odgovarajuću kućicu i unesite željeni broj , ali - pazite: za alfa i beta vrijede posebni uvjeti!
-      Osim toga, možete unijeti samo alfu ili i alfu i betu, no ne možete unijeti samo betu!
-      Za dešifriranje je dovoljno unijeti prost broj, tajni ključ i šifrat u formatu: (broj1, broj2)
-      Za alfu i betu vrijede ista pravila kao i u šifriranju.
-      Za pokretanje postupka, pritisnuti odgovarajuću strjelicu.)
+      Za šifriranje je potrebno unijeti prost broj, alfu, betu i tajni broj. Za pokretanje postupka, pritisnete strelicu ↓.
+      Za dešifriranje je potrebno unijeti prost broj, alfu, betu i tajni ključ. Za pokretanje postupka, pritisnete strelicu ↑.
+      Ukoliko želite provjeriti jesu li vaši podatci valjani, tj. međusobno kompatibilni, pritisnite odgovarajuću tipku.
+      Ako podatci nisu u redu, tim postupkom će biti ispravljeni. Da bi to bilo moguće, potrebno je unijeti barem valjani n (ili p i q).
       """;
 }
