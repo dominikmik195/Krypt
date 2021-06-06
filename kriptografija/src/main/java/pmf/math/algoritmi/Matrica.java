@@ -74,8 +74,8 @@ public class Matrica {
     int An = getN(), Am = getM();
     int[][] podaci = new int[An][Am];
     for (int i = 0; i < An; i++) {
-      for (int j = 0; j < An; j++) {
-        podaci[i][j] *= alfa;
+      for (int j = 0; j < Am; j++) {
+        podaci[i][j] = matrica[i][j] * alfa;
       }
     }
     return new Matrica(podaci);

@@ -29,7 +29,7 @@ public class HillKriptosustav {
     StringBuilder sifrat = new StringBuilder();
     Arrays.stream(otvoreniTekst.split(" ")).forEach(podtekst -> {
       Vektor x = new Vektor(pretvoriUintArray(podtekst.toCharArray()));
-      Vektor y = new Vektor(x.pomnozi(kljuc).getVektor());
+      Vektor y = new Vektor(x.pomnozi(kljuc).getVektor()).moduliraj(26);
       char[] izlaz = pretvoriUcharArray(y.getVektor());
       for (char c : izlaz) {
         sifrat.append(c);

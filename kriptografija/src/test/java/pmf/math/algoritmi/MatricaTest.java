@@ -56,10 +56,10 @@ public class MatricaTest extends TestCase {
         {0, 2, 0, 0, 0},
         {0, 0, 8, 4, 2}
     });
-    assertNotNull(A.pomnozi(A));
-    assertEquals(A.pomnozi(A).dohvatiElement(0, 3), alfaA.dohvatiElement(0, 3));
-    assertEquals(A.pomnozi(A).dohvatiElement(2, 2), alfaA.dohvatiElement(2, 2));
-    assertEquals(A.pomnozi(A).dohvatiElement(1, 3), alfaA.dohvatiElement(1, 3));
+    assertNotNull(A.pomnozi(alfa));
+    assertEquals(A.pomnozi(alfa).dohvatiElement(0, 3), alfaA.dohvatiElement(0, 3));
+    assertEquals(A.pomnozi(alfa).dohvatiElement(2, 2), alfaA.dohvatiElement(2, 2));
+    assertEquals(A.pomnozi(alfa).dohvatiElement(1, 3), alfaA.dohvatiElement(1, 3));
 
     Matrica BB = new Matrica(new int[][]{
         {1, 0, 15, -14},

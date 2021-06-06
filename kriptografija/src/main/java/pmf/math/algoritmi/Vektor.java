@@ -19,14 +19,11 @@ public class Vektor {
   }
 
   public Vektor pomnozi(Matrica A) {
-    int[] rezultat = new int[getN()];
+    int[] rezultat = new int[A.getM()];
 
-    for (int i = 0; i < getN(); i++) {
+    for (int i = 0; i < A.getM(); i++) {
       Vektor stupac = new Vektor(A.dohvatiStupac(i));
       rezultat[i] = pomnozi(stupac);
-      while (rezultat[i] < 0) {
-        rezultat[i] += 26;
-      }
     }
     return new Vektor(rezultat);
   }
@@ -40,5 +37,14 @@ public class Vektor {
       izlaz += vektor[i] * V.getVektor()[i];
     }
     return izlaz;
+  }
+
+  public Vektor moduliraj(int mod) {
+    for(int i = 0; i < getN(); i++) {
+      while(vektor[i] < 0) {
+        vektor[i] += mod;
+      }
+    }
+    return this;
   }
 }
