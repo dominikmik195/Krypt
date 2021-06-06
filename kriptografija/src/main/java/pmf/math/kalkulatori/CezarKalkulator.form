@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="pmf.math.kalkulatori.CezarKalkulator">
-  <grid id="27dc6" binding="kalkulatorPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="kalkulatorPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="563" height="711"/>
+      <xy x="20" y="20" width="563" height="390"/>
     </constraints>
     <properties>
       <preferredSize width="500" height="768"/>
@@ -13,10 +13,12 @@
       <grid id="5193c" layout-manager="GridLayoutManager" row-count="7" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
-        <border type="line" title="Kalkulator"/>
+        <border type="none">
+          <color color="-16777216"/>
+        </border>
         <children>
           <component id="a781f" class="javax.swing.JLabel">
             <constraints>
@@ -50,20 +52,6 @@
               <text value="Ključ"/>
             </properties>
           </component>
-          <component id="6bce9" class="javax.swing.JTextArea" binding="otvoreniTekstArea">
-            <constraints>
-              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
-              </grid>
-            </constraints>
-            <properties>
-              <alignmentX value="1.0"/>
-              <alignmentY value="1.0"/>
-              <font name="JetBrains Mono"/>
-              <lineWrap value="true"/>
-              <margin top="5" left="5" bottom="5" right="5"/>
-            </properties>
-          </component>
           <component id="d8bc0" class="javax.swing.JLabel">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
@@ -77,18 +65,6 @@
               <verifyInputWhenFocusTarget value="true"/>
               <verticalAlignment value="1"/>
               <verticalTextPosition value="1"/>
-            </properties>
-          </component>
-          <component id="3c142" class="javax.swing.JTextArea" binding="sifratArea">
-            <constraints>
-              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
-              </grid>
-            </constraints>
-            <properties>
-              <font name="JetBrains Mono"/>
-              <lineWrap value="true"/>
-              <margin top="5" left="5" bottom="5" right="5"/>
             </properties>
           </component>
           <component id="7a5bd" class="javax.swing.JLabel">
@@ -155,8 +131,60 @@
               <text value="A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"/>
             </properties>
           </component>
+          <scrollpane id="8f265">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <minimum-size width="-1" height="100"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="6bce9" class="javax.swing.JTextArea" binding="otvoreniTekstArea">
+                <constraints/>
+                <properties>
+                  <alignmentX value="1.0"/>
+                  <alignmentY value="1.0"/>
+                  <font name="JetBrains Mono"/>
+                  <lineWrap value="true"/>
+                  <margin top="5" left="5" bottom="5" right="5"/>
+                  <rows value="1"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+          <scrollpane id="6a5e8">
+            <constraints>
+              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <minimum-size width="-1" height="100"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="3c142" class="javax.swing.JTextArea" binding="sifratArea">
+                <constraints/>
+                <properties>
+                  <font name="JetBrains Mono"/>
+                  <lineWrap value="true"/>
+                  <margin top="5" left="5" bottom="5" right="5"/>
+                  <rows value="1"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
         </children>
       </grid>
+      <vspacer id="dbd5d">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="f84e5">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
     </children>
   </grid>
 </form>

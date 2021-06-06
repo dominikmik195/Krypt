@@ -13,13 +13,13 @@ logike aplikacije izvan datoteka koje pripadaju formama.
  */
 
 public class ObradaUnosa {
+  public static String ocisti(String tekst) {
+    return tekst.replaceAll("\s+", "").toUpperCase(Locale.ROOT);
+  }
+
   public static boolean kriviUnos(String tekst) {
     // Dozvoljena su samo slova engleske abecede i bjeline (koje se čiste).
     return !tekst.matches("^[a-zA-Z\s]*$");
-  }
-
-  public static String ocisti(String tekst) {
-    return tekst.replaceAll("\s+", "").toUpperCase(Locale.ROOT);
   }
 
   public static boolean kriviUnos(int[] permutacija) {

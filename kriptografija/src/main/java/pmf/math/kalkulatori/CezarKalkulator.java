@@ -1,8 +1,8 @@
 package pmf.math.kalkulatori;
 
+import pmf.math.kriptosustavi.CezarKljucnaRijecKriptosustav;
+import pmf.math.kriptosustavi.CezarKriptosustav;
 import pmf.math.obradaunosa.ObradaUnosa;
-import pmf.math.obradaunosa.ObradaUnosaCezar;
-import pmf.math.obradaunosa.ObradaUnosaCezarKljucnaRijec;
 import pmf.math.router.Konzola;
 
 import javax.swing.*;
@@ -81,8 +81,10 @@ public class CezarKalkulator extends JPanel {
       }
 
       String sifrat;
-      if (!kljucCheckBox.isSelected()) sifrat = ObradaUnosaCezar.sifriraj(pomak, otvoreniTekst);
-      else sifrat = ObradaUnosaCezarKljucnaRijec.sifriraj(pomak, kljucnaRijec, otvoreniTekst);
+      if (!kljucCheckBox.isSelected())
+        sifrat = (new CezarKriptosustav(pomak)).sifriraj(otvoreniTekst);
+      else
+        sifrat = (new CezarKljucnaRijecKriptosustav(kljucnaRijec, pomak)).sifriraj(otvoreniTekst);
 
       if (!greska) {
         sifratArea.setText(sifrat);
@@ -110,8 +112,10 @@ public class CezarKalkulator extends JPanel {
       }
 
       String otvoreniTekst;
-      if (!kljucCheckBox.isSelected()) otvoreniTekst = ObradaUnosaCezar.desifriraj(pomak, sifrat);
-      else otvoreniTekst = ObradaUnosaCezarKljucnaRijec.desifriraj(pomak, kljucnaRijec, sifrat);
+      if (!kljucCheckBox.isSelected())
+        otvoreniTekst = (new CezarKriptosustav(pomak)).desifriraj(sifrat);
+      else
+        otvoreniTekst = (new CezarKljucnaRijecKriptosustav(kljucnaRijec, pomak)).desifriraj(sifrat);
 
       if (!greska) {
         otvoreniTekstArea.setText(otvoreniTekst);
@@ -129,11 +133,15 @@ public class CezarKalkulator extends JPanel {
 
       if (ObradaUnosa.kriviUnos(kljucnaRijec) && kljucCheckBox.isSelected())
         konzola.ispisiGresku("Ključna riječ smije sadržavati samo slova engleske abecede!");
+      else {
+        if (!kljucCheckBox.isSelected())
+          novaPermutacija = (new CezarKriptosustav(pomak)).dohvatiPermutacijuString();
+        else
+          novaPermutacija =
+              (new CezarKljucnaRijecKriptosustav(kljucnaRijec, pomak)).dohvatiPermutacijuString();
 
-      if (!kljucCheckBox.isSelected()) novaPermutacija = ObradaUnosaCezar.permutacija(pomak);
-      else novaPermutacija = ObradaUnosaCezarKljucnaRijec.permutacija(pomak, kljucnaRijec);
-
-      permutacijaLabel.setText(novaPermutacija);
+        permutacijaLabel.setText(novaPermutacija.replaceAll("([A-Z])", "$0 "));
+      }
     }
   }
 }
