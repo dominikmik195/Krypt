@@ -1,6 +1,7 @@
 package pmf.math.kriptosustavi;
 
 import pmf.math.algoritmi.Abeceda;
+import pmf.math.obradaunosa.ObradaUnosa;
 
 import java.util.Arrays;
 
@@ -14,6 +15,14 @@ public class CezarKljucnaRijecKriptosustav extends SupstitucijskaKriptosustav {
     this.permutacija = new int[26];
     this.inverznaPermutacija = new int[26];
 
+    // Ako je upisana kriva ključna riječ, stvori nevažeću permutaciju.
+    if (ObradaUnosa.kriviUnos(kljucnaRijec)) {
+      Arrays.fill(this.permutacija, 0);
+      Arrays.fill(this.permutacija, 0);
+      return;
+    }
+
+    pomak = ((pomak % 26) + 26) % 26; // Da ne ispadne negativan.
     // Upisujemo slova ključne riječi.
     int j = pomak;
     for (char slovo : kljucnaRijec.toCharArray()) {

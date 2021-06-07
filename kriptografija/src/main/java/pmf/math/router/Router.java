@@ -12,6 +12,7 @@ import pmf.math.kalkulatori.CezarKalkulator;
 import pmf.math.kalkulatori.ElGamalKalkulator;
 import pmf.math.kalkulatori.RSAKalkulator;
 import pmf.math.kalkulatori.PlayfairKalkulator;
+import pmf.math.kalkulatori.SupstitucijskaKalkulator;
 import pmf.math.konstante.ImenaKalkulatora;
 import pmf.math.konstante.OpisiKalkulatora;
 import pmf.math.konstante.UputeKalkulatora;
@@ -41,7 +42,8 @@ public class Router extends JPanel implements ActionListener {
   private final RSAKalkulator RSAkalkulator = new RSAKalkulator(konzola);
   private final PlayfairKalkulator playfairKalkulator = new PlayfairKalkulator(konzola);
   private final CezarKalkulator cezarKalkulator = new CezarKalkulator(konzola);
-
+  private final SupstitucijskaKalkulator supstitucijskaKalkulator =
+      new SupstitucijskaKalkulator(konzola);
 
   public void Main() {
     SwingUtilities.invokeLater(
@@ -81,10 +83,11 @@ public class Router extends JPanel implements ActionListener {
     srednjiStupac.add("NULL", new JPanel());
 
     srednjiStupac.add(ImenaKalkulatora.CEZAROVA_SIFRA.toString(), cezarKalkulator.kalkulatorPanel);
-    //srednjiStupac.add(ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString(), );
-    //srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), );
-    //srednjiStupac.add(ImenaKalkulatora.HILLOVA_SIFRA.toString(), );
-    //srednjiStupac.add(ImenaKalkulatora.VIGENEROVA_SIFRA.toString(), );
+    srednjiStupac.add(
+        ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString(), supstitucijskaKalkulator.glavniPanel);
+    // srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), );
+    // srednjiStupac.add(ImenaKalkulatora.HILLOVA_SIFRA.toString(), );
+    // srednjiStupac.add(ImenaKalkulatora.VIGENEROVA_SIFRA.toString(), );
     srednjiStupac.add(ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString(), playfairKalkulator.glavniPanel);
     //srednjiStupac.add(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString(), );
     srednjiStupac.add(ImenaKalkulatora.RSA_SIFRA.toString(), RSAkalkulator.glavniPanel);
@@ -102,13 +105,16 @@ public class Router extends JPanel implements ActionListener {
       case EL_GAMALOVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS, UputeKalkulatora.EL_GAMAL_UPUTE);
-        break;
         }
 
       case RSA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.RSA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.RSA_OPIS, UputeKalkulatora.RSA_UPUTE);
-        break;
+      }
+
+      case SUPSTITUCIJSKA_SIFRA -> {
+        prikaz.show(srednjiStupac, ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString());
+        opis.postaviTekst(OpisiKalkulatora.SUPSTITUCIJA_OPIS, UputeKalkulatora.SUPSTITUCIJA_UPUTE);
       }
 
       case CEZAROVA_SIFRA -> {

@@ -13,12 +13,21 @@ logike aplikacije izvan datoteka koje pripadaju formama.
  */
 
 public class ObradaUnosa {
+  public static String ocisti(String tekst) {
+    return tekst.replaceAll("\s+", "").toUpperCase(Locale.ROOT);
+  }
+
   public static boolean kriviUnos(String tekst) {
     // Dozvoljena su samo slova engleske abecede i bjeline (koje se čiste).
     return !tekst.matches("^[a-zA-Z\s]*$");
   }
 
-  public static String ocisti(String tekst) {
-    return tekst.replaceAll("\s+", "").toUpperCase(Locale.ROOT);
+  public static boolean kriviUnos(int[] permutacija) {
+    // Niti jedan broj u permutaciji (osim -1) se ne smije pojaviti dvaput.
+    int[] counts = new int[26];
+    for (int i = 0; i < 26; i++) if (permutacija[i] != -1) counts[permutacija[i]]++;
+    for (int i = 0; i < 26; i++) if (counts[i] > 1) return true;
+
+    return false;
   }
 }

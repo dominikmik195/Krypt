@@ -3,16 +3,23 @@ package pmf.math.konstante;
 public class UputeKalkulatora {
 
   public static final String CEZAR_UPUTE = """
-      Za šifriranje pomoću Cezarove šifre dovoljno je unijeti pomak (broj).
-      Za šifriranje pomoću Cezarove šifre s ključnom riječi, treba označiti
-      odgovarajuću kućicu te unijeti ključnu riječ i pomak (broj), koji označava
-      mjesto od koje ključna riječ počinje u abecedi šifrata.
-      Sav uneseni tekst smije sadržavati isključivo slova engleske abecede.
-      Za pokretanje postupka, pritisnuti odgovarajuću strjelicu.
+      Za (de)šifriranje pomoću Cezarove šifre potrebno je unijeti pomak (broj).
+      
+      Za (de)šifriranje pomoću Cezarove šifre s ključnom riječi, treba označiti odgovarajuću kućicu te unijeti ključnu riječ i pomak (broj), koji označava mjesto od koje ključna riječ počinje u abecedi šifrata.
+      
+      Sav uneseni tekst (otvoreni tekst, šifrat i ključna riječ) smije sadržavati isključivo slova engleske abecede.
+      
+      Za pokretanje postupka, pritisnuti odgovarajuću strelicu ↓ ili ↑.
       """;
 
   public static final String SUPSTITUCIJA_UPUTE = """
-        
+      Za (de)šifriranje pomoću opće supstitucijske šifre, potrebno je unijeti zamjensko slovo za svako od navedenih slova engleske abecede. Ukoliko zamjensko slovo za neko od slova nije upisano, ono će u šifratu ili otvorenom tekstu biti prikazano kao _.
+      
+      Prilikom unosa zamjenskih slova, potrebno je pripaziti da nikoja dva slova nisu zamijenjena istim slovom (primjerice, slovo A i slovo B ne smiju oba biti zamijenjena slovom Q).
+      
+      Sav uneseni tekst (otvoreni tekst i šifrat) smije sadržavati isključivo slova engleske abecede.
+      
+      Za pokretanje postupka, pritisnuti odgovarajuću strelicu ↓ ili ↑.
       """;
 
   public static final String AFINA_UPUTE = """
