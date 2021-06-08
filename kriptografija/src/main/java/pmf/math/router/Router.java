@@ -10,6 +10,7 @@ import javax.swing.SwingUtilities;
 
 import pmf.math.kalkulatori.CezarKalkulator;
 import pmf.math.kalkulatori.ElGamalKalkulator;
+import pmf.math.kalkulatori.HillKalkulator;
 import pmf.math.kalkulatori.RSAKalkulator;
 import pmf.math.kalkulatori.PlayfairKalkulator;
 import pmf.math.kalkulatori.SupstitucijskaKalkulator;
@@ -41,6 +42,7 @@ public class Router extends JPanel implements ActionListener {
   private final ElGamalKalkulator elGamalKalkulator = new ElGamalKalkulator(konzola);
   private final RSAKalkulator RSAkalkulator = new RSAKalkulator(konzola);
   private final PlayfairKalkulator playfairKalkulator = new PlayfairKalkulator(konzola);
+  private final HillKalkulator hillKalkulator = new HillKalkulator(konzola);
   private final CezarKalkulator cezarKalkulator = new CezarKalkulator(konzola);
   private final SupstitucijskaKalkulator supstitucijskaKalkulator =
       new SupstitucijskaKalkulator(konzola);
@@ -85,18 +87,25 @@ public class Router extends JPanel implements ActionListener {
     srednjiStupac.add(ImenaKalkulatora.CEZAROVA_SIFRA.toString(), cezarKalkulator.kalkulatorPanel);
     srednjiStupac.add(
         ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString(), supstitucijskaKalkulator.glavniPanel);
-    // srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), );
-    // srednjiStupac.add(ImenaKalkulatora.HILLOVA_SIFRA.toString(), );
-    // srednjiStupac.add(ImenaKalkulatora.VIGENEROVA_SIFRA.toString(), );
+    //srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), );
+    srednjiStupac.add(ImenaKalkulatora.HILLOVA_SIFRA.toString(), hillKalkulator.glavniPanel);
+    //srednjiStupac.add(ImenaKalkulatora.VIGENEROVA_SIFRA.toString(), );
     srednjiStupac.add(ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString(), playfairKalkulator.glavniPanel);
     //srednjiStupac.add(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString(), );
     srednjiStupac.add(ImenaKalkulatora.RSA_SIFRA.toString(), RSAkalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString(), elGamalKalkulator.glavniPanel);
+
+    postaviKalkulator(ImenaKalkulatora.CEZAROVA_SIFRA);
   }
 
   private void postaviKalkulator(ImenaKalkulatora imeKalkulatora) {
     CardLayout prikaz = (CardLayout) srednjiStupac.getLayout();
     switch (imeKalkulatora) {
+      case HILLOVA_SIFRA -> {
+        prikaz.show(srednjiStupac, ImenaKalkulatora.HILLOVA_SIFRA.toString());
+        opis.postaviTekst(OpisiKalkulatora.HILL_OPIS, UputeKalkulatora.HILL_UPUTE);
+      }
+
       case PLAYFAIROVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.PLAYFAIR_OPIS, UputeKalkulatora.PLAYFAIR_UPUTE);

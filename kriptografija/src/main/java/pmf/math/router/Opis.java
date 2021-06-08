@@ -10,6 +10,8 @@ public class Opis {
   public JPanel glavniPanel;
   private JTextPane gornjiTextPane;
   private JTextPane donjiTextPane;
+  private JPanel gornjiPanel;
+  private JPanel donjiPanel;
 
   public void postaviTekst(String gornji, String donji) {
     gornjiTextPane.setText(gornji);
