@@ -15,7 +15,7 @@ import pmf.math.kriptosustavi.PlayfairKriptosustav.Jezik;
 public class PlayfairDAO {
 
   private Dao<PlayfairFavoriti, String> playfairDao;
-  private final int brojFavorita = 5;
+  public final int brojFavorita = 5;
 
   public PlayfairDAO() {
     try {
