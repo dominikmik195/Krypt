@@ -2,10 +2,7 @@ package pmf.math.kalkulatori;
 
 import static pmf.math.algoritmi.VrijemeDatum.dohvatiVrijemeDatum;
 
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.RowSpec;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
@@ -20,7 +17,6 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import pmf.math.baza.dao.PlayfairDAO;
