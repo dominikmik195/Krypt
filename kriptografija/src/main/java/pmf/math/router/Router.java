@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import pmf.math.baza.BazaPodataka;
 import pmf.math.kalkulatori.CezarKalkulator;
 import pmf.math.kalkulatori.ElGamalKalkulator;
 import pmf.math.kalkulatori.HillKalkulator;
@@ -37,6 +38,7 @@ public class Router extends JPanel implements ActionListener {
   private JPanel desniStupac;
   private JPanel srednjiStupac;
 
+  private final BazaPodataka bazaPodataka = new BazaPodataka();
   private final Konzola konzola = new Konzola();
   private final Opis opis = new Opis();
   private final ElGamalKalkulator elGamalKalkulator = new ElGamalKalkulator(konzola);
@@ -49,11 +51,7 @@ public class Router extends JPanel implements ActionListener {
 
   public void Main() {
     SwingUtilities.invokeLater(
-        new Runnable() {
-          public void run() {
-            stvoriGUI();
-          }
-        });
+        this::stvoriGUI);
   }
 
   private void postaviRouter() {
@@ -90,7 +88,8 @@ public class Router extends JPanel implements ActionListener {
     //srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), );
     srednjiStupac.add(ImenaKalkulatora.HILLOVA_SIFRA.toString(), hillKalkulator.glavniPanel);
     //srednjiStupac.add(ImenaKalkulatora.VIGENEROVA_SIFRA.toString(), );
-    srednjiStupac.add(ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString(), playfairKalkulator.glavniPanel);
+    srednjiStupac.add(
+        ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString(), playfairKalkulator.glavniPanel);
     //srednjiStupac.add(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString(), );
     srednjiStupac.add(ImenaKalkulatora.RSA_SIFRA.toString(), RSAkalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString(), elGamalKalkulator.glavniPanel);
@@ -114,7 +113,7 @@ public class Router extends JPanel implements ActionListener {
       case EL_GAMALOVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS, UputeKalkulatora.EL_GAMAL_UPUTE);
-        }
+      }
 
       case RSA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.RSA_SIFRA.toString());
