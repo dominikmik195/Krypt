@@ -2,8 +2,6 @@ package pmf.math.kalkulatori;
 
 import java.awt.Dimension;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.Locale;
@@ -18,11 +16,11 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import pmf.math.algoritmi.Matrica;
+import pmf.math.baza.dao.HillDAO;
 import pmf.math.konstante.HillMatrice;
 import pmf.math.kriptosustavi.HillKriptosustav;
 import pmf.math.router.Konzola;
@@ -51,7 +49,16 @@ public class HillKalkulator {
   private JCheckBox zakljucajCheckBox;
   private JButton prekiniButton;
   private JProgressBar kljucProgressbar;
+  private JPanel otkrijKljucPanel;
+  private JPanel favoritiPanel;
+  private JButton prethodniFavorit;
+  private JButton sljedeciFavorit;
+  private JButton postaviKljucButton;
+  private JPanel dimenzijaPanel;
+  private JTable favoritTable;
   private final Konzola mojaKonzola;
+  private final HillDAO hillDao = new HillDAO();
+  private int trenutniFavorit = 0;
 
   public HillKalkulator(Konzola konzola) {
     mojaKonzola = konzola;
@@ -68,11 +75,11 @@ public class HillKalkulator {
           if (kljucTable.getColumnCount() == m) {
             return;
           }
-          postaviTablicu(HillMatrice.Identiteta(m), m);
+          postaviTablicu(HillMatrice.Identiteta(m), m, kljucTable);
           sanitizirajTekst(otvoreniTekstTextArea);
           sanitizirajTekst(sifratTextArea);
         });
-    postaviTablicu(HillMatrice.Identiteta(3), 3);
+    postaviTablicu(HillMatrice.Identiteta(3), 3, kljucTable);
     zakljucajCheckBox.addActionListener(e -> {
       kljucTable.setEnabled(!kljucTable.isEnabled());
       dimenzijaSlider.setEnabled(!dimenzijaSlider.isEnabled());
@@ -110,10 +117,7 @@ public class HillKalkulator {
 
     // Šifriraj / Dešifriraj
     sifrirajButton.addActionListener(e -> {
-      if (!sifrirajButton.isEnabled()) {
-        return;
-      }
-      if (otvoreniTekstTextArea.getText().isEmpty()) {
+      if (!sifrirajButton.isEnabled() || otvoreniTekstTextArea.getText().isEmpty()) {
         return;
       }
       if (otvoreniTekstTextArea.getText().replaceAll(" ", "")
@@ -122,23 +126,22 @@ public class HillKalkulator {
         return;
       }
       try {
-        if (!dohvatiTablicu().regularna()) {
+        if (!dohvatiTablicu(kljucTable).regularna()) {
           mojaKonzola.ispisiGresku("Matrica ključa nije regularna.");
         } else {
+          Matrica kljuc = dohvatiTablicu(kljucTable);
           sifratTextArea.setText(
-              hillKriptosustav.sifriraj(otvoreniTekstTextArea.getText(), dohvatiTablicu()));
+              hillKriptosustav.sifriraj(otvoreniTekstTextArea.getText(), kljuc));
           provjeriTipkuZaRacunanjeKljuca();
           mojaKonzola.ispisiPoruku("Šifriranje dovršeno.");
+          dodajNoviFavorit();
         }
       } catch (Exception exception) {
         mojaKonzola.ispisiGresku("Pogreška pri šifriranju.");
       }
     });
     desifrirajButton.addActionListener(e -> {
-      if (!desifrirajButton.isEnabled()) {
-        return;
-      }
-      if (sifratTextArea.getText().isEmpty()) {
+      if (!desifrirajButton.isEnabled() || sifratTextArea.getText().isEmpty()) {
         return;
       }
       if (sifratTextArea.getText().replaceAll(" ", "")
@@ -146,21 +149,22 @@ public class HillKalkulator {
         mojaKonzola.ispisiGresku("OPREZ! Unos mora biti djeljiv sa dimenzijom matrice m.");
         return;
       }
-      //try {
-      if (!dohvatiTablicu().regularna()) {
-        mojaKonzola.ispisiGresku("Matrica ključa nije regularna.");
-      } else if (!dohvatiTablicu().involuirana()) {
-        mojaKonzola.ispisiGresku(
-            "Matrica ključa nije involuirana. Za dešifriranje treba vrijediti K = K^-1.");
-      } else {
-        otvoreniTekstTextArea.setText(
-            hillKriptosustav.desifriraj(sifratTextArea.getText(), dohvatiTablicu()));
-        provjeriTipkuZaRacunanjeKljuca();
-        mojaKonzola.ispisiPoruku("Dešifriranje dovršeno.");
+      try {
+        if (!dohvatiTablicu(kljucTable).regularna()) {
+          mojaKonzola.ispisiGresku("Matrica ključa nije regularna.");
+        } else if (!dohvatiTablicu(kljucTable).involuirana()) {
+          mojaKonzola.ispisiGresku(
+              "Matrica ključa nije involuirana. Za dešifriranje treba vrijediti K = K^-1.");
+        } else {
+          otvoreniTekstTextArea.setText(
+              hillKriptosustav.desifriraj(sifratTextArea.getText(), dohvatiTablicu(kljucTable)));
+          provjeriTipkuZaRacunanjeKljuca();
+          mojaKonzola.ispisiPoruku("Dešifriranje dovršeno.");
+          dodajNoviFavorit();
+        }
+      } catch (Exception exception) {
+        mojaKonzola.ispisiGresku("Pogreška pri dešifriranju.");
       }
-      //} catch (Exception exception) {
-      //  mojaKonzola.ispisiGresku("Pogreška pri dešifriranju.");
-      //}
     });
 
     // Sanitizacija unosa
@@ -208,8 +212,9 @@ public class HillKalkulator {
 
         SwingUtilities.invokeLater(() -> {
           if (kljuc != null) {
-            postaviTablicu(kljuc, m);
+            postaviTablicu(kljuc, m, kljucTable);
             mojaKonzola.ispisiPoruku("Uspješno računanje ključa.");
+            dodajNoviFavorit();
           } else {
             mojaKonzola.ispisiGresku("Neuspješno računanje ključa.");
           }
@@ -231,23 +236,43 @@ public class HillKalkulator {
       omoguciSucelje();
       hillKriptosustav.setExitThread(true);
     });
+
+    // Tipke za listanje favorite
+    prethodniFavorit.addActionListener(e -> {
+      trenutniFavorit--;
+      prikaziFavorit();
+      provjeriTipkeZaFavorite();
+    });
+
+    sljedeciFavorit.addActionListener(e -> {
+      trenutniFavorit++;
+      prikaziFavorit();
+      provjeriTipkeZaFavorite();
+    });
+    provjeriTipkeZaFavorite();
+    prikaziFavorit();
+
+    // Tipka za postavljanje favorita
+    postaviKljucButton.addActionListener(e -> {
+      postaviFavorit();
+    });
   }
 
-  private void postaviTablicu(String[][] podaci, int m) {
-    kljucTable.setPreferredSize(new Dimension(m * 50, m * 50));
-    kljucTable.setModel(new DefaultTableModel(podaci, HillMatrice.Naslov(m)));
+  private void postaviTablicu(String[][] podaci, int m, JTable tablica) {
+    tablica.setPreferredSize(new Dimension(m * 40, m * 30));
+    tablica.setModel(new DefaultTableModel(podaci, HillMatrice.Naslov(m)));
 
     // Centriranje teksta u ćelijama
     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
     centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-    for (int i = 0; i < kljucTable.getModel().getColumnCount(); i++) {
-      kljucTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+    for (int i = 0; i < tablica.getModel().getColumnCount(); i++) {
+      tablica.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
     }
   }
 
-  private Matrica dohvatiTablicu() {
-    TableModel model = kljucTable.getModel();
-    int m = dimenzijaSlider.getModel().getValue();
+  private Matrica dohvatiTablicu(JTable tablica) {
+    TableModel model = tablica.getModel();
+    int m = model.getColumnCount();
     int[][] izlaz = new int[m][m];
     for (int i = 0; i < m; i++) {
       for (int j = 0; j < m; j++) {
@@ -286,6 +311,39 @@ public class HillKalkulator {
     sifratTextArea.setMargin(new Insets(10, 10, 10, 10));
   }
 
+  public void prikaziFavorit() {
+    if(hillDao.brojFavorita() == 0) return;
+    String[][] podaci = hillDao.dohvatiFavorit(trenutniFavorit);
+    if (podaci == null) {
+      mojaKonzola.ispisiGresku("Greška pri učitavanju povijesti ključeva.");
+    } else {
+      postaviTablicu(podaci, podaci.length, favoritTable);
+    }
+  }
+
+  public void provjeriTipkeZaFavorite() {
+    prethodniFavorit.setEnabled(trenutniFavorit > 0);
+    sljedeciFavorit.setEnabled(trenutniFavorit < hillDao.brojFavorita());
+    postaviKljucButton.setEnabled(hillDao.brojFavorita() != 0);
+  }
+
+  public void postaviFavorit() {
+    String[][] podaci = hillDao.intToStringTablica(dohvatiTablicu(favoritTable).getMatrica());
+    if (podaci == null) {
+      mojaKonzola.ispisiGresku("Greška pri učitavanju ključa.");
+    } else {
+      dimenzijaSlider.setValue(podaci.length);
+      postaviTablicu(podaci, podaci.length, kljucTable);
+    }
+  }
+
+  public void dodajNoviFavorit() {
+    hillDao.ubaciFavorit(hillDao.intToStringTablica(dohvatiTablicu(kljucTable).getMatrica()));
+    trenutniFavorit = 0;
+    postaviFavorit();
+    provjeriTipkeZaFavorite();
+  }
+
   public void onemoguciSucelje() {
     if (!zakljucajCheckBox.isSelected()) {
       zakljucajCheckBox.doClick();
@@ -298,6 +356,10 @@ public class HillKalkulator {
     kljucButton.setEnabled(false);
     prekiniButton.setVisible(true);
     kljucProgressbar.setVisible(true);
+    sljedeciFavorit.setEnabled(false);
+    prethodniFavorit.setEnabled(false);
+    postaviKljucButton.setEnabled(false);
+    favoritTable.setEnabled(false);
   }
 
   public void omoguciSucelje() {
@@ -306,8 +368,10 @@ public class HillKalkulator {
     zakljucajCheckBox.setEnabled(true);
     sifrirajButton.setEnabled(true);
     desifrirajButton.setEnabled(true);
-    kljucButton.setEnabled(true);
     prekiniButton.setVisible(false);
     kljucProgressbar.setVisible(false);
+    sljedeciFavorit.setEnabled(true);
+    provjeriTipkeZaFavorite();
+    provjeriTipkuZaRacunanjeKljuca();
   }
 }
