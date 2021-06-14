@@ -24,14 +24,44 @@ public class OpisiKalkulatora {
       Hill-ova šifra je poligrafska supstitucijska šifra u klasičnoj kriptografiji koja se temelji na linearnoj algebri.
      
       Izumio ju je Lester S. Hill 1929. godine i to je bila prva poligrafska šifra u kojoj je bilo praktično operirati s više od tri simbola odjednom.
+      
+      Šifriranje odnosno dešifriranje se vrši množenjem vektora induciranim pojedinom m-torkom slova iz teksta sa matricom ključa dimenzije m.
+      Rezultirani vektor zatim se preslikava natrag u slova.
+      
+      Za šifriranje i dešifriranje je potrebno da je matrica ključa K regularna.
+      Za dešifriranje je dodatno potrebno da je matrica ključa involuirana odnosno da vrijedi K = K^-1, jer će u protivnom doći do nepoželjnih rezultata.
       """;
 
   public static final String VIGENERE_OPIS = """
+      Vigenèreovu šifra spada u polialfabetske kriptosustave kod kojih se svako slovo otvorenog teksta može preslikati u jedno od m mogućih slova (gdje je m duljina ključa), u ovisnosti o svom položaju unutar otvorenog teksta.
         
+      Francuski diplomat Blaise de Vigenère je 1586. godine objavio knjigu "Traicte de Chiffres" u kojoj se nalazilo sve što se u to vrijeme znalo o kriptografiji (ali gotovo ništa o kriptoanalizi).
+      U njoj je opisano više originalnih polialfabetskih sustava, među kojima se nalazi i ovaj.
+      
+      Šifriranje/dešifriranje vrši se pomoću danog ključa KLJUC duljine m.
+      
+      U slučaju ponavljajućeg ključa otvoreni tekst/sifrat najprije se razbija na riječi duljine m.
+      Pojedina razbijena riječ se zatim šifrira/dešifrira uz sljedeće transformacije:
+      +/- KLJUCKLJUCKLJUC...
+          
+      U slučaju Vigenèreovog kvadrata otvoreni tekst/sifrat OTVORENITEKST / SIFRAT šifrira/dešifrira se u riječ REZULTAT uz sljedeće transformacije:
+      + KLJUCOTVORENITEKST / - KLJUCREZULTAT
       """;
 
   public static final String PLAYFAIR_OPIS = """
-        
+      Ovu šifru je izumio britanski znanstvenik Charles Wheatstone 1854. godine, a ime je dobila po njegovom prijatelju barunu Playfairu od St. Andrewsa koji ju je popularizirao.
+            
+      To je bigramska šifra, u smislu da se šifriraju parovi slova LD i to tako da rezultat ovisi i o jednom i o drugom slovu.
+            
+      Šifriranje(dešifriranje) vrši se za svaki par slova pomoću Playfairove 5x5 tablice na sljedeći način:
+      (lijevo slovo: L, desno slovo: D)
+          ■ Ako su L i D jednaki, onda se vraća LL.
+          ■ Ako su L i D u istom retku, onda se vraćaju znakovi L'D' koji su dobiveni pomicanjem L i D za jedno mjesto udesno(ulijevo).
+          ■ Ako su L i D u istom stupcu, onda se vraćaju znakovi L'D' koji su dobiveni pomicanjem L i D za jedno mjesto dolje(gore).
+          ■ Preostao je slučaj kada L i D nisu u istom retku ni u istom stupcu. Tada oni čine pravokutnik sa L' i D'. Ako postavimo:
+           L' = vrh pravokutnika u istom retku kao L
+           D' = vrh pravokutnika u istom retku sa D
+       onda se vraća L'D'.
       """;
 
   public static final String STUPCANA_OPIS = """

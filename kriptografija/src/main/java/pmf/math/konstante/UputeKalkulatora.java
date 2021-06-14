@@ -27,13 +27,7 @@ public class UputeKalkulatora {
       """;
 
   public static final String HILL_UPUTE = """
-      Hillov kriptosustav ima mogućnost šifriranja i dešifriranja ovisno o zadanom ključu (matrici).
-      
-      Šifriranje odnosno dešifriranje se vrši množenjem vektora induciranim pojedinom m-torkom slova iz teksta sa matricom ključa.
-      Rezultirani vektor zatim se preslikava natrag u slova.
-      
-      Za šifriranje i dešifriranje je potrebno da je matrica ključa K regularna.
-      Za dešifriranje je dodatno potrebno da je matrica ključa INVOLUIRANA odnosno da vrijedi K = K^-1, jer će u protivnom doći do nepoželjnih rezultata.
+      Za šifriranje/dešifiranje potrebno je postaviti ključ(matricu) te kliknuti pripadni gumb ↓ ↑.
       
       Ćelije matrice mogu biti peteroznamenkasti brojevi sa ili bez predznaka. Dimenzije matrice također se mogu mijenjati (m je od 2 do 5).
       Kljuc je moguće i zaključati kako bi se izbjegao slučajan gubitak podataka.
@@ -43,21 +37,13 @@ public class UputeKalkulatora {
       """;
 
   public static final String VIGENERE_UPUTE = """
-        
+      Za šifriranje/dešifiranje potrebno je postaviti ključ(riječ) te kliknuti pripadni gumb ↓ ↑.
+      
+      Klikom na pripadnu tipku mogu se izmijeniti načini korištenja ključa.
       """;
 
   public static final String PLAYFAIR_UPUTE = """
       Za šifriranje/dešifriranje dovoljno je kliknuti pripadni gumb ↓ ↑.
-            
-      Šifriranje(dešifriranje) vrši se za svaki par slova pomoću Playfairove 5x5 tablice na sljedeći način:
-      (lijevo slovo: L, desno slovo: D)
-          ■ Ako su L i D jednaki, onda se vraća LL.
-          ■ Ako su L i D u istom retku, onda se vraćaju znakovi L'D' koji su dobiveni pomicanjem L i D za jedno mjesto udesno(ulijevo).
-          ■ Ako su L i D u istom stupcu, onda se vraćaju znakovi L'D' koji su dobiveni pomicanjem L i D za jedno mjesto dolje(gore).
-          ■ Preostao je slučaj kada L i D nisu u istom retku ni u istom stupcu. Tada oni čine pravokutnik sa L' i D'. Ako postavimo:
-           L' = vrh pravokutnika u istom retku kao L
-           D' = vrh pravokutnika u istom retku sa D
-       onda se vraća L'D'.
           
       Playfairov pravokutnik može se izmijeniti dodavanjem ključa ili izmjenom abecede.
       """;
@@ -68,15 +54,21 @@ public class UputeKalkulatora {
 
   public static final String RSA_UPUTE = """
       Za šifriranje je potrebno unijeti broj n (ili p i q), i broj e.
+      
       Za dešifriranje je potrebno unijeti broj n (ili p i q), i broj d.
+      
       Ukoliko želite provjeriti jesu li vaši podatci valjani, tj. međusobno kompatibilni, pritisnite odgovarajuću tipku.
+      
       Ako podatci nisu u redu, tim postupkom će biti ispravljeni. Da bi to bilo moguće, potrebno je unijeti barem prost broj i tajni ključ.
       """;
 
   public static final String EL_GAMAL_UPUTE = """
       Za šifriranje je potrebno unijeti prost broj, alfu, betu i tajni broj. Za pokretanje postupka, pritisnete strelicu ↓.
+      
       Za dešifriranje je potrebno unijeti prost broj, alfu, betu i tajni ključ. Za pokretanje postupka, pritisnete strelicu ↑.
+      
       Ukoliko želite provjeriti jesu li vaši podatci valjani, tj. međusobno kompatibilni, pritisnite odgovarajuću tipku.
+      
       Ako podatci nisu u redu, tim postupkom će biti ispravljeni. Da bi to bilo moguće, potrebno je unijeti barem valjani n (ili p i q).
       """;
 }

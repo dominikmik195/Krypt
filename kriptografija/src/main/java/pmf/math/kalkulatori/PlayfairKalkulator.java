@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import pmf.math.baza.dao.PlayfairDAO;
-import pmf.math.baza.tablice.PlayfairFavoriti;
+import pmf.math.baza.tablice.PlayfairPovijest;
 import pmf.math.kriptosustavi.PlayfairKriptosustav;
 import pmf.math.kriptosustavi.PlayfairKriptosustav.Jezik;
 import pmf.math.router.Konzola;
@@ -94,7 +94,7 @@ public class PlayfairKalkulator {
       try {
         sifratTextArea.setText(playfairKriptosustav.sifriraj(otvoreniTekstTextArea.getText()));
         Jezik jezik = hrvatskiRadioButton.isSelected() ? Jezik.HRVATSKI : Jezik.ENGLESKI;
-        playfairDAO.ubaciFavorit(kljucTekstField.getText(), jezik);
+        playfairDAO.ubaciElement(kljucTekstField.getText(), jezik);
         osvjeziFavorite();
         mojaKonzola.ispisiPoruku("Šifriranje dovršeno.");
       } catch (Exception exception) {
@@ -106,7 +106,7 @@ public class PlayfairKalkulator {
       try {
         otvoreniTekstTextArea.setText(playfairKriptosustav.desifriraj(sifratTextArea.getText()));
         Jezik jezik = hrvatskiRadioButton.isSelected() ? Jezik.HRVATSKI : Jezik.ENGLESKI;
-        playfairDAO.ubaciFavorit(kljucTekstField.getText(), jezik);
+        playfairDAO.ubaciElement(kljucTekstField.getText(), jezik);
         osvjeziFavorite();
         mojaKonzola.ispisiPoruku("Dešifriranje dovršeno.");
       } catch (Exception exception) {
@@ -170,14 +170,14 @@ public class PlayfairKalkulator {
   public void osvjeziFavorite() {
     favoritiPanel.removeAll();
     favoritiPanel.setLayout(new GridLayout(0, 1));
-    playfairDAO.dohvatiFavorite()
+    playfairDAO.dohvatiElemente()
         .forEach(favorit -> favoritiPanel.add(stvoriRedakFavorita(favorit)));
     GridLayout layout = (GridLayout) favoritiPanel.getLayout();
     layout.setVgap(0);
     favoritiPanel.revalidate();
   }
 
-  public JPanel stvoriRedakFavorita(PlayfairFavoriti favorit) {
+  public JPanel stvoriRedakFavorita(PlayfairPovijest favorit) {
     String jezik = favorit.getJezik() == Jezik.HRVATSKI.ordinal() ? "HR" : "EN";
     String datum = dohvatiVrijemeDatum(favorit.getVrijemeStvaranja());
 
@@ -189,7 +189,7 @@ public class PlayfairKalkulator {
     return izlazniPanel;
   }
 
-  public JButton stvoriGumbFavorita(PlayfairFavoriti favorit) {
+  public JButton stvoriGumbFavorita(PlayfairPovijest favorit) {
     JButton izlazniGumb = new JButton(favorit.getKljuc());
     izlazniGumb.setPreferredSize(new Dimension(150, 30));
 
@@ -226,7 +226,7 @@ public class PlayfairKalkulator {
     StringBuilder izlaz = new StringBuilder();
 
     for (int i = 0; i < tekst.length(); i += 2) {
-      izlaz.append(tekst.substring(i, Math.min(i + 2, tekst.length())))
+      izlaz.append(tekst, i, Math.min(i + 2, tekst.length()))
           .append(i + 2 < tekst.length() ? " " : "");
     }
     if (!izlaz.toString().equals(textArea.getText())

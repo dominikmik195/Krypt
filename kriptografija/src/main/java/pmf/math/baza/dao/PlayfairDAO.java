@@ -9,24 +9,24 @@ import com.j256.ormlite.table.TableUtils;
 import java.util.Date;
 import java.sql.SQLException;
 import java.util.List;
-import pmf.math.baza.tablice.PlayfairFavoriti;
+import pmf.math.baza.tablice.PlayfairPovijest;
 import pmf.math.kriptosustavi.PlayfairKriptosustav.Jezik;
 
 public class PlayfairDAO {
 
-  private Dao<PlayfairFavoriti, String> playfairDao;
-  public final int brojFavorita = 5;
+  private Dao<PlayfairPovijest, String> playfairDao;
+  public final int brojElemenata = 5;
 
   public PlayfairDAO() {
     try {
-      playfairDao = DaoManager.createDao(poveznicaBaze, PlayfairFavoriti.class);
-      TableUtils.createTableIfNotExists(poveznicaBaze, PlayfairFavoriti.class);
+      playfairDao = DaoManager.createDao(poveznicaBaze, PlayfairPovijest.class);
+      TableUtils.createTableIfNotExists(poveznicaBaze, PlayfairPovijest.class);
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
 
-  public List<PlayfairFavoriti> dohvatiFavorite() {
+  public List<PlayfairPovijest> dohvatiElemente() {
     try {
       return playfairDao.queryBuilder().orderBy("vrijemeStvaranja", false).query();
     } catch (SQLException throwables) {
@@ -35,40 +35,40 @@ public class PlayfairDAO {
     return List.of();
   }
 
-  public void ubaciFavorit(String kljuc, Jezik jezik) {
+  public void ubaciElement(String kljuc, Jezik jezik) {
     if(kljuc.equals("")) return;
     try {
-      PlayfairFavoriti favorit = new PlayfairFavoriti(0, kljuc, jezik.ordinal(), new Date());
-      izbaciDuplikate(favorit);
+      PlayfairPovijest element = new PlayfairPovijest(0, kljuc, jezik.ordinal(), new Date());
+      izbaciDuplikate(element);
       izbaciVisak();
-      playfairDao.create(favorit);
+      playfairDao.create(element);
     } catch (SQLException throwables) {
       throwables.printStackTrace();
     }
   }
 
-  // Izbaci prethodne favorite za isti ključ
-  private void izbaciDuplikate(PlayfairFavoriti favorit) {
+  // Izbaci prethodne elemente za isti ključ
+  private void izbaciDuplikate(PlayfairPovijest element) {
     try {
-      DeleteBuilder<PlayfairFavoriti, String> deleteBuilder = playfairDao.deleteBuilder();
+      DeleteBuilder<PlayfairPovijest, String> deleteBuilder = playfairDao.deleteBuilder();
       deleteBuilder.setWhere(deleteBuilder.where()
-          .eq("kljuc", favorit.getKljuc()));
+          .eq("kljuc", element.getKljuc()));
       deleteBuilder.delete();
     } catch (SQLException throwables) {
       throwables.printStackTrace();
     }
   }
 
-  // Obriši stare favorite, max je "brojFavorita"
+  // Obriši stare elemente, max je "brojElemenata"
   private void izbaciVisak() {
     try {
-      List<PlayfairFavoriti> favoriti = playfairDao.queryBuilder()
+      List<PlayfairPovijest> elementi = playfairDao.queryBuilder()
           .orderBy("vrijemeStvaranja", false).query();
 
-      if(favoriti.size() >= brojFavorita) {
-        DeleteBuilder<PlayfairFavoriti, String> deleteBuilder = playfairDao.deleteBuilder();
+      if(elementi.size() >= brojElemenata) {
+        DeleteBuilder<PlayfairPovijest, String> deleteBuilder = playfairDao.deleteBuilder();
         deleteBuilder.setWhere(deleteBuilder.where()
-            .le("vrijemeStvaranja", favoriti.get(brojFavorita - 1).getVrijemeStvaranja()));
+            .le("vrijemeStvaranja", elementi.get(brojElemenata - 1).getVrijemeStvaranja()));
         deleteBuilder.delete();
       }
     } catch (SQLException throwables) {
