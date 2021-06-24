@@ -49,7 +49,6 @@ public class HillKalkulator {
   private JCheckBox zakljucajCheckBox;
   private JButton prekiniButton;
   private JProgressBar kljucProgressbar;
-  private JPanel otkrijKljucPanel;
   private JPanel favoritiPanel;
   private JButton prethodniFavorit;
   private JButton sljedeciFavorit;
@@ -312,8 +311,8 @@ public class HillKalkulator {
   }
 
   public void prikaziFavorit() {
-    if(hillDao.brojFavorita() == 0) return;
-    String[][] podaci = hillDao.dohvatiFavorit(trenutniFavorit);
+    if(hillDao.brojElemenata() == 0) return;
+    String[][] podaci = hillDao.dohvatiElement(trenutniFavorit);
     if (podaci == null) {
       mojaKonzola.ispisiGresku("Greška pri učitavanju povijesti ključeva.");
     } else {
@@ -322,9 +321,10 @@ public class HillKalkulator {
   }
 
   public void provjeriTipkeZaFavorite() {
+    int brojFavorita = hillDao.brojElemenata();
     prethodniFavorit.setEnabled(trenutniFavorit > 0);
-    sljedeciFavorit.setEnabled(trenutniFavorit < hillDao.brojFavorita());
-    postaviKljucButton.setEnabled(hillDao.brojFavorita() != 0);
+    sljedeciFavorit.setEnabled(trenutniFavorit < brojFavorita);
+    postaviKljucButton.setEnabled(brojFavorita != 0);
   }
 
   public void postaviFavorit() {
@@ -338,7 +338,7 @@ public class HillKalkulator {
   }
 
   public void dodajNoviFavorit() {
-    hillDao.ubaciFavorit(hillDao.intToStringTablica(dohvatiTablicu(kljucTable).getMatrica()));
+    hillDao.ubaciElement(hillDao.intToStringTablica(dohvatiTablicu(kljucTable).getMatrica()));
     trenutniFavorit = 0;
     postaviFavorit();
     provjeriTipkeZaFavorite();
@@ -354,7 +354,7 @@ public class HillKalkulator {
     sifrirajButton.setEnabled(false);
     desifrirajButton.setEnabled(false);
     kljucButton.setEnabled(false);
-    prekiniButton.setVisible(true);
+    prekiniButton.setEnabled(true);
     kljucProgressbar.setVisible(true);
     sljedeciFavorit.setEnabled(false);
     prethodniFavorit.setEnabled(false);
@@ -368,7 +368,7 @@ public class HillKalkulator {
     zakljucajCheckBox.setEnabled(true);
     sifrirajButton.setEnabled(true);
     desifrirajButton.setEnabled(true);
-    prekiniButton.setVisible(false);
+    prekiniButton.setEnabled(false);
     kljucProgressbar.setVisible(false);
     sljedeciFavorit.setEnabled(true);
     provjeriTipkeZaFavorite();

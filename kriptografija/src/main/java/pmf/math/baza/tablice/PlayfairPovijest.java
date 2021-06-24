@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @DatabaseTable(tableName = "playfair")
-public class PlayfairFavoriti {
+public class PlayfairPovijest {
 
   @DatabaseField(generatedId = true, allowGeneratedIdInsert = true)
   int id;

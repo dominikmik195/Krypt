@@ -10,23 +10,23 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import pmf.math.baza.tablice.HillFavoriti;
+import pmf.math.baza.tablice.HillPovijest;
 
 public class HillDAO {
 
-  private Dao<HillFavoriti, String> hillDao;
-  public final int maxBrojFavorita = 10;
+  private Dao<HillPovijest, String> hillDao;
+  public final int maxBrojElemenata = 10;
 
   public HillDAO() {
     try {
-      hillDao = DaoManager.createDao(poveznicaBaze, HillFavoriti.class);
-      TableUtils.createTableIfNotExists(poveznicaBaze, HillFavoriti.class);
+      hillDao = DaoManager.createDao(poveznicaBaze, HillPovijest.class);
+      TableUtils.createTableIfNotExists(poveznicaBaze, HillPovijest.class);
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
 
-  public int brojFavorita() {
+  public int brojElemenata() {
     try {
       return (int) hillDao.countOf();
     } catch (SQLException throwables) {
@@ -35,55 +35,55 @@ public class HillDAO {
     return 0;
   }
 
-  public String[][] dohvatiFavorit(int indeks) {
-    if (brojFavorita() <= indeks) {
+  public String[][] dohvatiElement(int indeks) {
+    if (brojElemenata() <= indeks) {
       return null;
     }
     try {
-      HillFavoriti favorit = hillDao.queryBuilder()
+      HillPovijest element = hillDao.queryBuilder()
           .orderBy("vrijemeStvaranja", false).query()
           .get(indeks);
-      return stringToTablica(favorit.getKljuc());
+      return stringToTablica(element.getKljuc());
     } catch (SQLException throwables) {
       throwables.printStackTrace();
     }
     return null;
   }
 
-  public void ubaciFavorit(String[][] podaci) {
+  public void ubaciElement(String[][] podaci) {
     try {
       String kljuc = tablicaToString(podaci);
-      HillFavoriti favorit = new HillFavoriti(0, kljuc, new Date());
-      izbaciDuplikate(favorit);
+      HillPovijest element = new HillPovijest(0, kljuc, new Date());
+      izbaciDuplikate(element);
       izbaciVisak();
-      hillDao.create(favorit);
+      hillDao.create(element);
     } catch (SQLException throwables) {
       throwables.printStackTrace();
     }
   }
 
-  // Izbaci prethodne favorite za isti ključ
-  private void izbaciDuplikate(HillFavoriti favorit) {
+  // Izbaci prethodne elemente za isti ključ
+  private void izbaciDuplikate(HillPovijest element) {
     try {
-      DeleteBuilder<HillFavoriti, String> deleteBuilder = hillDao.deleteBuilder();
+      DeleteBuilder<HillPovijest, String> deleteBuilder = hillDao.deleteBuilder();
       deleteBuilder.setWhere(deleteBuilder.where()
-          .eq("kljuc", favorit.getKljuc()));
+          .eq("kljuc", element.getKljuc()));
       deleteBuilder.delete();
     } catch (SQLException throwables) {
       throwables.printStackTrace();
     }
   }
 
-  // Obriši stare favorite, max je "brojFavorita"
+  // Obriši stare elemente, max je "brojElemenata"
   private void izbaciVisak() {
     try {
-      List<HillFavoriti> favoriti = hillDao.queryBuilder()
+      List<HillPovijest> elementi = hillDao.queryBuilder()
           .orderBy("vrijemeStvaranja", false).query();
 
-      if (favoriti.size() >= maxBrojFavorita) {
-        DeleteBuilder<HillFavoriti, String> deleteBuilder = hillDao.deleteBuilder();
+      if (elementi.size() >= maxBrojElemenata) {
+        DeleteBuilder<HillPovijest, String> deleteBuilder = hillDao.deleteBuilder();
         deleteBuilder.setWhere(deleteBuilder.where()
-            .le("vrijemeStvaranja", favoriti.get(maxBrojFavorita - 1).getVrijemeStvaranja()));
+            .le("vrijemeStvaranja", elementi.get(maxBrojElemenata - 1).getVrijemeStvaranja()));
         deleteBuilder.delete();
       }
     } catch (SQLException throwables) {

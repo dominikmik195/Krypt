@@ -12,8 +12,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@DatabaseTable(tableName = "hill")
-public class HillFavoriti {
+@DatabaseTable(tableName = "vigenere")
+public class VigenerePovijest {
 
   @DatabaseField(generatedId = true, allowGeneratedIdInsert = true)
   int id;
