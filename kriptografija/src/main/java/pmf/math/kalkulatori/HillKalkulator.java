@@ -287,7 +287,7 @@ public class HillKalkulator {
     int m = dimenzijaSlider.getModel().getValue();
 
     for (int i = 0; i < tekst.length(); i += m) {
-      izlaz.append(tekst.substring(i, Math.min(i + m, tekst.length())))
+      izlaz.append(tekst, i, Math.min(i + m, tekst.length()))
           .append(i + m < tekst.length() ? " " : "");
     }
     textArea.setText(izlaz.toString().trim());
