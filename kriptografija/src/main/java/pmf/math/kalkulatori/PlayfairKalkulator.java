@@ -64,12 +64,8 @@ public class PlayfairKalkulator {
     jezikButtonGroup.add(hrvatskiRadioButton);
     jezikButtonGroup.add(engleskiRadioButton);
 
-    hrvatskiRadioButton.addActionListener(e -> {
-      postaviKljuc(kljucTekstField.getText());
-    });
-    engleskiRadioButton.addActionListener(e -> {
-      postaviKljuc(kljucTekstField.getText());
-    });
+    hrvatskiRadioButton.addActionListener(e -> postaviKljuc(kljucTekstField.getText()));
+    engleskiRadioButton.addActionListener(e -> postaviKljuc(kljucTekstField.getText()));
 
     // Početna tablica
     hrvatskiRadioButton.setSelected(true);
@@ -193,9 +189,7 @@ public class PlayfairKalkulator {
     JButton izlazniGumb = new JButton(favorit.getKljuc());
     izlazniGumb.setPreferredSize(new Dimension(150, 30));
 
-    izlazniGumb.addActionListener(e -> {
-      postaviKljuc(favorit.getKljuc());
-    });
+    izlazniGumb.addActionListener(e -> postaviKljuc(favorit.getKljuc()));
 
     return izlazniGumb;
   }

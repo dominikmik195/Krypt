@@ -30,31 +30,28 @@ public class RSAKalkulator extends JDialog {
     konzola = _konzola;
 
     sifrirajButton.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent ev) {
-            int broj = PQDEBrojSifrat(4);
-            if (broj < 0) {
-              konzola.ispisiGresku("Uneseni otvoreni tekst nije ispravan.");
-              return;
-            }
-            int[] npq = dohvatiNPQ();
-            if (npq[3] == 0) return;
-            // Nama su bitni p i q, jer računanje pomoću njih je puno lakše.
-            // Ako p i q nisu uneseni, oni se izračunaju obzirom na uneseni n (ako je ispravan, dakako).
-            int p = npq[1];
-            int q = npq[2];
-            int e = PQDEBrojSifrat(3);
-            if (e < 0) ispisGresaka(3, e);
-            else {
-              RSAKriptosustav stroj = new RSAKriptosustav(p, q);
-              stroj.e = e;
-              stroj.sifriraj(broj);
-              sifratArea.setText(String.valueOf(stroj.vratiSifrat()));
-              konzola.ispisiPoruku("Šifriranje uspješno!");
-            }
-          }
-        });
+            ev -> {
+              int broj = PQDEBrojSifrat(4);
+              if (broj < 0) {
+                konzola.ispisiGresku("Uneseni otvoreni tekst nije ispravan.");
+                return;
+              }
+              int[] npq = dohvatiNPQ();
+              if (npq[3] == 0) return;
+              // Nama su bitni p i q, jer računanje pomoću njih je puno lakše.
+              // Ako p i q nisu uneseni, oni se izračunaju obzirom na uneseni n (ako je ispravan, dakako).
+              int p = npq[1];
+              int q = npq[2];
+              int e = PQDEBrojSifrat(3);
+              if (e < 0) ispisGresaka(3, e);
+              else {
+                RSAKriptosustav stroj = new RSAKriptosustav(p, q);
+                stroj.e = e;
+                stroj.sifriraj(broj);
+                sifratArea.setText(String.valueOf(stroj.vratiSifrat()));
+                konzola.ispisiPoruku("Šifriranje uspješno!");
+              }
+            });
     desifrirajButton.addActionListener(
         new ActionListener() {
           @Override

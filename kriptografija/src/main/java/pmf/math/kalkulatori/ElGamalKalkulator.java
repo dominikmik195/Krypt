@@ -1,6 +1,7 @@
 package pmf.math.kalkulatori;
 
 import pmf.math.algoritmi.TeorijaBrojeva;
+import pmf.math.baza.dao.ElGamalDAO;
 import pmf.math.kriptosustavi.ElGamalKriptosustav;
 import pmf.math.obradaunosa.ObradaUnosaElGamal;
 import pmf.math.router.Konzola;
@@ -8,7 +9,6 @@ import pmf.math.router.Konzola;
 import javax.swing.*;
 
 public class ElGamalKalkulator {
-
   private static final ElGamalKriptosustav stroj = new ElGamalKriptosustav();
 
   public JPanel glavniPanel;
@@ -31,9 +31,24 @@ public class ElGamalKalkulator {
   private JButton provjeriIIspraviButton;
   private JButton ocistiPoljaButton;
   private JProgressBar progressBar;
+  private JButton lijevoButton;
+  private JButton desnoButton;
+  private JLabel pbBazaLabel;
+  private JLabel tkBazaLabel;
+  private JLabel alfaBazaLabel;
+  private JLabel betaBazaLabel;
+  private JLabel tbBazaLabel;
+  private JButton odaberiPodatkeButton;
+  private JPanel podatciJPanel;
+
+  private ElGamalDAO elGamalDao = new ElGamalDAO();
+  private int trenutniPrikaz = 0;
 
   public ElGamalKalkulator(Konzola _konzola) {
     konzola = _konzola;
+    prikaziTrenutni();
+    provjeriTipkeLijevoDesno();
+
     sifrirajButton.addActionListener(
             e -> {
               onemoguciSucelje();
@@ -130,6 +145,26 @@ public class ElGamalKalkulator {
       tajniBrojField.setText("");
       otvoreniTekstArea.setText("");
       sifratArea.setText("");
+    });
+
+    desnoButton.addActionListener(e -> {
+      trenutniPrikaz++;
+      prikaziTrenutni();
+      provjeriTipkeLijevoDesno();
+    });
+
+    lijevoButton.addActionListener(e -> {
+      trenutniPrikaz--;
+      prikaziTrenutni();
+      provjeriTipkeLijevoDesno();
+    });
+
+    odaberiPodatkeButton.addActionListener(e -> {
+      prostBrojField.setText(pbBazaLabel.getText());
+      tajniKljucField.setText(tkBazaLabel.getText());
+      alfaField.setText(alfaBazaLabel.getText());
+      betaField.setText(betaBazaLabel.getText());
+      tajniBrojField.setText(tbBazaLabel.getText());
     });
   }
 
@@ -265,6 +300,7 @@ public class ElGamalKalkulator {
           alfaField.setText(String.valueOf(stroj.alfa));
           betaField.setText(String.valueOf(stroj.beta));
           tajniBrojField.setText(String.valueOf(stroj.getTajniBroj()));
+          noviElement(stroj.prostBroj, stroj.getTajniKljuc(), stroj.alfa, stroj.beta, stroj.getTajniBroj());
         }
         else
           konzola.ispisiGresku("Podatci nisu kompatibilni. Ispravak nije uspješan!");
@@ -306,5 +342,44 @@ public class ElGamalKalkulator {
     sifratArea.setEnabled(true);
     otvoreniTekstArea.setEnabled(true);
     progressBar.setVisible(false);
+  }
+
+  private void prikaziTrenutni() {
+    if(elGamalDao.brojElemenata() == 0 || podatciJPanel == null) return;
+    Integer[] podaci = elGamalDao.dohvatiElement(trenutniPrikaz);
+    if (podaci == null) {
+      podatciJPanel.setVisible(false);
+      konzola.ispisiGresku("Greška pri učitavanju povijesti ključeva.");
+    } else {
+      podatciJPanel.setVisible(true);
+      pbBazaLabel.setText(String.valueOf(podaci[0]));
+      tkBazaLabel.setText(String.valueOf(podaci[1]));
+      alfaBazaLabel.setText(String.valueOf(podaci[2]));
+      betaBazaLabel.setText(String.valueOf(podaci[3]));
+      tbBazaLabel.setText(String.valueOf(podaci[4]));
+    }
+  }
+
+  private void provjeriTipkeLijevoDesno() {
+    if(elGamalDao.brojElemenata() == 0) {
+      lijevoButton.setEnabled(false);
+      desnoButton.setEnabled(false);
+      odaberiPodatkeButton.setEnabled(false);
+    }
+    else {
+      odaberiPodatkeButton.setEnabled(true);
+      lijevoButton.setEnabled(true);
+      desnoButton.setEnabled(true);
+      if(trenutniPrikaz == 0) lijevoButton.setEnabled(false);
+      if (trenutniPrikaz == (elGamalDao.brojElemenata()-1)) desnoButton.setEnabled(false);
+    }
+  }
+
+  private void noviElement(int _pB, int _tK, int _a, int _b, int _tB) {
+    Integer podatci[] = new Integer[]{_pB, _tK, _a, _b, _tB};
+    elGamalDao.ubaciElement(podatci);
+    trenutniPrikaz = 0;
+    prikaziTrenutni();
+    provjeriTipkeLijevoDesno();
   }
 }
