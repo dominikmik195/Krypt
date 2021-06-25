@@ -376,10 +376,11 @@ public class ElGamalKalkulator {
   }
 
   private void noviElement(int _pB, int _tK, int _a, int _b, int _tB) {
-    Integer podatci[] = new Integer[]{_pB, _tK, _a, _b, _tB};
+    Integer[] podatci = new Integer[]{_pB, _tK, _a, _b, _tB};
     elGamalDao.ubaciElement(podatci);
     trenutniPrikaz = 0;
     prikaziTrenutni();
     provjeriTipkeLijevoDesno();
   }
+
 }

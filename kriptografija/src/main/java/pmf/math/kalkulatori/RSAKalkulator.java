@@ -53,29 +53,26 @@ public class RSAKalkulator extends JDialog {
               }
             });
     desifrirajButton.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent ev) {
-            int sifrat = PQDEBrojSifrat(5);
-            if (sifrat < 0) {
-              konzola.ispisiGresku("Uneseni šifrat nije ispravan.");
-              return;
-            }
-            int[] npq = dohvatiNPQ();
-            if (npq[3] == 0) return;
-            int p = npq[1];
-            int q = npq[2];
-            int d = PQDEBrojSifrat(2);
-            if (d < 0) ispisGresaka(2, d);
-            else {
-              RSAKriptosustav stroj = new RSAKriptosustav(p, q);
-              stroj.setD(d);
-              stroj.postaviSifrat(sifrat);
-              otvoreniTekstArea.setText(String.valueOf(stroj.desifriraj()));
-              konzola.ispisiPoruku("Dešifriranje uspješno!");
-            }
-          }
-        });
+            ev -> {
+              int sifrat = PQDEBrojSifrat(5);
+              if (sifrat < 0) {
+                konzola.ispisiGresku("Uneseni šifrat nije ispravan.");
+                return;
+              }
+              int[] npq = dohvatiNPQ();
+              if (npq[3] == 0) return;
+              int p = npq[1];
+              int q = npq[2];
+              int d = PQDEBrojSifrat(2);
+              if (d < 0) ispisGresaka(2, d);
+              else {
+                RSAKriptosustav stroj = new RSAKriptosustav(p, q);
+                stroj.setD(d);
+                stroj.postaviSifrat(sifrat);
+                otvoreniTekstArea.setText(String.valueOf(stroj.desifriraj()));
+                konzola.ispisiPoruku("Dešifriranje uspješno!");
+              }
+            });
     provjeriIIspraviPodatkeButton.addActionListener(
             e -> provjeriIspravi());
     ocistiPoljaButton.addActionListener(

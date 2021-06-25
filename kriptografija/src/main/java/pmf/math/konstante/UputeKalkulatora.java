@@ -63,12 +63,10 @@ public class UputeKalkulatora {
       """;
 
   public static final String EL_GAMAL_UPUTE = """
-      Za šifriranje je potrebno unijeti prost broj, alfu, betu i tajni broj. Za pokretanje postupka, pritisnete strelicu ↓.
-      
-      Za dešifriranje je potrebno unijeti prost broj, alfu, betu i tajni ključ. Za pokretanje postupka, pritisnete strelicu ↑.
-      
+      Za šifriranje je potrebno unijeti prost broj, alfu, betu i tajni broj. Također, u polje za otvoreni tekst treba unijeti proizvoljan prirodan broj. Za pokretanje postupka, pritisnete strelicu ↓.
+      Za dešifriranje je potrebno unijeti prost broj, alfu, betu i tajni ključ. Također, u polje za šifrat treba unijeti par prirodnih brojeva u formatu: '(broj1, broj2)'. Za pokretanje postupka, pritisnete strelicu ↑.
       Ukoliko želite provjeriti jesu li vaši podatci valjani, tj. međusobno kompatibilni, pritisnite odgovarajuću tipku.
-      
-      Ako podatci nisu u redu, tim postupkom će biti ispravljeni. Da bi to bilo moguće, potrebno je unijeti barem valjani n (ili p i q).
+      Ako podatci nisu u redu, tim postupkom će biti ispravljeni. Da bi to bilo moguće, potrebno je unijeti barem valjani prost broj i tajni ključ.
+      U okviru 'Povijest' će se naći samo oni podatci koji su provjereni klikom na tipku 'Provjeri i ispravi'.
       """;
 }
