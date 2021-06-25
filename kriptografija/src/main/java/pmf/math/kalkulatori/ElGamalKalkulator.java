@@ -6,10 +6,10 @@ import pmf.math.obradaunosa.ObradaUnosaElGamal;
 import pmf.math.router.Konzola;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ElGamalKalkulator {
+
+  private static final ElGamalKriptosustav stroj = new ElGamalKriptosustav();
 
   public JPanel glavniPanel;
   public Konzola konzola;
@@ -30,68 +30,97 @@ public class ElGamalKalkulator {
   private JButton desifrirajButton;
   private JButton provjeriIIspraviButton;
   private JButton ocistiPoljaButton;
+  private JProgressBar progressBar;
 
   public ElGamalKalkulator(Konzola _konzola) {
     konzola = _konzola;
     sifrirajButton.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            int[] PAB = dohvatiPAB();
-            if(PAB[3] == 0) {
-              konzola.ispisiGresku("Daljnji nastavak nije moguć!");
-              return;
-            }
-            int tB = dohvatiVarijablu(4);
-            if(tB < 0) {
-              ispisiGreske(4, tB);
-              konzola.ispisiGresku("Daljnji nastavak nije moguć!");
-              return;
-            }
-            int broj = dohvatiVarijablu(5);
-            if(broj < 0) {
-              ispisiGreske(5, broj);
-              konzola.ispisiGresku("Daljnji nastavak nije moguć!");
-              return;
-            }
-            ElGamalKriptosustav stroj = new ElGamalKriptosustav(PAB[0], PAB[1], PAB[2]);
-            stroj.sifriraj(broj, tB);
-            sifratArea.setText(String.valueOf(stroj.vratiSifrat()));
-            konzola.ispisiPoruku("Šifriranje uspješno!");
-          }
-        });
+            e -> {
+              onemoguciSucelje();
+              stroj.setOK(true);
+              stroj.reinicijalizirajPoruke();
+              int[] PAB = dohvatiPAB();
+              if(PAB[3] == 0) {
+                stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
+                stroj.setOK(false);
+              }
+              int tB = dohvatiVarijablu(4);
+              if(tB < 0 && stroj.isOK()) {
+                stroj.prosiriPoruku(vratiGresku(4, tB));
+                stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
+                stroj.setOK(false);
+              }
+              int broj = dohvatiVarijablu(5);
+              if(broj < 0 && stroj.isOK()) {
+                stroj.prosiriPoruku(vratiGresku(5, broj));
+                stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
+                stroj.setOK(false);
+              }
+
+              stroj.prostBroj = PAB[0];
+              stroj.alfa = PAB[1];
+              stroj.beta = PAB[2];
+              stroj.setTajniBroj(tB);
+              stroj.setOtvoreniTekst(broj);
+
+              SwingUtilities.invokeLater(() -> {
+                if(!stroj.dohvatiPoruke().equals("")) konzola.ispisiPoruku(stroj.dohvatiPoruke());
+                if(stroj.isOK()) {
+                  stroj.sifriraj();
+                  sifratArea.setText(String.valueOf(stroj.vratiSifrat()));
+                  konzola.ispisiPoruku("Šifriranje uspješno!");
+                }
+                else
+                  konzola.ispisiGresku("Šifriranje neuspješno!");
+                omoguciSucelje();
+              });
+            });
 
     desifrirajButton.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            int[] PAB = dohvatiPAB();
-            if(PAB[3] == 0) {
-              konzola.ispisiGresku("Daljnji nastavak nije moguć!");
-              return;
-            }
-            int tK = dohvatiVarijablu(1);
-            if(tK < 0) {
-              ispisiGreske(1, tK);
-              konzola.ispisiGresku("Daljnji nastavak nije moguć!");
-              return;
-            }
-            try {
-              String sifra = sifratArea.getText().strip();
-              if (!ObradaUnosaElGamal.provjeriSifru(sifra)) {
-                konzola.ispisiGresku("Krivi format šifre!");
-                return;
+            e -> new Thread(() -> {
+              onemoguciSucelje();
+              stroj.setOK(true);
+              stroj.reinicijalizirajPoruke();
+              int[] PAB = dohvatiPAB();
+              if(PAB[3] == 0) {
+                stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
+                stroj.setOK(false);
               }
-              ElGamalKriptosustav stroj = new ElGamalKriptosustav(PAB[0], PAB[1], PAB[2]);
-              stroj.setTajniKljuc(tK);
-              stroj.pohraniSifrat(sifra);
-              otvoreniTekstArea.setText(String.valueOf(stroj.desifriraj()));
-              konzola.ispisiPoruku("Dešifriranje uspješno!");
-            } catch (StringIndexOutOfBoundsException | NumberFormatException ex) {
-              konzola.ispisiGresku("Krivi format šifre!");
-            }
-          }
-        });
+              int tK = dohvatiVarijablu(1);
+              if(tK < 0 && stroj.isOK()) {
+                stroj.prosiriPoruku(vratiGresku(1, tK));
+                stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
+                stroj.setOK(false);
+              }
+              if(stroj.isOK()) {
+                try {
+                  String sifra = sifratArea.getText().strip();
+                  if (!ObradaUnosaElGamal.provjeriSifru(sifra)) {
+                    stroj.prosiriPoruku("Krivi format šifre!");
+                    stroj.setOK(false);
+                  }
+                  else {
+                    stroj.prostBroj = PAB[0];
+                    stroj.alfa = PAB[1];
+                    stroj.beta = PAB[2];
+                    stroj.setTajniKljuc(tK);
+                    stroj.pohraniSifrat(sifra);
+                    stroj.prosiriPoruku("Dešifriranje uspješno!");
+                  }
+                } catch (StringIndexOutOfBoundsException | NumberFormatException ex) {
+                  stroj.prosiriPoruku("Krivi format šifre!");
+                  stroj.setOK(false);
+                }
+              }
+              SwingUtilities.invokeLater(() -> {
+                konzola.ispisiPoruku(stroj.dohvatiPoruke());
+                if(stroj.isOK())
+                  otvoreniTekstArea.setText(String.valueOf(stroj.desifriraj()));
+                else
+                  konzola.ispisiGresku("Neuspjelo dešifriranje!");
+                omoguciSucelje();
+              });
+            }).start());
     provjeriIIspraviButton.addActionListener(e -> provjeriIIspravi());
     ocistiPoljaButton.addActionListener(e -> {
       prostBrojField.setText("");
@@ -124,7 +153,7 @@ public class ElGamalKalkulator {
     return trazeni;
   }
 
-  private void ispisiGreske(int kod, int rezultat) {
+  private String vratiGresku(int kod, int rezultat) {
     // Funkcija koja ispisuje greške obzirom na kod varijable i rezultata dohvaćanja.
     // Ako je rezultat -1, unosa nema ili je neispravan. Ako je rezultat -2, unos je negativan broj.
     // Ako je rezultat -3, to znači da nisu zadovoljeni posebni uvjeti kriptosustava.
@@ -138,14 +167,15 @@ public class ElGamalKalkulator {
       default -> "";
     };
     if (rezultat == -1) {
-      konzola.ispisiGresku(izraz + " nije ispravnog formata!");
+      return izraz + " nije ispravnog formata!";
     } else if (rezultat == -2) {
-      konzola.ispisiGresku(izraz + " ne smije biti negativan!");
+      return izraz + " ne smije biti negativan!";
     } else if (rezultat == -3) {
-      if (kod == 0) konzola.ispisiGresku("Uneseni broj p mora biti prost!");
-      else if(kod == 2) konzola.ispisiGresku("Alfa nije primitivni korijen!");
-      else if(kod == 3) konzola.ispisiGresku("Beta ne odgovara unesenom alfa!");
+      if (kod == 0) return "Uneseni broj p mora biti prost!";
+      else if(kod == 2) return "Alfa nije primitivni korijen!";
+      else if(kod == 3) return "Beta ne odgovara unesenom alfa!";
     }
+    return "";
   }
 
   private int[] dohvatiPAB() {
@@ -153,60 +183,128 @@ public class ElGamalKalkulator {
     // i u šifriranju i u dešifriranju. Sve tri varijable moraju biti ispravno unesene!
     int[] PAB = {-1, -1, -1, 1};
     PAB[0] = dohvatiVarijablu(0);
-    ispisiGreske(0, PAB[0]);
+    stroj.prosiriPoruku(vratiGresku(0, PAB[0]));
     PAB[1] = dohvatiVarijablu(2);
-    ispisiGreske(2, PAB[1]);
+    stroj.prosiriPoruku(vratiGresku(2, PAB[1]));
     PAB[2] = dohvatiVarijablu(3);
-    ispisiGreske(3, PAB[2]);
+    stroj.prosiriPoruku(vratiGresku(3, PAB[2]));
     if(PAB[0] < 0 || PAB[1] < 0 || PAB[2] < 0) PAB[3] = 0;
     return PAB;
   }
 
   private void provjeriIIspravi() {
-    // Funkcija koja provjerava unose i provjerava jesu li međusobno kopatibilni te ih po potrebi ispravlja.
-    int pB, tK, alfa, beta, tB;
-    // Bez prostog broja i tajnog ključa, ne možemo ništa provjeravati.
-    pB = dohvatiVarijablu(0);
-    if(pB < 0) {
-      ispisiGreske(0, pB);
-      konzola.ispisiGresku("Daljnji nastavak nije moguć.");
-      return;
-    }
-    tK = dohvatiVarijablu(1);
-    if(tK < 0) {
-      ispisiGreske(1, tK);
-      konzola.ispisiGresku("Daljnji nastavak nije moguć.");
-      return;
-    }
-    alfa = dohvatiVarijablu(2);
-    // Ovdje dodjeljujemo 'poseban' kod za alfu, ako nisu zadovoljeni uvjeti kriptosustava
-    if(!ObradaUnosaElGamal.provjeriAlfa(alfa, pB)) alfa = -3;
-    beta = dohvatiVarijablu(3);
-    // Ovdje dodjeljujemo 'poseban' kod za betu, ako nisu zadovoljeni uvjeti kriptosustava
-    if(!ObradaUnosaElGamal.provjeriBeta(alfa, beta, pB, tK)) beta = -3;
-    if(alfa < 0) {
-      // Ako alfa nije ispravan, računamo novi te postavljamo novi beta također.
-      ispisiGreske(2, alfa);
-      konzola.ispisiPoruku("Tražim alfa i beta...");
-      alfa = ElGamalKriptosustav.noviAlfa(pB);
-      alfaField.setText(String.valueOf(alfa));
-      betaField.setText(String.valueOf(ElGamalKriptosustav.noviBeta(pB, alfa, tK)));
-    }
-    else if(alfa > 0) {
-      if(beta < 0) {
-        // Ako je alfa u redu a beta nije - nalazimo novi beta.
-        ispisiGreske(3, beta);
-        konzola.ispisiPoruku("Tražim beta...");
-        betaField.setText(String.valueOf(ElGamalKriptosustav.noviBeta(pB, alfa, tK)));
+    new Thread(() -> {
+      onemoguciSucelje();
+      stroj.setNapredak(0);
+      stroj.reinicijalizirajPoruke();
+      stroj.setOK(true);
+      // Funkcija koja provjerava unose i provjerava jesu li međusobno kopatibilni te ih po potrebi ispravlja.
+      int pB, tK, alfa, beta, tB;
+      // Bez prostog broja i tajnog ključa, ne možemo ništa provjeravati.
+        pB = dohvatiVarijablu(0);
+      if(pB < 0) {
+        stroj.prosiriPoruku(vratiGresku(0, pB));
+        stroj.prosiriPoruku("Daljnji nastavak nije moguć.");
+        stroj.setOK(false);
       }
-    }
-    tB = dohvatiVarijablu(4);
-    if(tB < 0) {
-      // Ako tajni broj nije unesen, to nije katastrofa - postavljamo ga na bilo koji broj, u ovom slučaju 5.
-      ispisiGreske(4, tB);
-      tajniBrojField.setText(String.valueOf(5));
-      konzola.ispisiPoruku("Postavljam tajni broj na 5...");
-    }
-    konzola.ispisiPoruku("Podatci su kompatibilni.");
+      stroj.setNapredak(20);
+      tK = dohvatiVarijablu(1);
+      if(tK < 0 && stroj.isOK()) {
+        stroj.prosiriPoruku(vratiGresku(1, tK));
+        stroj.prosiriPoruku("Daljnji nastavak nije moguć.");
+        stroj.setOK(false);
+      }
+      stroj.setNapredak(40);
+      if(stroj.isOK()) {
+      alfa = dohvatiVarijablu(2);
+      // Ovdje dodjeljujemo 'poseban' kod za alfu, ako nisu zadovoljeni uvjeti kriptosustava
+      if(!ObradaUnosaElGamal.provjeriAlfa(alfa, pB)) alfa = -3;
+      beta = dohvatiVarijablu(3);
+      // Ovdje dodjeljujemo 'poseban' kod za betu, ako nisu zadovoljeni uvjeti kriptosustava
+      if(!ObradaUnosaElGamal.provjeriBeta(alfa, beta, pB, tK)) beta = -3;
+      if(alfa < 0) {
+        // Ako alfa nije ispravan, računamo novi te postavljamo novi beta također.
+        stroj.prosiriPoruku(vratiGresku(2, alfa));
+        stroj.prosiriPoruku("Tražim alfa i beta...");
+        alfa = ElGamalKriptosustav.noviAlfa(pB);
+        stroj.setNapredak(60);
+        beta = ElGamalKriptosustav.noviBeta(pB, alfa, tK);
+      }
+      else if(alfa > 0) {
+        stroj.setNapredak(60);
+        if(beta < 0) {
+          // Ako je alfa u redu a beta nije - nalazimo novi beta.
+          stroj.prosiriPoruku(vratiGresku(3, beta));
+          stroj.prosiriPoruku("Tražim beta...");
+          beta = ElGamalKriptosustav.noviBeta(pB, alfa, tK);
+        }
+      }
+      stroj.setNapredak(80);
+      tB = dohvatiVarijablu(4);
+      if(tB < 0) {
+        // Ako tajni broj nije unesen, to nije katastrofa - postavljamo ga na bilo koji broj, u ovom slučaju 5.
+        stroj.prosiriPoruku(vratiGresku(4, tB));
+        tB = 5;
+        stroj.prosiriPoruku("Postavljam tajni broj na 5...");
+      }
+      stroj.prosiriPoruku("Podatci su kompatibilni.");
+      stroj.prostBroj = pB;
+      stroj.alfa = alfa;
+      stroj.beta = beta;
+      stroj.setTajniKljuc(tK);
+      stroj.setTajniBroj(tB);
+      stroj.setNapredak(100);
+      }
+
+      SwingUtilities.invokeLater(() -> {
+        konzola.ispisiPoruku(stroj.dohvatiPoruke());
+        omoguciSucelje();
+        if(stroj.isOK()){
+          prostBrojField.setText(String.valueOf(stroj.prostBroj));
+          tajniKljucField.setText(String.valueOf(stroj.getTajniKljuc()));
+          alfaField.setText(String.valueOf(stroj.alfa));
+          betaField.setText(String.valueOf(stroj.beta));
+          tajniBrojField.setText(String.valueOf(stroj.getTajniBroj()));
+        }
+        else
+          konzola.ispisiGresku("Podatci nisu kompatibilni. Ispravak nije uspješan!");
+      });
+    }).start();
+
+    new Thread(() -> {
+      progressBar.setVisible(true);
+      while(progressBar.isVisible()) {
+        SwingUtilities.invokeLater(() -> progressBar.setValue(stroj.getNapredak()));
+      }
+    }).start();
+  }
+
+  public void onemoguciSucelje() {
+    prostBrojField.setEnabled(false);
+    tajniKljucField.setEnabled(false);
+    tajniBrojField.setEnabled(false);
+    alfaField.setEnabled(false);
+    betaField.setEnabled(false);
+    ocistiPoljaButton.setEnabled(false);
+    provjeriIIspraviButton.setEnabled(false);
+    sifrirajButton.setEnabled(false);
+    desifrirajButton.setEnabled(false);
+    sifratArea.setEnabled(false);
+    otvoreniTekstArea.setEnabled(false);
+  }
+
+  public void omoguciSucelje() {
+    prostBrojField.setEnabled(true);
+    tajniKljucField.setEnabled(true);
+    tajniBrojField.setEnabled(true);
+    alfaField.setEnabled(true);
+    betaField.setEnabled(true);
+    ocistiPoljaButton.setEnabled(true);
+    provjeriIIspraviButton.setEnabled(true);
+    sifrirajButton.setEnabled(true);
+    desifrirajButton.setEnabled(true);
+    sifratArea.setEnabled(true);
+    otvoreniTekstArea.setEnabled(true);
+    progressBar.setVisible(false);
   }
 }
