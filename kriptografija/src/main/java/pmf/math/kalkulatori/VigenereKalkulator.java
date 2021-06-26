@@ -1,5 +1,7 @@
 package pmf.math.kalkulatori;
 
+import static pmf.math.algoritmi.Abeceda.filtrirajTekst;
+
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -71,7 +73,7 @@ public class VigenereKalkulator {
       @Override
       public void focusLost(FocusEvent e) {
         String kljuc = kljucTextField.getText();
-        kljucTextField.setText(kljuc.toUpperCase(Locale.ROOT).replaceAll("[^A-Z]", ""));
+        kljucTextField.setText(filtrirajTekst(kljuc));
         sanitizirajTekst(otvoreniTekstTextArea);
         sanitizirajTekst(sifratTextArea);
       }
@@ -195,7 +197,7 @@ public class VigenereKalkulator {
   }
 
   public void sanitizirajTekst(JTextArea textArea) {
-    String tekst = textArea.getText().toUpperCase(Locale.ROOT).replaceAll("[^A-Z]", "");
+    String tekst = filtrirajTekst(textArea.getText());
     int m = kljucTextField.getText().length();
     if (m == 0 || vigenereovKvadratRadioButton.isSelected()) {
       textArea.setText(tekst);

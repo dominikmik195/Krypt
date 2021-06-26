@@ -1,5 +1,7 @@
 package pmf.math.kalkulatori;
 
+import static pmf.math.algoritmi.Abeceda.filtrirajTekst;
+
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
@@ -282,7 +284,7 @@ public class HillKalkulator {
   }
 
   public void sanitizirajTekst(JTextArea textArea) {
-    String tekst = textArea.getText().toUpperCase(Locale.ROOT).replaceAll("[^A-Z]", "");
+    String tekst = filtrirajTekst(textArea.getText());
     StringBuilder izlaz = new StringBuilder();
     int m = dimenzijaSlider.getModel().getValue();
 

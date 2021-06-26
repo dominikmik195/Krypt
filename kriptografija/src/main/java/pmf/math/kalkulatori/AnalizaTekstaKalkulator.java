@@ -1,5 +1,6 @@
 package pmf.math.kalkulatori;
 
+import static pmf.math.algoritmi.Abeceda.filtrirajTekst;
 import static pmf.math.konstante.DuljineTeksta.ANALIZIRANI_TEKST_REDAK_MAX;
 
 import java.awt.Color;
@@ -208,7 +209,7 @@ public class AnalizaTekstaKalkulator {
 
   public void sanitizirajTekst() {
     StringBuilder izlazniTekst = new StringBuilder();
-    String tekst = analiziraniTekst.getText().toUpperCase(Locale.ROOT).replaceAll("[^A-Z]", "");
+    String tekst = filtrirajTekst(analiziraniTekst.getText());
     for (int i = 0; i < tekst.length() - ANALIZIRANI_TEKST_REDAK_MAX;
         i += ANALIZIRANI_TEKST_REDAK_MAX) {
       izlazniTekst.append(tekst, i, i + ANALIZIRANI_TEKST_REDAK_MAX).append(" ");
