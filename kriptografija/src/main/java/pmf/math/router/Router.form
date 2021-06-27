@@ -116,7 +116,7 @@
           </component>
         </children>
       </grid>
-      <grid id="2b50c" binding="formPanel" layout-manager="BorderLayout" hgap="15" vgap="0">
+      <grid id="2b50c" binding="formPanel" layout-manager="BorderLayout" hgap="10" vgap="0">
         <constraints border-constraint="Center"/>
         <properties>
           <preferredSize width="1280" height="756"/>
@@ -128,7 +128,7 @@
           <grid id="74cea" binding="lijeviStupac" layout-manager="CardLayout" hgap="0" vgap="0">
             <constraints border-constraint="West"/>
             <properties>
-              <preferredSize width="440" height="24"/>
+              <preferredSize width="420" height="24"/>
             </properties>
             <border type="none"/>
             <children/>
