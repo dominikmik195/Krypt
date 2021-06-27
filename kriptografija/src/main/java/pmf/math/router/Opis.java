@@ -39,12 +39,7 @@ public class Opis {
   }
 
   private void postaviTipke() {
-    osvjeziGrafButton.addActionListener(e -> {
-      if (postavljanjeGrafa) {
-        return;
-      }
-      new Thread(() -> postaviGraf(true)).start();
-    });
+    osvjeziGrafButton.addActionListener(e -> new Thread(() -> postaviGraf(true)).start());
   }
 
   public void postaviTekst(String gornji, String donji, ImenaKalkulatora ime) {
@@ -56,21 +51,21 @@ public class Opis {
   }
 
   public void postaviGraf(boolean osvjezi) {
-    postavljanjeGrafa = true;
-    osvjeziGrafButton.setEnabled(false);
-
     TekstGrafovi grafSifriraj = tekstGrafDAO
       .dohvatiElement(imeKalkulatora, VrstaSimulacije.SIFRIRAJ, osvjezi);
     TekstGrafovi grafDesifriraj = tekstGrafDAO
         .dohvatiElement(imeKalkulatora, VrstaSimulacije.DESIFRIRAJ, osvjezi);
 
     postaviGrafUzPodatke(dohvatiPodatke(grafSifriraj, grafDesifriraj));
-
-    osvjeziGrafButton.setEnabled(true);
-    postavljanjeGrafa = false;
   }
 
   public void postaviGrafUzPodatke(DefaultCategoryDataset podaci) {
+    if (postavljanjeGrafa) {
+      return;
+    }
+    postavljanjeGrafa = true;
+    osvjeziGrafButton.setEnabled(false);
+
     JFreeChart linijskiDijagram = ChartFactory.createLineChart(
         "",
         "Duljina teksta (broj slova)", "Vrijeme (µs)",
@@ -85,6 +80,9 @@ public class Opis {
     ChartPanel grafPodloga = new ChartPanel(linijskiDijagram);
     grafPanel.add(grafPodloga);
     grafPanel.revalidate();
+
+    osvjeziGrafButton.setEnabled(true);
+    postavljanjeGrafa = false;
   }
 
   public void postaviPrazanGraf() {
