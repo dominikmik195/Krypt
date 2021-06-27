@@ -1,14 +1,17 @@
 package pmf.math.router;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import pmf.math.baza.BazaPodataka;
+import pmf.math.kalkulatori.AnalizaTekstaKalkulator;
 import pmf.math.kalkulatori.CezarKalkulator;
 import pmf.math.kalkulatori.ElGamalKalkulator;
 import pmf.math.kalkulatori.HillKalkulator;
@@ -39,6 +42,7 @@ public class Router extends JPanel implements ActionListener {
   private JPanel lijeviStupac;
   private JPanel desniStupac;
   private JPanel srednjiStupac;
+  private JButton analizaTekstaButton;
 
   private final BazaPodataka bazaPodataka = new BazaPodataka();
   private final Konzola konzola = new Konzola();
@@ -51,6 +55,8 @@ public class Router extends JPanel implements ActionListener {
   private final CezarKalkulator cezarKalkulator = new CezarKalkulator(konzola);
   private final SupstitucijskaKalkulator supstitucijskaKalkulator =
       new SupstitucijskaKalkulator(konzola);
+  private final AnalizaTekstaKalkulator analizaTekstaKalkulator =
+      new AnalizaTekstaKalkulator(konzola);
 
   public void Main() {
     SwingUtilities.invokeLater(this::stvoriGUI);
@@ -95,6 +101,7 @@ public class Router extends JPanel implements ActionListener {
     //srednjiStupac.add(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString(), );
     srednjiStupac.add(ImenaKalkulatora.RSA_SIFRA.toString(), RSAkalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString(), elGamalKalkulator.glavniPanel);
+    srednjiStupac.add(ImenaKalkulatora.ANALIZA_TEKSTA.toString(), analizaTekstaKalkulator.glavniPanel);
 
     cezarButton.doClick();
   }
@@ -137,6 +144,11 @@ public class Router extends JPanel implements ActionListener {
         opis.postaviTekst(OpisiKalkulatora.CEZAR_OPIS, UputeKalkulatora.CEZAR_UPUTE);
       }
 
+      case ANALIZA_TEKSTA -> {
+        prikaz.show(srednjiStupac, ImenaKalkulatora.ANALIZA_TEKSTA.toString());
+        opis.postaviTekst(OpisiKalkulatora.ANALIZA_TEKSTA_OPIS, UputeKalkulatora.ANALIZA_TEKSTA_UPUTE);
+      }
+
       default -> {
         prikaz.show(srednjiStupac, "NULL");
         opis.postaviTekst("", "");
@@ -150,76 +162,80 @@ public class Router extends JPanel implements ActionListener {
   }
 
   private void omoguciSveTipke() {
-    omoguciTipku(cezarButton);
-    omoguciTipku(supstitucijskaButton);
-    omoguciTipku(afinaButton);
-    omoguciTipku(hillovaButton);
-    omoguciTipku(vigenerovaButton);
-    omoguciTipku(playfairovaButton);
-    omoguciTipku(stupcanaButton);
-    omoguciTipku(rsaButton);
-    omoguciTipku(elgamalButton);
+    omoguciTipku(cezarButton, true);
+    omoguciTipku(supstitucijskaButton, true);
+    omoguciTipku(afinaButton, true);
+    omoguciTipku(hillovaButton, true);
+    omoguciTipku(vigenerovaButton, true);
+    omoguciTipku(playfairovaButton, true);
+    omoguciTipku(stupcanaButton, true);
+    omoguciTipku(rsaButton, true);
+    omoguciTipku(elgamalButton, true);
+    omoguciTipku(analizaTekstaButton, true);
   }
 
-  private void omoguciTipku(JButton button) {
-    button.setEnabled(true);
-    button.setFocusable(true);
+  private void omoguciTipku(JButton button, boolean omoguci) {
+    button.setEnabled(omoguci);
+    button.setFocusable(omoguci);
+    button.setOpaque(omoguci);
+    if(omoguci) {
+      button.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    }
+    else {
+      button.setBorder(BorderFactory.createEmptyBorder());
+    }
   }
 
   private void postaviTipke() {
     cezarButton.addActionListener(e -> {
       omoguciSveTipke();
-      cezarButton.setEnabled(false);
-      cezarButton.setFocusable(false);
+      omoguciTipku(cezarButton, false);
       postaviKalkulator(ImenaKalkulatora.CEZAROVA_SIFRA);
     });
     supstitucijskaButton.addActionListener(e -> {
       omoguciSveTipke();
-      supstitucijskaButton.setEnabled(false);
-      supstitucijskaButton.setFocusable(false);
+      omoguciTipku(supstitucijskaButton, false);
       postaviKalkulator(ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA);
     });
     afinaButton.addActionListener(e -> {
       omoguciSveTipke();
-      afinaButton.setEnabled(false);
-      afinaButton.setFocusable(false);
+      omoguciTipku(afinaButton, false);
       postaviKalkulator(ImenaKalkulatora.AFINA_SIFRA);
     });
     hillovaButton.addActionListener(e -> {
       omoguciSveTipke();
-      hillovaButton.setEnabled(false);
-      hillovaButton.setFocusable(false);
+      omoguciTipku(hillovaButton, false);
       postaviKalkulator(ImenaKalkulatora.HILLOVA_SIFRA);
     });
     vigenerovaButton.addActionListener(e -> {
       omoguciSveTipke();
-      vigenerovaButton.setEnabled(false);
-      vigenerovaButton.setFocusable(false);
+      omoguciTipku(vigenerovaButton, false);
       postaviKalkulator(ImenaKalkulatora.VIGENEROVA_SIFRA);
     });
     playfairovaButton.addActionListener(e -> {
       omoguciSveTipke();
-      playfairovaButton.setEnabled(false);
-      playfairovaButton.setFocusable(false);
+      omoguciTipku(playfairovaButton, false);
       postaviKalkulator(ImenaKalkulatora.PLAYFAIROVA_SIFRA);
     });
     stupcanaButton.addActionListener(e -> {
       omoguciSveTipke();
-      stupcanaButton.setEnabled(false);
-      stupcanaButton.setFocusable(false);
+      omoguciTipku(stupcanaButton, false);
       postaviKalkulator(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA);
     });
     rsaButton.addActionListener(e -> {
       omoguciSveTipke();
-      rsaButton.setEnabled(false);
-      rsaButton.setFocusable(false);
+      omoguciTipku(rsaButton, false);
       postaviKalkulator(ImenaKalkulatora.RSA_SIFRA);
     });
     elgamalButton.addActionListener(e -> {
       omoguciSveTipke();
-      elgamalButton.setEnabled(false);
-      elgamalButton.setFocusable(false);
+      omoguciTipku(elgamalButton, false);
       postaviKalkulator(ImenaKalkulatora.EL_GAMALOVA_SIFRA);
+    });
+    analizaTekstaButton.addActionListener(e -> {
+      omoguciSveTipke();
+      omoguciTipku(analizaTekstaButton, false);
+      postaviKalkulator(ImenaKalkulatora.ANALIZA_TEKSTA);
     });
   }
 
