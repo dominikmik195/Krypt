@@ -57,10 +57,19 @@ public class TeorijaBrojeva {
     return redElementa(element, modulo) == modulo - 1;
   }
 
+  // Multiplikativni inverzi modulo 26. Spremamo ih ovdje kako se ne bi morali uvijek iznova
+  // računati budući da se često koriste. -1 je oznaka da inverz ne postoji.
+  public static final int[] inverziModulo26 = {
+    -1, 1, -1, 9, -1, 21, -1, 15, -1, 3, -1, 19, -1, -1, -1, 7, -1, 23, -1, 11, -1, 5, -1, 17, -1,
+    25
+  };
+
   public static int inverz(int broj, int modulo) {
-    // Računamo inverz i koristimo se brute force metodom. Funkcija je relativno brza, ali treba paziti na granicu.
+    // Računamo inverz i koristimo se brute force metodom. Funkcija je relativno brza, ali treba
+    // paziti na granicu.
     // Naime, pokušamo kao granicu definirati modulo*modulo, ali ako je taj modulo preveliki,
-    // onda će granica (umnožak) biti prevelika, pa je definiramo kao maksimalnu moguću vrijednost u tom slučaju.
+    // onda će granica (umnožak) biti prevelika, pa je definiramo kao maksimalnu moguću vrijednost u
+    // tom slučaju.
     int granica = modulo * modulo;
     if (granica < 0) granica = Integer.MAX_VALUE;
     for (int i = 0; i < granica; i++) {
@@ -79,7 +88,8 @@ public class TeorijaBrojeva {
   }
 
   public static int posebnaEulerovaFunkcija(int prost1, int prost2) {
-    // Trivijalna funkcija, ali definirana je na ovaj način kako bismo naznačili da doista radimo s Eulerovom funkcijom.
+    // Trivijalna funkcija, ali definirana je na ovaj način kako bismo naznačili da doista radimo s
+    // Eulerovom funkcijom.
     return prost1 * prost2 - prost1 - prost2 + 1;
   }
 }

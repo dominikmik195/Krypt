@@ -9,13 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import pmf.math.baza.BazaPodataka;
-import pmf.math.kalkulatori.CezarKalkulator;
-import pmf.math.kalkulatori.ElGamalKalkulator;
-import pmf.math.kalkulatori.HillKalkulator;
-import pmf.math.kalkulatori.RSAKalkulator;
-import pmf.math.kalkulatori.PlayfairKalkulator;
-import pmf.math.kalkulatori.SupstitucijskaKalkulator;
-import pmf.math.kalkulatori.VigenereKalkulator;
+import pmf.math.kalkulatori.*;
 import pmf.math.konstante.ImenaKalkulatora;
 import pmf.math.konstante.OpisiKalkulatora;
 import pmf.math.konstante.UputeKalkulatora;
@@ -51,6 +45,7 @@ public class Router extends JPanel implements ActionListener {
   private final CezarKalkulator cezarKalkulator = new CezarKalkulator(konzola);
   private final SupstitucijskaKalkulator supstitucijskaKalkulator =
       new SupstitucijskaKalkulator(konzola);
+  private final AfinaKalkulator afinaKalkulator = new AfinaKalkulator(konzola);
 
   public void Main() {
     SwingUtilities.invokeLater(this::stvoriGUI);
@@ -87,7 +82,7 @@ public class Router extends JPanel implements ActionListener {
     srednjiStupac.add(ImenaKalkulatora.CEZAROVA_SIFRA.toString(), cezarKalkulator.kalkulatorPanel);
     srednjiStupac.add(
         ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString(), supstitucijskaKalkulator.glavniPanel);
-    //srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), );
+    srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), afinaKalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.HILLOVA_SIFRA.toString(), hillKalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.VIGENEROVA_SIFRA.toString(), vigenereKalkulator.glavniPanel);
     srednjiStupac.add(
@@ -135,6 +130,11 @@ public class Router extends JPanel implements ActionListener {
       case CEZAROVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.CEZAROVA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.CEZAR_OPIS, UputeKalkulatora.CEZAR_UPUTE);
+      }
+
+      case AFINA_SIFRA -> {
+        prikaz.show(srednjiStupac, ImenaKalkulatora.AFINA_SIFRA.toString());
+        opis.postaviTekst(OpisiKalkulatora.AFINA_OPIS, UputeKalkulatora.AFINA_UPUTE);
       }
 
       default -> {

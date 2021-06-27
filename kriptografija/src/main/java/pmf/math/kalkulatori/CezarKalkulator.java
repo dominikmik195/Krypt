@@ -34,9 +34,7 @@ public class CezarKalkulator extends JPanel {
 
     // O(ne)mogućavanje unosa ključne riječi.
     kljucCheckBox.addItemListener(
-        e -> {
-          kljucnaRijecTextField.setEditable(e.getStateChange() != ItemEvent.DESELECTED);
-        });
+        e -> kljucnaRijecTextField.setEditable(e.getStateChange() != ItemEvent.DESELECTED));
 
     // Prikaz supstitucije u UI-ju.
     pomakSpinner.addChangeListener(e -> (new Permutacija()).azuriraj());
