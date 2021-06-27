@@ -24,8 +24,8 @@ public class ElGamalKalkulator {
   private JTextField alfaField;
   private JTextField betaField;
   private JTextField tajniBrojField;
-  private JTextArea otvoreniTekstArea;
-  private JTextArea sifratArea;
+  private JTextField otvoreniTekstArea;
+  private JTextField sifratArea;
   private JButton sifrirajButton;
   private JButton desifrirajButton;
   private JButton provjeriIIspraviButton;
@@ -84,6 +84,8 @@ public class ElGamalKalkulator {
                   stroj.sifriraj();
                   sifratArea.setText(String.valueOf(stroj.vratiSifrat()));
                   konzola.ispisiPoruku("Šifriranje uspješno!");
+                  stroj.setTajniKljuc(dohvatiVarijablu(1));
+                  noviElement(stroj.prostBroj, stroj.getTajniKljuc(), stroj.alfa, stroj.beta, stroj.getTajniBroj());
                 }
                 else
                   konzola.ispisiGresku("Šifriranje neuspješno!");
@@ -129,8 +131,11 @@ public class ElGamalKalkulator {
               }
               SwingUtilities.invokeLater(() -> {
                 konzola.ispisiPoruku(stroj.dohvatiPoruke());
-                if(stroj.isOK())
+                if(stroj.isOK()) {
                   otvoreniTekstArea.setText(String.valueOf(stroj.desifriraj()));
+                  stroj.setTajniBroj(dohvatiVarijablu(4));
+                  noviElement(stroj.prostBroj, stroj.getTajniKljuc(), stroj.alfa, stroj.beta, stroj.getTajniBroj());
+                }
                 else
                   konzola.ispisiGresku("Neuspjelo dešifriranje!");
                 omoguciSucelje();
