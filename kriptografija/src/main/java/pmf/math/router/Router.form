@@ -6,7 +6,7 @@
     </constraints>
     <properties>
       <minimumSize width="24" height="24"/>
-      <preferredSize width="1366" height="768"/>
+      <preferredSize width="1400" height="960"/>
     </properties>
     <border type="none"/>
     <children>
@@ -116,10 +116,10 @@
           </component>
         </children>
       </grid>
-      <grid id="2b50c" binding="formPanel" layout-manager="BorderLayout" hgap="30" vgap="0">
+      <grid id="2b50c" binding="formPanel" layout-manager="BorderLayout" hgap="15" vgap="0">
         <constraints border-constraint="Center"/>
         <properties>
-          <preferredSize width="1024" height="756"/>
+          <preferredSize width="1280" height="756"/>
         </properties>
         <border type="none">
           <title-color color="-4473925"/>
@@ -128,7 +128,7 @@
           <grid id="74cea" binding="lijeviStupac" layout-manager="CardLayout" hgap="0" vgap="0">
             <constraints border-constraint="West"/>
             <properties>
-              <preferredSize width="380" height="24"/>
+              <preferredSize width="440" height="24"/>
             </properties>
             <border type="none"/>
             <children/>
@@ -136,7 +136,7 @@
           <grid id="c63b1" binding="desniStupac" layout-manager="CardLayout" hgap="0" vgap="0">
             <constraints border-constraint="East"/>
             <properties>
-              <preferredSize width="260" height="24"/>
+              <preferredSize width="290" height="24"/>
             </properties>
             <border type="none"/>
             <children/>

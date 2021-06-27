@@ -1,14 +1,13 @@
 package pmf.math.kalkulatori;
 
 import static pmf.math.algoritmi.Abeceda.filtrirajTekst;
-import static pmf.math.algoritmi.VrijemeDatum.dohvatiVrijemeDatum;
+import static pmf.math.pomagala.VrijemeDatum.dohvatiVrijemeDatum;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.Locale;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -22,6 +21,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import pmf.math.baza.dao.PlayfairDAO;
 import pmf.math.baza.tablice.PlayfairPovijest;
+import pmf.math.filteri.PlayfairFilter;
 import pmf.math.kriptosustavi.PlayfairKriptosustav;
 import pmf.math.kriptosustavi.PlayfairKriptosustav.Jezik;
 import pmf.math.router.Konzola;
@@ -217,26 +217,17 @@ public class PlayfairKalkulator {
   }
 
   public void sanitizirajTekst(JTextArea textArea) {
+    Jezik jezik = hrvatskiRadioButton.isSelected() ? Jezik.HRVATSKI : Jezik.ENGLESKI;
     String tekst = filtrirajTekst(textArea.getText());
-    if (hrvatskiRadioButton.isSelected()) {
-      tekst = tekst.replaceAll("W", "V");
-    }
-    if (engleskiRadioButton.isSelected()) {
-      tekst = tekst.replaceAll("J", "I");
-    }
-    StringBuilder izlaz = new StringBuilder();
+    String izlaz = PlayfairFilter.filtriraj(tekst, jezik);
 
-    for (int i = 0; i < tekst.length(); i += 2) {
-      izlaz.append(tekst, i, Math.min(i + 2, tekst.length()))
-          .append(i + 2 < tekst.length() ? " " : "");
-    }
-    if (!izlaz.toString().equals(textArea.getText())
+    if (!izlaz.equals(textArea.getText())
         && textArea.getText().replaceAll(" ", "").length() % 2 != 0) {
       mojaKonzola
           .ispisiGresku("OPREZ! Unos mora biti parne duljine. Zadnje slovo neće biti izmijenjeno.");
     }
 
-    textArea.setText(izlaz.toString());
+    textArea.setText(izlaz);
   }
 
   public void postaviRubove() {
