@@ -1,5 +1,6 @@
 package pmf.math.kalkulatori;
 
+import static pmf.math.algoritmi.Abeceda.filtrirajTekst;
 import static pmf.math.algoritmi.VrijemeDatum.dohvatiVrijemeDatum;
 
 import java.awt.Dimension;
@@ -64,12 +65,8 @@ public class PlayfairKalkulator {
     jezikButtonGroup.add(hrvatskiRadioButton);
     jezikButtonGroup.add(engleskiRadioButton);
 
-    hrvatskiRadioButton.addActionListener(e -> {
-      postaviKljuc(kljucTekstField.getText());
-    });
-    engleskiRadioButton.addActionListener(e -> {
-      postaviKljuc(kljucTekstField.getText());
-    });
+    hrvatskiRadioButton.addActionListener(e -> postaviKljuc(kljucTekstField.getText()));
+    engleskiRadioButton.addActionListener(e -> postaviKljuc(kljucTekstField.getText()));
 
     // Početna tablica
     hrvatskiRadioButton.setSelected(true);
@@ -141,7 +138,7 @@ public class PlayfairKalkulator {
   }
 
   public void postaviKljuc(String kljuc) {
-    kljuc = kljuc.toUpperCase(Locale.ROOT).replaceAll("[^A-Z]", "");
+    kljuc = filtrirajTekst(kljuc);
     if (kljuc.length() >= 25) {
       kljuc = kljuc.substring(0, 25);
     }
@@ -193,9 +190,7 @@ public class PlayfairKalkulator {
     JButton izlazniGumb = new JButton(favorit.getKljuc());
     izlazniGumb.setPreferredSize(new Dimension(150, 30));
 
-    izlazniGumb.addActionListener(e -> {
-      postaviKljuc(favorit.getKljuc());
-    });
+    izlazniGumb.addActionListener(e -> postaviKljuc(favorit.getKljuc()));
 
     return izlazniGumb;
   }
@@ -216,7 +211,7 @@ public class PlayfairKalkulator {
   }
 
   public void sanitizirajTekst(JTextArea textArea) {
-    String tekst = textArea.getText().toUpperCase(Locale.ROOT).replaceAll("[^A-Z]", "");
+    String tekst = filtrirajTekst(textArea.getText());
     if (hrvatskiRadioButton.isSelected()) {
       tekst = tekst.replaceAll("W", "V");
     }
