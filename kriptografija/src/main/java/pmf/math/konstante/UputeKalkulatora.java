@@ -69,4 +69,10 @@ public class UputeKalkulatora {
       Ako podatci nisu u redu, tim postupkom će biti ispravljeni. Da bi to bilo moguće, potrebno je unijeti barem valjani prost broj i tajni ključ.
       U okviru 'Povijest' će se naći samo oni podatci koji su provjereni klikom na tipku 'Provjeri i ispravi'.
       """;
+
+  public static final String ANALIZA_TEKSTA_UPUTE = """
+      Kako bi se izvršila analiza teksta potrebno je upisati tekst u pripadnu bijelu kućicu te kliknuti gumb "Analiziraj".
+      
+      Klikom na gumb "Očisti" brišu se svi podaci sa kalkulatora.
+      """;
 }

@@ -80,4 +80,69 @@ public class OpisiKalkulatora {
       Upravo u tome leži teškoća razbijanja šifre, jer da bi netko znao koliki je k, ili mora poznavati tajni ključ ili morao biti u mogućnosti riješiti problem diskretnog logaritma.
       Stoga se dešifriranje vrši pomoću brojeva p, alfa, beta i tajnog ključa.
       """;
+
+  public static final String ANALIZA_TEKSTA_OPIS = """
+      Analiza frekvencije pojedinih slova u šifratu može pomoći u supstitucijskim šiframa za otkrivanje otvorenog teksta.
+      
+      To se čini tako da se te frekvencije usporede sa prosječnim i očekivanim frekvencijama u otvorenom tekstu.
+      
+      Bitno je naglasiti da je ova metoda bolja što je tekst opsežniji i raznolikiji.
+      
+      Slijede srednje frekvencije slova, bigrama i trigrama na raznim jezicima:
+      
+      HRVATSKI   ENGLESKI    NJEMAČKI
+      A   115    E   127     E   175
+      I   98     T   91      N   98
+      O   90     A   82      I   77
+      E   84     O   75      R   75
+      N   66     I   70      S   68
+      S   56     N   67      A   65
+      R   54     S   63      T   61
+      J   51     H   61      D   48
+      T   48     R   60      H   42
+      U   43     D   43      U   42
+      D   37     L   40      L   35
+      K   36     C   28      G   31
+      V   35     U   28      O   30
+      L   33     M   24      C   27
+      M   31     W   23      M   26
+      P   29     F   22      B   19
+      C   28     G   20      F   17
+      Z   23     Y   20      W   15
+      G   16     P   19      K   15
+      B   15     B   15      Z   11
+      H   8      V   10      P   10
+      F   3      K   8       V   9
+      Q   0      J   2       J   3
+      Y   0      Q   1       Y   1
+      X   0      X   1       X   0
+      W   0      Z   1       Q   0
+                  
+                  
+                  
+      Zatim najčešći bigrami:
+      
+      HRVATSKI:
+      JE, NA, RA, ST, AN, NI, KO, OS, TI, IJ, NO, EN, PR
+      
+      ENGLESKI:
+      TH, HE, AN, IN, ER, RE, ON, ES, TI, AT
+      
+      NJEMAČKI:
+      ER, EN, CH, DE, EI, ND, TE, IN, IE, GE
+      
+      
+      
+      Zatim najčešći trigrami:
+      
+      HRVATSKI:
+      IJE, STA, OST, JED, KOJ, OJE, JEN
+      
+      ENGLESKI:
+      THE, ING, AND, ION, TIO, ENT, ERE, HER
+      
+      NJEMAČKI:
+      EIN, ICH, NDE, DIE, UND, DER, CHE, END
+      
+      """;
 }

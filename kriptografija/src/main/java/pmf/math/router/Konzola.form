@@ -9,25 +9,33 @@
     <properties>
       <background color="-16777216"/>
       <minimumSize width="50" height="23"/>
+      <opaque value="false"/>
     </properties>
     <border type="none">
       <title-color color="-4473925"/>
     </border>
     <children>
-      <component id="acb0e" class="javax.swing.JTextPane" binding="ispisKonzole">
+      <scrollpane id="d4f37">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="50"/>
-          </grid>
-          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms top="10" left="10" bottom="10" right="10" defaultalign-horz="false" defaultalign-vert="false"/>
         </constraints>
-        <properties>
-          <background color="-16777216"/>
-          <editable value="false"/>
-          <foreground color="-1"/>
-          <text value=""/>
-        </properties>
-      </component>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="acb0e" class="javax.swing.JTextPane" binding="ispisKonzole">
+            <constraints/>
+            <properties>
+              <background color="-16777216"/>
+              <editable value="false"/>
+              <font size="14"/>
+              <foreground color="-1"/>
+              <margin top="10" left="10" bottom="10" right="10"/>
+              <text value=""/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
     </children>
   </grid>
 </form>

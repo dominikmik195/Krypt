@@ -17,7 +17,6 @@ public class Konzola {
   public void ispisiPoruku(String poruka){
     SimpleAttributeSet set = new SimpleAttributeSet();
     StyleConstants.setForeground(set, Color.WHITE);
-    StyleConstants.setFontSize(set, 11);
     StyledDocument tekst = ispisKonzole.getStyledDocument();
     try { tekst.insertString(tekst.getLength(), dohvatiVrijeme() + " " + poruka + "\n", set); }
     catch (BadLocationException ignored) { }
@@ -27,7 +26,6 @@ public class Konzola {
   public void ispisiGresku(String poruka) {
     SimpleAttributeSet set = new SimpleAttributeSet();
     StyleConstants.setForeground(set, Color.RED);
-    StyleConstants.setFontSize(set, 11);
     StyledDocument tekst = ispisKonzole.getStyledDocument();
     try { tekst.insertString(tekst.getLength(), dohvatiVrijeme() + " " + poruka + "\n", set); }
     catch (BadLocationException ignored) { }
