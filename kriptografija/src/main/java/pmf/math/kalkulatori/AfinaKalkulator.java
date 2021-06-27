@@ -1,11 +1,15 @@
 package pmf.math.kalkulatori;
 
+import com.jgoodies.forms.layout.FormLayout;
 import pmf.math.algoritmi.TeorijaBrojeva;
+import pmf.math.baza.dao.AfinaDAO;
+import pmf.math.baza.tablice.AfinaPovijest;
 import pmf.math.kriptosustavi.AfiniKriptosustav;
 import pmf.math.obradaunosa.ObradaUnosa;
 import pmf.math.router.Konzola;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,8 +24,11 @@ public class AfinaKalkulator {
   private JButton sifrirajButton;
   private JButton desifrirajButton;
   private JLabel permutacijaLabel;
+  private JPanel povijestPanel;
 
   private final Konzola konzola;
+
+  private final AfinaDAO afinaDAO = new AfinaDAO();
 
   public AfinaKalkulator(Konzola konzola) {
     this.konzola = konzola;
@@ -41,6 +48,8 @@ public class AfinaKalkulator {
         });
 
     aSpinner.setValue(1); // Identiteta.
+
+    osvjeziPovijest();
   }
 
   private class Sifriraj implements ActionListener {
@@ -66,6 +75,11 @@ public class AfinaKalkulator {
       if (!greska) {
         sifratArea.setText(sifrat);
         konzola.ispisiPoruku("Poruka uspješno šifrirana afinom šifrom.");
+
+        // Ispis i ažuriranje povijesti.
+        // TODO: Ubaciti % 26 ili originalno upisani broj?
+        afinaDAO.ubaciElement((Integer) aSpinner.getValue(), (Integer) bSpinner.getValue());
+        osvjeziPovijest();
       }
     }
   }
@@ -93,8 +107,35 @@ public class AfinaKalkulator {
       if (!greska) {
         otvoreniTekstArea.setText(otvoreniTekst);
         konzola.ispisiPoruku("Poruka uspješno dešifrirana afinom šifrom.");
+
+        // Ispis i ažuriranje povijesti.
+        // TODO: Ubaciti % 26 ili originalno upisani broj?
+        afinaDAO.ubaciElement((Integer) aSpinner.getValue(), (Integer) bSpinner.getValue());
+        osvjeziPovijest();
       }
     }
+  }
+
+  public JButton stvoriGumbPovijesti(AfinaPovijest povijest) {
+    String tekst = "a = " + povijest.getA() + " i b = " + povijest.getB();
+    JButton noviGumb = new JButton(tekst);
+    // noviGumb.setMaximumSize(new Dimension(50, -1));
+
+    // TODO: Dodaj action listenera.
+    noviGumb.addActionListener(
+        e -> {
+          aSpinner.setValue(povijest.getA());
+          bSpinner.setValue(povijest.getB());
+        });
+
+    return noviGumb;
+  }
+
+  public void osvjeziPovijest() {
+    povijestPanel.removeAll();
+    povijestPanel.setLayout(new GridLayout(1, 1));
+    afinaDAO.dohvatiElemente().forEach(element -> povijestPanel.add(stvoriGumbPovijesti(element)));
+    povijestPanel.revalidate();
   }
 
   private class Permutacija {
