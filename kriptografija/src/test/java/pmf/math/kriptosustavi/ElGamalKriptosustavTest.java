@@ -8,13 +8,15 @@ public class ElGamalKriptosustavTest extends TestCase {
   private ElGamalKriptosustav stroj;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     stroj = new ElGamalKriptosustav(107, 2, 94);
+    stroj.setOtvoreniTekst(66);
+    stroj.setTajniBroj(45);
     assertNotNull(stroj);
   }
 
   public void testSifriraj() {
-    stroj.sifriraj(66, 45);
+    stroj.sifriraj();
     assertEquals("(28, 9)", stroj.vratiSifrat());
   }
 

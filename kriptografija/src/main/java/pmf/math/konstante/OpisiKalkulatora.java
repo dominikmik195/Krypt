@@ -73,7 +73,12 @@ public class OpisiKalkulatora {
       """;
 
   public static final String EL_GAMAL_OPIS = """
-
+      Ovu šifru je osmislio egipatski kriptograf, Taher Elgamal 1985. godine.
+      Riječ je o kriptosustavu s javnim ključem koji je zasnovan na teškoći računanja diskretnog logaritma u konačnim poljima.
+      Sastoji se od javnih ključeva: prostog broja p, alfe - koja je primitivni korijen modulo p i bete - koja je kongruentna s alfa potencirano na a modulo p. Ovdje je a proizvoljan tajni ključ.
+      Šifriranje se odvija tako da se nasumično odabere tajni broj k pomoću kojeg se onda - uz p, alfa i beta - otvoreni tekst šifrira kao uređeni par dvaju brojeva.
+      Upravo u tome leži teškoća razbijanja šifre, jer da bi netko znao koliki je k, ili mora poznavati tajni ključ ili morao biti u mogućnosti riješiti problem diskretnog logaritma.
+      Stoga se dešifriranje vrši pomoću brojeva p, alfa, beta i tajnog ključa.
       """;
 
   public static final String ANALIZA_TEKSTA_OPIS = """
