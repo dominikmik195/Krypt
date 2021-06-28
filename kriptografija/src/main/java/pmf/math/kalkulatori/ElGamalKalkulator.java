@@ -41,7 +41,7 @@ public class ElGamalKalkulator {
   private JButton odaberiPodatkeButton;
   private JPanel podatciJPanel;
 
-  private ElGamalDAO elGamalDao = new ElGamalDAO();
+  private final ElGamalDAO elGamalDao = new ElGamalDAO();
   private int trenutniPrikaz = 0;
 
   public ElGamalKalkulator(Konzola _konzola) {
@@ -321,6 +321,7 @@ public class ElGamalKalkulator {
   }
 
   public void onemoguciSucelje() {
+    odaberiPodatkeButton.setEnabled(false);
     prostBrojField.setEnabled(false);
     tajniKljucField.setEnabled(false);
     tajniBrojField.setEnabled(false);
@@ -335,6 +336,7 @@ public class ElGamalKalkulator {
   }
 
   public void omoguciSucelje() {
+    provjeriTipkeLijevoDesno();
     prostBrojField.setEnabled(true);
     tajniKljucField.setEnabled(true);
     tajniBrojField.setEnabled(true);

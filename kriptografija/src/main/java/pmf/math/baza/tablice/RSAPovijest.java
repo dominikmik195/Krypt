@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@DatabaseTable(tableName = "elgamal")
+@DatabaseTable(tableName = "rsa")
 public class RSAPovijest {
 
     @DatabaseField(generatedId = true, allowGeneratedIdInsert = true)

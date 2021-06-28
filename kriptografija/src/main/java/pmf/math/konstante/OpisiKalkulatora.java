@@ -69,7 +69,11 @@ public class OpisiKalkulatora {
       """;
 
   public static final String RSA_OPIS = """
-        
+        Najpopularniji i najšire korišteni kriptosustav s javnim ključem je RSA kriptosustav koji su izumili Ron Rivest, Adi Shamir i Len Adleman 1977. godine.
+        Njegova sigurnost je zasnovana na teškoći faktorizacije velikih prirodnih brojeva.
+        Sastoji se od javnih ključeva: n i e, te privatnih vrijednosti: p, q i d. Broj n je pritom umnožak prostih brojeva p i q, a umnožak brojeva d i e pri djeljenju brojem n daje ostatak 1.
+        Šifriranje se odvija tako da se broj potencira na e-tu potenciju te se onda računa ostatak dobivenog broja pri djeljenju s n.
+        Dešifriranje se odvija tako da se broj potencira na d-tu potenciju te se onda računa ostatak dobivenog broja pri djeljenju s n.
       """;
 
   public static final String EL_GAMAL_OPIS = """
