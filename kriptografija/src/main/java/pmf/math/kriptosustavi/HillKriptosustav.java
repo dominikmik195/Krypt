@@ -1,6 +1,5 @@
 package pmf.math.kriptosustavi;
 
-import static java.lang.System.exit;
 import static pmf.math.algoritmi.Abeceda.uBroj;
 import static pmf.math.algoritmi.Abeceda.uSlovo;
 
@@ -15,6 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 import pmf.math.algoritmi.Matrica;
 import pmf.math.algoritmi.Vektor;
+import pmf.math.baza.dao.TekstGrafDAO.VrstaSimulacije;
 
 @Setter
 @Getter
@@ -145,5 +145,12 @@ public class HillKriptosustav {
       rezultat[i] = uSlovo(array[i]);
     }
     return rezultat;
+  }
+
+  public static int[] simuliraj(int[] duljineTekstova, VrstaSimulacije vrstaSimulacije, int brojIteracija) {
+    return switch (vrstaSimulacije) {
+      case SIFRIRAJ -> duljineTekstova;
+      case DESIFRIRAJ -> new int[duljineTekstova.length];
+    };
   }
 }
