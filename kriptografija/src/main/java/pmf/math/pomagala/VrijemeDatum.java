@@ -1,4 +1,4 @@
-package pmf.math.algoritmi;
+package pmf.math.pomagala;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
