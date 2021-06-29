@@ -62,9 +62,11 @@ public class TeorijaBrojeva {
     // Naime, pokušamo kao granicu definirati modulo*modulo, ali ako je taj modulo preveliki,
     // onda će granica (umnožak) biti prevelika, pa je definiramo kao maksimalnu moguću vrijednost u tom slučaju.
     int granica = modulo * modulo;
+    BigInteger br = new BigInteger(String.valueOf(broj));
+    BigInteger mod = new BigInteger(String.valueOf(modulo));
     if (granica < 0) granica = Integer.MAX_VALUE;
     for (int i = 0; i < granica; i++) {
-      if ((i * broj) % modulo == 1) {
+      if (br.multiply(new BigInteger(String.valueOf(i))).mod(mod).intValue() == 1) {
         return i;
       }
     }

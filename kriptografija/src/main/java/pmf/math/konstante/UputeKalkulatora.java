@@ -53,21 +53,17 @@ public class UputeKalkulatora {
       """;
 
   public static final String RSA_UPUTE = """
-      Za šifriranje je potrebno unijeti broj n (ili p i q), i broj e.
-      
-      Za dešifriranje je potrebno unijeti broj n (ili p i q), i broj d.
-      
-      Ukoliko želite provjeriti jesu li vaši podatci valjani, tj. međusobno kompatibilni, pritisnite odgovarajuću tipku.
-      
-      Ako podatci nisu u redu, tim postupkom će biti ispravljeni. Da bi to bilo moguće, potrebno je unijeti barem prost broj i tajni ključ.
+      Za šifriranje je potrebno unijeti broj n (ili brojeve p i q), i broj e. Također, u polje 'Broj' je potrebno unijeti proizvoljan prirodan broj. Za pokretanje postupka, pritisnete strelicu ↓.
+      Za dešifriranje je potrebno unijeti broj n (ili brojeve p i q), i broj d. U polje za šifrat treba unijeti proizvoljan prirodan broj. Za pokretanje postupka, pritisnete strelicu ↑.      
+      Ukoliko želite provjeriti jesu li vaši podatci valjani, tj. međusobno kompatibilni, pritisnite odgovarajuću tipku.     
+      Ako podatci nisu u redu, tim postupkom će biti ispravljeni. Da bi to bilo moguće, potrebno je unijeti barem broj n ili brojeve p i q.
       """;
 
   public static final String EL_GAMAL_UPUTE = """
-      Za šifriranje je potrebno unijeti prost broj, alfu, betu i tajni broj. Također, u polje za otvoreni tekst treba unijeti proizvoljan prirodan broj. Za pokretanje postupka, pritisnete strelicu ↓.
+      Za šifriranje je potrebno unijeti prost broj, alfu, betu i tajni broj. Također, u polje 'Broj' treba unijeti proizvoljan prirodan broj. Za pokretanje postupka, pritisnete strelicu ↓.
       Za dešifriranje je potrebno unijeti prost broj, alfu, betu i tajni ključ. Također, u polje za šifrat treba unijeti par prirodnih brojeva u formatu: '(broj1, broj2)'. Za pokretanje postupka, pritisnete strelicu ↑.
       Ukoliko želite provjeriti jesu li vaši podatci valjani, tj. međusobno kompatibilni, pritisnite odgovarajuću tipku.
       Ako podatci nisu u redu, tim postupkom će biti ispravljeni. Da bi to bilo moguće, potrebno je unijeti barem valjani prost broj i tajni ključ.
-      U okviru 'Povijest' će se naći samo oni podatci koji su provjereni klikom na tipku 'Provjeri i ispravi'.
       """;
 
   public static final String ANALIZA_TEKSTA_UPUTE = """
