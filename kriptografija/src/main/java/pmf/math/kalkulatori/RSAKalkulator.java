@@ -33,8 +33,9 @@ public class RSAKalkulator extends JDialog {
   private JLabel dLabelBaza;
   private JLabel eLabelBaza;
   private JPanel podatciPanel;
+    private JProgressBar progressBar;
 
-  private final static RSAKriptosustav stroj = new RSAKriptosustav();
+    private final static RSAKriptosustav stroj = new RSAKriptosustav();
   private final RSADAO RSADao = new RSADAO();
   private int trenutniPrikaz = 0;
 
@@ -44,94 +45,117 @@ public class RSAKalkulator extends JDialog {
     prikaziTrenutni();
 
     sifrirajButton.addActionListener(
-            ev -> new Thread(() -> {
-              onemoguciSucelje();
-              stroj.reinicijaliziraj();
-              int broj = PQDEBrojSifrat(4);
-              if (broj < 0) {
-                System.out.println("flag");
-                stroj.prosiriPoruku("Uneseni otvoreni tekst nije ispravan.");
-                stroj.setOK(false);
-              }
-              int[] npq = dohvatiNPQ();
-              if (npq[3] == 0) stroj.setOK(false);
-              if (stroj.isOK()) {
-                // Nama su bitni p i q, jer računanje pomoću njih je puno lakše.
-                // Ako p i q nisu uneseni, oni se izračunaju obzirom na uneseni n (ako je ispravan, dakako).
-                int p = npq[1];
-                int q = npq[2];
-                int e = PQDEBrojSifrat(3);
-                if (e < 0) {
-                  stroj.prosiriPoruku(vratiGreske(3, e));
+            ev -> {
+              new Thread(() -> {
+                onemoguciSucelje();
+                stroj.reinicijaliziraj();
+                int broj = PQDEBrojSifrat(4);
+                stroj.setNapredak(20);
+                if (broj < 0) {
+                  System.out.println("flag");
+                  stroj.prosiriPoruku("Uneseni otvoreni tekst nije ispravan.");
                   stroj.setOK(false);
                 }
-                else {
-                  stroj.setP(p);
-                  stroj.setQ(q);
-                  stroj.setN(p*q);
-                  stroj.setD(PQDEBrojSifrat(2));
-                  stroj.e = e;
-                  stroj.sifriraj(broj);
+                int[] npq = dohvatiNPQ();
+                stroj.setNapredak(40);
+                if (npq[3] == 0) stroj.setOK(false);
+                if (stroj.isOK()) {
+                  // Nama su bitni p i q, jer računanje pomoću njih je puno lakše.
+                  // Ako p i q nisu uneseni, oni se izračunaju obzirom na uneseni n (ako je ispravan, dakako).
+                  int p = npq[1];
+                  int q = npq[2];
+                  int e = PQDEBrojSifrat(3);
+                  stroj.setNapredak(60);
+                  if (e < 0) {
+                    stroj.prosiriPoruku(vratiGreske(3, e));
+                    stroj.setOK(false);
+                  }
+                  else {
+                    stroj.setP(p);
+                    stroj.setQ(q);
+                    stroj.setN(p*q);
+                    stroj.setD(PQDEBrojSifrat(2));
+                    stroj.e = e;
+                    stroj.sifriraj(broj);
+                  }
                 }
-              }
 
-              SwingUtilities.invokeLater(() -> {
-                if(stroj.isOK()) {
-                  sifratArea.setText(String.valueOf(stroj.vratiSifrat()));
-                  konzola.ispisiPoruku("Šifriranje uspješno!");
-                  noviElement(stroj.getP(), stroj.getQ(), stroj.getN(), stroj.getD(), stroj.getE());
+                SwingUtilities.invokeLater(() -> {
+                  if(stroj.isOK()) {
+                    sifratArea.setText(String.valueOf(stroj.vratiSifrat()));
+                    konzola.ispisiPoruku("Šifriranje uspješno!");
+                    noviElement(stroj.getP(), stroj.getQ(), stroj.getN(), stroj.getD(), stroj.getE());
+                  }
+                  else {
+                    konzola.ispisiPoruku(stroj.getPoruke());
+                    konzola.ispisiGresku("Šifriranje neuspješno!");
+                  }
+                  omoguciSucelje();
+                });
+              }).start();
+
+              new Thread(() -> {
+                progressBar.setVisible(true);
+                while(progressBar.isVisible()) {
+                  SwingUtilities.invokeLater(() -> progressBar.setValue(stroj.getNapredak()));
                 }
-                else {
-                  konzola.ispisiPoruku(stroj.getPoruke());
-                  konzola.ispisiGresku("Šifriranje neuspješno!");
-                }
-                omoguciSucelje();
-              });
-            }).start());
+              }).start();
+            });
+
     desifrirajButton.addActionListener(
-            ev -> new Thread(() -> {
-              onemoguciSucelje();
-              stroj.setPoruke("");
-              stroj.setNapredak(0);
-              stroj.setOK(true);
-              int sifrat = PQDEBrojSifrat(5);
-              if (sifrat < 0) {
-                stroj.prosiriPoruku("Uneseni šifrat nije ispravan.");
-                stroj.setOK(false);
-              }
-              int[] npq = dohvatiNPQ();
-              if (npq[3] == 0) stroj.setOK(false);
-              if(stroj.isOK()) {
-                int p = npq[1];
-                int q = npq[2];
-                int d = PQDEBrojSifrat(2);
-                if (d < 0) {
-                  stroj.prosiriPoruku(vratiGreske(3, d));
+            ev -> {
+              new Thread(() -> {
+                onemoguciSucelje();
+                stroj.reinicijaliziraj();
+                int sifrat = PQDEBrojSifrat(5);
+                stroj.setNapredak(20);
+                if (sifrat < 0) {
+                  stroj.prosiriPoruku("Uneseni šifrat nije ispravan.");
                   stroj.setOK(false);
                 }
-                else {
-                  stroj.setP(p);
-                  stroj.setQ(q);
-                  stroj.setD(d);
-                  stroj.setN(p*q);
-                  stroj.setE(PQDEBrojSifrat(3));
-                  stroj.postaviSifrat(sifrat);
-                }
-              }
-
-              SwingUtilities.invokeLater(() -> {
+                int[] npq = dohvatiNPQ();
+                stroj.setNapredak(40);
+                if (npq[3] == 0) stroj.setOK(false);
                 if(stroj.isOK()) {
-                  otvoreniTekstArea.setText(String.valueOf(stroj.desifriraj()));
-                  konzola.ispisiPoruku("Dešifriranje uspješno!");
-                  noviElement(stroj.getP(), stroj.getQ(), stroj.getN(), stroj.getD(), stroj.getE());
+                  int p = npq[1];
+                  int q = npq[2];
+                  int d = PQDEBrojSifrat(2);
+                  stroj.setNapredak(60);
+                  if (d < 0) {
+                    stroj.prosiriPoruku(vratiGreske(3, d));
+                    stroj.setOK(false);
+                  }
+                  else {
+                    stroj.setP(p);
+                    stroj.setQ(q);
+                    stroj.setD(d);
+                    stroj.setN(p*q);
+                    stroj.setE(PQDEBrojSifrat(3));
+                    stroj.postaviSifrat(sifrat);
+                  }
                 }
-                else {
-                  konzola.ispisiPoruku(stroj.getPoruke());
-                  konzola.ispisiGresku("Dešifriranje neuspješno!");
+
+                SwingUtilities.invokeLater(() -> {
+                  if(stroj.isOK()) {
+                    otvoreniTekstArea.setText(String.valueOf(stroj.desifriraj()));
+                    konzola.ispisiPoruku("Dešifriranje uspješno!");
+                    noviElement(stroj.getP(), stroj.getQ(), stroj.getN(), stroj.getD(), stroj.getE());
+                  }
+                  else {
+                    konzola.ispisiPoruku(stroj.getPoruke());
+                    konzola.ispisiGresku("Dešifriranje neuspješno!");
+                  }
+                  omoguciSucelje();
+                });
+              }).start();
+
+              new Thread(() -> {
+                progressBar.setVisible(true);
+                while(progressBar.isVisible()) {
+                  SwingUtilities.invokeLater(() -> progressBar.setValue(stroj.getNapredak()));
                 }
-                omoguciSucelje();
-              });
-            }).start());
+              }).start();
+            });
     provjeriIIspraviPodatkeButton.addActionListener(
             e -> provjeriIspravi());
     ocistiPoljaButton.addActionListener(
@@ -263,6 +287,7 @@ public class RSAKalkulator extends JDialog {
       int[] pq;
       p = PQDEBrojSifrat(0);
       q = PQDEBrojSifrat(1);
+      stroj.setNapredak(10);
       if (p < 0 || q < 0) {
         // U slučaju da p ili q nisu u redu, ispisujemo greške i dohvaćamo n.
         stroj.prosiriPoruku(vratiGreske(0, p));
@@ -290,9 +315,11 @@ public class RSAKalkulator extends JDialog {
           n = p * q;
         }
       }
+      stroj.setNapredak(20);
       if(stroj.isOK()) {
         d = PQDEBrojSifrat(2);
         e = PQDEBrojSifrat(3);
+        stroj.setNapredak(40);
         stroj.prosiriPoruku(vratiGreske(3, d));
         stroj.prosiriPoruku(vratiGreske(4, e));
         if (d < 0 && e < 0) {
@@ -342,7 +369,7 @@ public class RSAKalkulator extends JDialog {
             }
           }
         }
-
+        stroj.setNapredak(90);
         stroj.setP(p);
         stroj.setQ(q);
         stroj.setN(n);
@@ -368,6 +395,13 @@ public class RSAKalkulator extends JDialog {
         }
         omoguciSucelje();
       });
+    }).start();
+
+    new Thread(() -> {
+      progressBar.setVisible(true);
+      while(progressBar.isVisible()) {
+        SwingUtilities.invokeLater(() -> progressBar.setValue(stroj.getNapredak()));
+      }
     }).start();
   }
 
@@ -399,7 +433,7 @@ public class RSAKalkulator extends JDialog {
     sifratArea.setEnabled(true);
     otvoreniTekstArea.setEnabled(true);
     provjeriTipkeLijevoDesno();
-    //progressBar.setVisible(false);
+    progressBar.setVisible(false);
   }
 
   private void prikaziTrenutni() {
@@ -440,4 +474,5 @@ public class RSAKalkulator extends JDialog {
     prikaziTrenutni();
     provjeriTipkeLijevoDesno();
   }
+
 }
