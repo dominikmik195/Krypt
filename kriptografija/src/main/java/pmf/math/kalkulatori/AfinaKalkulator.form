@@ -13,6 +13,7 @@
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <labelFor value="3e2ef"/>
           <text value="Otvoreni tekst"/>
         </properties>
       </component>
@@ -21,6 +22,7 @@
           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <labelFor value="e5d5d"/>
           <text value="Šifrat"/>
         </properties>
       </component>
@@ -167,6 +169,7 @@
                 </constraints>
                 <properties>
                   <font size="16"/>
+                  <labelFor value="49d28"/>
                   <text value="a ="/>
                 </properties>
               </component>
@@ -185,6 +188,7 @@
                 </constraints>
                 <properties>
                   <font size="16"/>
+                  <labelFor value="b42ed"/>
                   <text value="b ="/>
                 </properties>
               </component>

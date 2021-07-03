@@ -1,6 +1,5 @@
 package pmf.math.kalkulatori;
 
-import com.jgoodies.forms.layout.FormLayout;
 import pmf.math.algoritmi.TeorijaBrojeva;
 import pmf.math.baza.dao.AfinaDAO;
 import pmf.math.baza.tablice.AfinaPovijest;
@@ -77,7 +76,6 @@ public class AfinaKalkulator {
         konzola.ispisiPoruku("Poruka uspješno šifrirana afinom šifrom.");
 
         // Ispis i ažuriranje povijesti.
-        // TODO: Ubaciti % 26 ili originalno upisani broj?
         afinaDAO.ubaciElement((Integer) aSpinner.getValue(), (Integer) bSpinner.getValue());
         osvjeziPovijest();
       }
@@ -109,7 +107,6 @@ public class AfinaKalkulator {
         konzola.ispisiPoruku("Poruka uspješno dešifrirana afinom šifrom.");
 
         // Ispis i ažuriranje povijesti.
-        // TODO: Ubaciti % 26 ili originalno upisani broj?
         afinaDAO.ubaciElement((Integer) aSpinner.getValue(), (Integer) bSpinner.getValue());
         osvjeziPovijest();
       }
@@ -119,9 +116,7 @@ public class AfinaKalkulator {
   public JButton stvoriGumbPovijesti(AfinaPovijest povijest) {
     String tekst = "a = " + povijest.getA() + " i b = " + povijest.getB();
     JButton noviGumb = new JButton(tekst);
-    // noviGumb.setMaximumSize(new Dimension(50, -1));
 
-    // TODO: Dodaj action listenera.
     noviGumb.addActionListener(
         e -> {
           aSpinner.setValue(povijest.getA());

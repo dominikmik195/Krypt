@@ -28,6 +28,7 @@
               <focusable value="true"/>
               <font name="JetBrains Mono" size="13"/>
               <horizontalAlignment value="4"/>
+              <labelFor value="cb535"/>
               <preferredSize width="120" height="21"/>
               <text value="Pomak"/>
             </properties>
@@ -62,6 +63,7 @@
               <focusable value="true"/>
               <font name="JetBrains Mono" size="13"/>
               <horizontalAlignment value="4"/>
+              <labelFor value="6bce9"/>
               <preferredSize width="120" height="21"/>
               <text value="Otvoreni tekst"/>
               <verifyInputWhenFocusTarget value="true"/>
@@ -77,6 +79,7 @@
               <focusable value="true"/>
               <font name="JetBrains Mono" size="13"/>
               <horizontalAlignment value="4"/>
+              <labelFor value="3c142"/>
               <preferredSize width="120" height="21"/>
               <text value="Šifrat"/>
             </properties>

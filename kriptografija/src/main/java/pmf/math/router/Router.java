@@ -170,7 +170,11 @@ public class Router extends JPanel implements ActionListener {
 
       case AFINA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.AFINA_SIFRA.toString());
-        opis.postaviTekst(OpisiKalkulatora.AFINA_OPIS, UputeKalkulatora.AFINA_UPUTE);
+        opis.postaviTekst(
+                OpisiKalkulatora.AFINA_OPIS,
+                UputeKalkulatora.AFINA_UPUTE,
+                imeKalkulatora);
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       case ANALIZA_TEKSTA -> {
