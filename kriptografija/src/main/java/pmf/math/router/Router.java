@@ -8,8 +8,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
+import javax.swing.SwingUtilities;
 import pmf.math.baza.BazaPodataka;
 import pmf.math.kalkulatori.AnalizaTekstaKalkulator;
 import pmf.math.kalkulatori.CezarKalkulator;
@@ -45,7 +45,7 @@ public class Router extends JPanel implements ActionListener {
   private JPanel srednjiStupac;
   private JButton analizaTekstaButton;
 
-  private final BazaPodataka bazaPodataka = new BazaPodataka();
+  private final BazaPodataka baza = new BazaPodataka();
   private final Konzola konzola = new Konzola();
   private final Opis opis = new Opis();
   private final ElGamalKalkulator elGamalKalkulator = new ElGamalKalkulator(konzola);
@@ -61,7 +61,7 @@ public class Router extends JPanel implements ActionListener {
       new AnalizaTekstaKalkulator(konzola);
 
   public void Main() {
-    SwingUtilities.invokeLater(this::stvoriGUI);
+    stvoriGUI();
   }
 
   private void postaviRouter() {
@@ -113,37 +113,59 @@ public class Router extends JPanel implements ActionListener {
     switch (imeKalkulatora) {
       case HILLOVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.HILLOVA_SIFRA.toString());
-        opis.postaviTekst(OpisiKalkulatora.HILL_OPIS, UputeKalkulatora.HILL_UPUTE);
+        opis.postaviTekst(OpisiKalkulatora.HILL_OPIS,
+            UputeKalkulatora.HILL_UPUTE,
+            imeKalkulatora);
+        new Thread(opis::postaviPrazanGraf).start();
       }
 
       case VIGENEROVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.VIGENEROVA_SIFRA.toString());
-        opis.postaviTekst(OpisiKalkulatora.VIGENERE_OPIS, UputeKalkulatora.VIGENERE_UPUTE);
+        opis.postaviTekst(OpisiKalkulatora.VIGENERE_OPIS,
+            UputeKalkulatora.VIGENERE_UPUTE,
+            imeKalkulatora);
+        new Thread(opis::postaviPrazanGraf).start();
       }
 
       case PLAYFAIROVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString());
-        opis.postaviTekst(OpisiKalkulatora.PLAYFAIR_OPIS, UputeKalkulatora.PLAYFAIR_UPUTE);
+        opis.postaviTekst(OpisiKalkulatora.PLAYFAIR_OPIS,
+            UputeKalkulatora.PLAYFAIR_UPUTE,
+            imeKalkulatora);
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       case EL_GAMALOVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString());
-        opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS, UputeKalkulatora.EL_GAMAL_UPUTE);
+        opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS,
+            UputeKalkulatora.EL_GAMAL_UPUTE,
+            imeKalkulatora);
+        new Thread(opis::postaviPrazanGraf).start();
       }
 
       case RSA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.RSA_SIFRA.toString());
-        opis.postaviTekst(OpisiKalkulatora.RSA_OPIS, UputeKalkulatora.RSA_UPUTE);
+        opis.postaviTekst(OpisiKalkulatora.RSA_OPIS,
+            UputeKalkulatora.RSA_UPUTE,
+            imeKalkulatora);
+        new Thread(opis::postaviPrazanGraf).start();
       }
 
       case SUPSTITUCIJSKA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString());
-        opis.postaviTekst(OpisiKalkulatora.SUPSTITUCIJA_OPIS, UputeKalkulatora.SUPSTITUCIJA_UPUTE);
+        opis.postaviTekst(OpisiKalkulatora.SUPSTITUCIJA_OPIS,
+            UputeKalkulatora.SUPSTITUCIJA_UPUTE,
+            imeKalkulatora);
+        new Thread(opis::postaviPrazanGraf).start();
       }
 
       case CEZAROVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.CEZAROVA_SIFRA.toString());
-        opis.postaviTekst(OpisiKalkulatora.CEZAR_OPIS, UputeKalkulatora.CEZAR_UPUTE);
+        opis.postaviTekst(
+            OpisiKalkulatora.CEZAR_OPIS,
+            UputeKalkulatora.CEZAR_UPUTE,
+            imeKalkulatora);
+        new Thread(opis::postaviPrazanGraf).start();
       }
 
       case AFINA_SIFRA -> {
@@ -153,12 +175,17 @@ public class Router extends JPanel implements ActionListener {
 
       case ANALIZA_TEKSTA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.ANALIZA_TEKSTA.toString());
-        opis.postaviTekst(OpisiKalkulatora.ANALIZA_TEKSTA_OPIS, UputeKalkulatora.ANALIZA_TEKSTA_UPUTE);
+        opis.postaviTekst(
+            OpisiKalkulatora.ANALIZA_TEKSTA_OPIS,
+            UputeKalkulatora.ANALIZA_TEKSTA_UPUTE,
+            imeKalkulatora);
+        new Thread(opis::postaviPrazanGraf).start();
       }
 
       default -> {
         prikaz.show(srednjiStupac, "NULL");
-        opis.postaviTekst("", "");
+        opis.postaviTekst("", "", null);
+        new Thread(opis::postaviPrazanGraf).start();
       }
     }
     myFrame.revalidate();

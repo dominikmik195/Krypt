@@ -1,13 +1,22 @@
 package pmf.math.kriptosustavi;
 
+import lombok.Getter;
+import lombok.Setter;
 import pmf.math.algoritmi.TeorijaBrojeva;
 import pmf.math.obradaunosa.ObradaUnosaRSA;
 
+@Getter
+@Setter
 public class RSAKriptosustav {
   private int p, q, d;
   public int n, e;
 
   private int sifrat;
+  private int broj;
+
+  private String poruke;
+  private boolean OK;
+  private int napredak;
 
   public RSAKriptosustav() {
     p = -1;
@@ -34,6 +43,23 @@ public class RSAKriptosustav {
 
   public int getD() {
     return d;
+  }
+
+  public void prosiriPoruku(String dodatak) {
+    if(!dodatak.equals(""))
+      poruke += dodatak + " ";
+  }
+
+  public void reinicijaliziraj() {
+    p = -1;
+    q = -1;
+    n = -1;
+    d = -1;
+    e = -1;
+    sifrat = 0;
+    OK = true;
+    poruke = "";
+    napredak = 0;
   }
 
   public int sifriraj(int broj) {
@@ -63,8 +89,7 @@ public class RSAKriptosustav {
     // Funkcija koja za zadani p i q nalazi najmanji d i pripadni e koji zadovoljavaju uvjete sustava.
     int[] de = {-1, -1};
     int _d = 2;
-    while (true) {
-      if (ObradaUnosaRSA.provjeriD(_p, _q, _d)) break;
+    while (!ObradaUnosaRSA.provjeriD(_p, _q, _d)) {
       _d++;
     }
     de[0] = _d;
