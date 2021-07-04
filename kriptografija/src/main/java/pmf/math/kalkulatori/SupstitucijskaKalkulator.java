@@ -106,15 +106,15 @@ public class SupstitucijskaKalkulator {
 
   private void azurirajSlovaLabele() {
     String novaPreostala = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    String novaIskoristena = "";
+    StringBuilder novaIskoristena = new StringBuilder();
     int[] permutacija = dohvatiTextFields();
     Arrays.sort(permutacija);
     for (int i = 0; i < 26; i++) {
       novaPreostala = novaPreostala.replace(String.valueOf(Abeceda.uSlovo(permutacija[i])), "");
-      if (permutacija[i] != -1) novaIskoristena += String.valueOf(Abeceda.uSlovo(permutacija[i]));
+      if (permutacija[i] != -1) novaIskoristena.append(Abeceda.uSlovo(permutacija[i]));
     }
     preostalaLabel.setText(novaPreostala.replaceAll("([A-Z])", "$0 "));
-    iskoristenaLabel.setText(novaIskoristena.replaceAll("([A-Z])", "$0 "));
+    iskoristenaLabel.setText(novaIskoristena.toString().replaceAll("([A-Z])", "$0 "));
   }
 
   // -----------------------------------------------------------------------------------------------------------------

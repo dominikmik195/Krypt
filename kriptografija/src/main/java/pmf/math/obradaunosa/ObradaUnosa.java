@@ -17,6 +17,8 @@ public class ObradaUnosa {
     return tekst.replaceAll("\s+", "").toUpperCase(Locale.ROOT);
   }
 
+  public static int ocisti(int broj) { return ((broj % 26) + 26) % 26; }
+
   public static boolean kriviUnos(String tekst) {
     // Dozvoljena su samo slova engleske abecede i bjeline (koje se čiste).
     return !tekst.matches("^[a-zA-Z\s]*$");

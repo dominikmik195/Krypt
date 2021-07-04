@@ -17,7 +17,21 @@ public class OpisiKalkulatora {
       """;
 
   public static final String AFINA_OPIS = """
+      Afina šifra je jedna od supstitutcijskih šifri, u kojoj se svako slovo otvorenog teksta zamjenjuje odgovarajućim slovom abecede, prema zadanoj permutaciji slova.
+      
+      Za šifriranje i dešifriranje potrebno je zadati cjelobrojne parametre a i b. Tada je šifriranje slova x zadano preslikavanjem
         
+        E(x) = (ax + b) (mod 26),
+        
+      dok je dešifiranje zadano preslikavanjem
+        
+        D(x) = a^(-1)(x - b) (mod 26),
+        
+      gdje a^(-1) označava multiplikativni inverz modulo 26.
+      
+      Kako nemaju svi brojevi multiplikativni inverz modulo 26, tako treba postaviti dodatan uvjet na parametar a. Stoga zahtijevamo da je a relativno prost s brojem 26, odnosno da je najveći zajednički djelitelj brojeva a i 26 jednak 1.
+      
+      Za vrijednost parametra a = 1, ova je šifra upravo jednaka Cezarovoj šifri gdje je pomak određen vrijednošću parametra b.
       """;
 
   public static final String HILL_OPIS = """
