@@ -8,6 +8,7 @@ import pmf.math.obradaunosa.ObradaUnosa;
 import pmf.math.router.Konzola;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -114,7 +115,7 @@ public class AfinaKalkulator {
   }
 
   public JButton stvoriGumbPovijesti(AfinaPovijest povijest) {
-    String tekst = "a = " + povijest.getA() + " i b = " + povijest.getB();
+    String tekst = "<html>a = " + povijest.getA() + "<br>b = " + povijest.getB() + "</html>";
     JButton noviGumb = new JButton(tekst);
 
     noviGumb.addActionListener(
@@ -129,6 +130,7 @@ public class AfinaKalkulator {
   public void osvjeziPovijest() {
     povijestPanel.removeAll();
     povijestPanel.setLayout(new GridLayout(1, 1));
+    povijestPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
     afinaDAO.dohvatiElemente().forEach(element -> povijestPanel.add(stvoriGumbPovijesti(element)));
     povijestPanel.revalidate();
   }
