@@ -1,6 +1,7 @@
 package pmf.math.kalkulatori;
 
 import pmf.math.kriptosustavi.StupcanaTranspozicijaSustav;
+import pmf.math.obradaunosa.ObradaUnosa;
 import pmf.math.router.Konzola;
 
 import javax.swing.*;
@@ -17,9 +18,8 @@ public class StupcanaTranspozicijaKalkulator {
   private JButton desifrirajButton;
   private JLabel kljucLabel;
 
-  private Konzola konzola;
-  private Vector<JSpinner> spinnerVector;
-  private GridLayout spinnerLayout;
+  private final Konzola konzola;
+  private final Vector<JSpinner> spinnerVector;
 
   private static final StupcanaTranspozicijaSustav stroj = new StupcanaTranspozicijaSustav();
 
@@ -27,8 +27,12 @@ public class StupcanaTranspozicijaKalkulator {
     konzola = _konzola;
     spinnerVector = new Vector<>();
     stupciSpinner.setValue(2);
-    spinnerLayout = new GridLayout(2, 10, 2, 2);
+    GridLayout spinnerLayout = new GridLayout(2, 10, 2, 2);
     spinnerlPanel.setLayout(spinnerLayout);
+    sifratArea.setWrapStyleWord(true);
+    sifratArea.setLineWrap(true);
+    otvoreniTekstArea.setWrapStyleWord(true);
+    otvoreniTekstArea.setLineWrap(true);
     for (int i = 0; i < 2; i++) {
       JSpinner novi = new JSpinner(new SpinnerNumberModel(1, 1, 2, 1));
       postaviKljucSpinner(novi);
@@ -50,17 +54,15 @@ public class StupcanaTranspozicijaKalkulator {
             tmpV.add((int) spin.getValue());
           }
           spinnerVector.clear();
-
-          spinnerlPanel.removeAll(); // ************
+          spinnerlPanel.removeAll();
 
           for (int i = 0; i < broj; i++) {
             JSpinner novi;
             if (i < tmpV.size()) {
-                int stavi = tmpV.get(i);
-                while(stavi > tmpV.size()) stavi--;
-                novi = new JSpinner(new SpinnerNumberModel(stavi, 1, broj, 1));
-            }
-            else novi = new JSpinner(new SpinnerNumberModel(1, 1, broj, 1));
+              int stavi = tmpV.get(i);
+              while (stavi > tmpV.size()) stavi--;
+              novi = new JSpinner(new SpinnerNumberModel(stavi, 1, broj, 1));
+            } else novi = new JSpinner(new SpinnerNumberModel(1, 1, broj, 1));
             postaviKljucSpinner(novi);
             novi.setMinimumSize(new Dimension(50, 10));
             spinnerVector.add(novi);
@@ -74,32 +76,97 @@ public class StupcanaTranspozicijaKalkulator {
         });
 
     sifrirajButton.addActionListener(
-        e -> {
-          stroj.setBrojStupaca(4);
-          Vector<Integer> v = new Vector<>();
-          v.add(3);
-          v.add(1);
-          v.add(2);
-          v.add(4);
-          stroj.setVrijednosti(v);
-          stroj.setOtvoreniTekst("NEKIDULJITEKSTICWA");
-          stroj.sifriraj();
-          System.out.println(stroj.getSifrat());
-        });
+        e -> new Thread(
+                () -> {
+                  stroj.reinicijaliziraj();
+                  String unos = otvoreniTekstArea.getText();
+                  postaviVrijednosti();
+                  if (!stroj.provjeriVrijednosti()) {
+                    String tehnikalija;
+                    int br = (int) stupciSpinner.getValue();
+                    if (br < 5) tehnikalija = "različita broja";
+                    else tehnikalija = "različitih brojeva";
+                    stroj.setOK(false);
+                    stroj.prosiriPoruku(
+                        "Ključ mora sadržavati točno "
+                            + br
+                            + " "
+                            + tehnikalija
+                            + ", po jedan za svaki stupac.");
+                  } else if (!ObradaUnosa.dobarUnosHrvEng(unos)) {
+                    stroj.setOK(false);
+                    stroj.prosiriPoruku(
+                        "Unos smije sadržavati samo slova hrvatske ili engleske"
+                            + " abecede te interpunkcijske znakove i praznine.");
+                  } else {
+                    unos = ObradaUnosa.ocistiStupcana(unos);
+                    stroj.setOtvoreniTekst(unos);
+                    stroj.sifriraj();
+                  }
+
+                  SwingUtilities.invokeLater(
+                      () -> {
+                        if (stroj.isOK()) {
+                          otvoreniTekstArea.setText(stroj.formatirajOtvoreniTekst());
+                          sifratArea.setText(stroj.getSifrat());
+                          konzola.ispisiPoruku("Uspješno šifriranje stupčanom transpozicijom!");
+                        } else {
+                          konzola.ispisiGresku(stroj.getPoruke());
+                        }
+                      });
+                })
+            .start());
 
     desifrirajButton.addActionListener(
-        e -> {
-          stroj.setBrojStupaca(4);
-          Vector<Integer> v = new Vector<>();
-          v.add(3);
-          v.add(1);
-          v.add(2);
-          v.add(4);
-          stroj.setVrijednosti(v);
-          stroj.setSifrat("KLEIXNDISWEUTTAIJKCX");
-          stroj.desifriraj();
-          System.out.println(stroj.getOtvoreniTekst());
-        });
+        e -> new Thread(
+                () -> {
+                  stroj.reinicijaliziraj();
+                  String sifrat = sifratArea.getText();
+                  postaviVrijednosti();
+                  if (!stroj.provjeriVrijednosti()) {
+                    String tehnikalija;
+                    int br = (int) stupciSpinner.getValue();
+                    if (br < 5) tehnikalija = "različita broja";
+                    else tehnikalija = "različitih brojeva";
+                    stroj.setOK(false);
+                    stroj.prosiriPoruku(
+                        "Ključ mora sadržavati točno "
+                            + br
+                            + " "
+                            + tehnikalija
+                            + ", po jedan za svaki stupac.");
+                  } else if (!ObradaUnosa.dobarUnosHrvEng(sifrat)) {
+                    stroj.setOK(false);
+                    stroj.prosiriPoruku(
+                        "Unos smije sadržavati samo slova hrvatske ili engleske"
+                            + " abecede te interpunkcijske znakove i praznine.");
+                  } else {
+                    sifrat = ObradaUnosa.ocistiStupcana(sifrat);
+                    stroj.setSifrat(sifrat);
+                    stroj.desifriraj();
+                  }
+
+                  SwingUtilities.invokeLater(
+                      () -> {
+                        if (stroj.isOK()) {
+                          otvoreniTekstArea.setText(stroj.formatirajOtvoreniTekst());
+                          otvoreniTekstArea.setText(stroj.getOtvoreniTekst());
+                          konzola.ispisiPoruku("Uspješno dešifriranje stupčanom transpozicijom!");
+                        } else {
+                          konzola.ispisiGresku(stroj.getPoruke());
+                        }
+                      });
+                })
+            .start());
+  }
+
+  private void postaviVrijednosti() {
+    Vector<Integer> vrijednosti = new Vector<>();
+    for (JSpinner spin : spinnerVector) {
+      vrijednosti.add((int) spin.getValue());
+    }
+    stroj.setBrojStupaca(vrijednosti.size());
+    stroj.setVrijednosti(vrijednosti);
   }
 
   private void postaviKljucSpinner(JSpinner spinner) {
@@ -108,13 +175,13 @@ public class StupcanaTranspozicijaKalkulator {
 
   private void tekstKljuca() {
     Vector<Integer> vrijednosti = new Vector<>();
-    String popis = "";
+    StringBuilder popis = new StringBuilder();
     for (JSpinner spin : spinnerVector) {
       vrijednosti.add((int) spin.getValue());
-      popis += spin.getValue() + "   ";
+      popis.append(spin.getValue()).append("   ");
     }
     stroj.setVrijednosti(vrijednosti);
-    kljucLabel.setText(popis);
+    kljucLabel.setText(popis.toString());
     if (stroj.provjeriVrijednosti()) {
       kljucLabel.setForeground(new Color(0, 143, 0));
     } else {

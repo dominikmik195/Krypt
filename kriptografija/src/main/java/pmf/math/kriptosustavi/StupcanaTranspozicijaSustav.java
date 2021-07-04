@@ -2,6 +2,7 @@ package pmf.math.kriptosustavi;
 
 import lombok.Getter;
 import lombok.Setter;
+import pmf.math.obradaunosa.ObradaUnosa;
 
 import java.util.Vector;
 
@@ -13,48 +14,81 @@ public class StupcanaTranspozicijaSustav {
   private String otvoreniTekst;
   private String sifrat;
   private int brojRedaka;
-
-  public StupcanaTranspozicijaSustav(Vector<Integer> v) {
-    vrijednosti = v;
-    brojStupaca = v.size();
-  }
+  private boolean OK;
+  private String poruke;
 
   public StupcanaTranspozicijaSustav() {
     vrijednosti = new Vector<>();
   }
 
+  public void reinicijaliziraj() {
+    poruke = "";
+    OK = true;
+    sifrat = "";
+    otvoreniTekst = "";
+  }
+
+  public void prosiriPoruku(String dodatak) {
+    poruke += dodatak + " ";
+  }
+
+  public String formatirajOtvoreniTekst() {
+    StringBuilder noviTekst = new StringBuilder();
+    String tmp = ObradaUnosa.ocistiStupcana(otvoreniTekst);
+    for (int i = 0; i < tmp.length(); i++) {
+      noviTekst.append(tmp.charAt(i));
+      if(i%brojStupaca == brojStupaca-1) noviTekst.append("\n");
+    }
+    return noviTekst.toString();
+  }
+
   public void sifriraj() {
     brojRedaka = (int)Math.ceil((double)otvoreniTekst.length()/brojStupaca);
-    char[][] matrica = new char[brojRedaka][brojStupaca];
+    char[][] matricaUnos = new char[brojRedaka][brojStupaca];
+    char[][] matricaIzlaz = new char[brojStupaca][brojRedaka];
     while(otvoreniTekst.length() < brojStupaca*brojRedaka) {
       otvoreniTekst += "X";
     }
     for (int i = 0; i < brojRedaka; i++) {
       for (int j = 0; j < brojStupaca; j++) {
-        matrica[i][j] = otvoreniTekst.charAt(i*brojStupaca + j);
+        matricaUnos[i][j] = otvoreniTekst.charAt(i*brojStupaca + j);
+      }
+    }
+    for (int i = 0; i < brojStupaca; i++) {
+      for (int j = 0; j < brojRedaka; j++) {
+        matricaIzlaz[vrijednosti.get(i)-1][j] = matricaUnos[j][i];
       }
     }
     sifrat = "";
-    for (int stupac : vrijednosti) {
-      for (int i = 0; i < brojRedaka; i++) {
-        sifrat += matrica[i][stupac-1];
+    for (int i = 0; i < brojStupaca; i++) {
+      for (int j = 0; j < brojRedaka; j++) {
+        sifrat += matricaIzlaz[i][j];
       }
+      sifrat += "\n";
     }
   }
 
   public void desifriraj() {
     otvoreniTekst = "";
     brojRedaka = sifrat.length()/brojStupaca;
-    char[][] matrica = new char[brojRedaka][brojStupaca];
-    for (int i = 0; i < brojRedaka; i++) {
-      for(int j = 0; j < brojStupaca; j++) {
-        matrica[i][vrijednosti.get(j)-1] = sifrat.charAt(brojRedaka*j + i);
+    char[][] matricaSifrat = new char[brojStupaca][brojRedaka];
+    char[][] matricaUnos = new char[brojRedaka][brojStupaca];
+    for (int i = 0; i < brojStupaca; i++) {
+      for(int j = 0; j < brojRedaka; j++) {
+        matricaSifrat[i][j] = sifrat.charAt(brojRedaka*i + j);
       }
     }
+    for (int i = 0; i < brojStupaca; i++) {
+      for (int j = 0; j < brojRedaka; j++) {
+        matricaUnos[j][vrijednosti.indexOf(i+1)] = matricaSifrat[i][j];
+      }
+    }
+    otvoreniTekst = "";
     for (int i = 0; i < brojRedaka; i++) {
       for (int j = 0; j < brojStupaca; j++) {
-        otvoreniTekst += matrica[i][j];
+        otvoreniTekst += matricaUnos[i][j];
       }
+      otvoreniTekst += "\n";
     }
   }
 

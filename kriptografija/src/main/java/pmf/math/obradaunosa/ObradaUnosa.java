@@ -22,6 +22,24 @@ public class ObradaUnosa {
     return !tekst.matches("^[a-zA-Z\s]*$");
   }
 
+  public static boolean dobarUnosHrvEng(String tekst) {
+    // Dozvoljena su slova hrvatske i engleske abecede, interpunkcijski znakovi i bjeline (koje se čiste).
+    if(tekst.strip().equals("")) return false;
+    return tekst.matches("^[a-zčćžšđA-ZČĆŽŠĐ,.;:?!\s\n]*$");
+  }
+
+  public static String ocistiStupcana(String tekst) {
+    return tekst.replaceAll("\s+", "")
+            .replaceAll("\\.", "")
+            .replaceAll(",", "")
+            .replaceAll(";", "")
+            .replaceAll(":", "")
+            .replaceAll("!", "")
+            .replaceAll("\\?", "")
+            .replaceAll("\n", "")
+            .toUpperCase();
+  }
+
   public static boolean kriviUnos(int[] permutacija) {
     // Niti jedan broj u permutaciji (osim -1) se ne smije pojaviti dvaput.
     int[] counts = new int[26];

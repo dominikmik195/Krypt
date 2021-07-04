@@ -157,14 +157,16 @@
                 <maximum-size width="-1" height="200"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <horizontalScrollBarPolicy value="31"/>
+            </properties>
             <border type="etched"/>
             <children>
               <component id="d88e0" class="javax.swing.JTextArea" binding="otvoreniTekstArea">
                 <constraints/>
                 <properties>
                   <focusable value="true"/>
-                  <font size="14"/>
+                  <font name="Courier New" size="16"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -178,14 +180,16 @@
                 <maximum-size width="-1" height="200"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <horizontalScrollBarPolicy value="31"/>
+            </properties>
             <border type="etched"/>
             <children>
               <component id="96ed3" class="javax.swing.JTextArea" binding="sifratArea">
                 <constraints/>
                 <properties>
                   <focusable value="true"/>
-                  <font size="14"/>
+                  <font name="Courier New" size="16"/>
                 </properties>
               </component>
             </children>
