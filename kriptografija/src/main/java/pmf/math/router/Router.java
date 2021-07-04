@@ -114,7 +114,7 @@ public class Router extends JPanel implements ActionListener {
         opis.postaviTekst(OpisiKalkulatora.HILL_OPIS,
             UputeKalkulatora.HILL_UPUTE,
             imeKalkulatora);
-        new Thread(opis::postaviPrazanGraf).start();
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       case VIGENEROVA_SIFRA -> {
@@ -122,7 +122,7 @@ public class Router extends JPanel implements ActionListener {
         opis.postaviTekst(OpisiKalkulatora.VIGENERE_OPIS,
             UputeKalkulatora.VIGENERE_UPUTE,
             imeKalkulatora);
-        new Thread(opis::postaviPrazanGraf).start();
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       case PLAYFAIROVA_SIFRA -> {
