@@ -19,6 +19,7 @@ import pmf.math.kalkulatori.RSAKalkulator;
 import pmf.math.kalkulatori.PlayfairKalkulator;
 import pmf.math.kalkulatori.SupstitucijskaKalkulator;
 import pmf.math.kalkulatori.VigenereKalkulator;
+import pmf.math.kalkulatori.AfinaKalkulator;
 import pmf.math.konstante.ImenaKalkulatora;
 import pmf.math.konstante.OpisiKalkulatora;
 import pmf.math.konstante.UputeKalkulatora;
@@ -55,6 +56,7 @@ public class Router extends JPanel implements ActionListener {
   private final CezarKalkulator cezarKalkulator = new CezarKalkulator(konzola);
   private final SupstitucijskaKalkulator supstitucijskaKalkulator =
       new SupstitucijskaKalkulator(konzola);
+  private final AfinaKalkulator afinaKalkulator = new AfinaKalkulator(konzola);
   private final AnalizaTekstaKalkulator analizaTekstaKalkulator =
       new AnalizaTekstaKalkulator(konzola);
 
@@ -93,7 +95,7 @@ public class Router extends JPanel implements ActionListener {
     srednjiStupac.add(ImenaKalkulatora.CEZAROVA_SIFRA.toString(), cezarKalkulator.kalkulatorPanel);
     srednjiStupac.add(
         ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString(), supstitucijskaKalkulator.glavniPanel);
-    //srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), );
+    srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), afinaKalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.HILLOVA_SIFRA.toString(), hillKalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.VIGENEROVA_SIFRA.toString(), vigenereKalkulator.glavniPanel);
     srednjiStupac.add(
@@ -164,6 +166,15 @@ public class Router extends JPanel implements ActionListener {
             UputeKalkulatora.CEZAR_UPUTE,
             imeKalkulatora);
         new Thread(opis::postaviPrazanGraf).start();
+      }
+
+      case AFINA_SIFRA -> {
+        prikaz.show(srednjiStupac, ImenaKalkulatora.AFINA_SIFRA.toString());
+        opis.postaviTekst(
+                OpisiKalkulatora.AFINA_OPIS,
+                UputeKalkulatora.AFINA_UPUTE,
+                imeKalkulatora);
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       case ANALIZA_TEKSTA -> {

@@ -12,8 +12,10 @@ public class CezarKljucnaRijecKriptosustavTest extends TestCase {
   @Before
   public void setUp() {
     stroj = new CezarKljucnaRijecKriptosustav("KRIPTOGRAFIJA", 8);
-    assertNotNull(stroj);
     kriviStroj = new CezarKljucnaRijecKriptosustav("KRIPTOGRAFIJAČ", 8);
+
+    assertNotNull(stroj);
+    assertNotNull(kriviStroj);
   }
 
   public void testSifriraj() {
@@ -51,13 +53,17 @@ public class CezarKljucnaRijecKriptosustavTest extends TestCase {
 
   public void testDohvatiPermutacijuSlova() {
     char[] permutacija = stroj.dohvatiPermutacijuSlova();
+    char[] krivaPermutacija = kriviStroj.dohvatiPermutacijuSlova();
 
     Assert.assertArrayEquals("QSUVWXYZKRIPTOGAFJBCDEHLMN".toCharArray(), permutacija);
+    Assert.assertArrayEquals("AAAAAAAAAAAAAAAAAAAAAAAAAA".toCharArray(), krivaPermutacija);
   }
 
   public void testDohvatiPermutacijuString() {
     String permutacija = stroj.dohvatiPermutacijuString();
+    String krivaPermutacija = kriviStroj.dohvatiPermutacijuString();
 
     assertEquals("QSUVWXYZKRIPTOGAFJBCDEHLMN", permutacija);
+    assertEquals("AAAAAAAAAAAAAAAAAAAAAAAAAA", krivaPermutacija);
   }
 }
