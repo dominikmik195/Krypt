@@ -15,6 +15,13 @@ import lombok.Setter;
 import pmf.math.algoritmi.Matrica;
 import pmf.math.algoritmi.Vektor;
 import pmf.math.baza.dao.TekstGrafDAO.VrstaSimulacije;
+import pmf.math.filteri.HillFilter;
+import pmf.math.filteri.PlayfairFilter;
+import pmf.math.konstante.HillMatrice;
+import pmf.math.konstante.PlayfairAbecede;
+import pmf.math.kriptosustavi.PlayfairKriptosustav.Jezik;
+import pmf.math.pomagala.GeneratorTeksta;
+import pmf.math.pomagala.Stoperica;
 
 @Setter
 @Getter
@@ -148,9 +155,26 @@ public class HillKriptosustav {
   }
 
   public static int[] simuliraj(int[] duljineTekstova, VrstaSimulacije vrstaSimulacije, int brojIteracija) {
-    return switch (vrstaSimulacije) {
-      case SIFRIRAJ -> duljineTekstova;
-      case DESIFRIRAJ -> new int[duljineTekstova.length];
-    };
+    HillKriptosustav hillKriptosustav = new HillKriptosustav();
+    Matrica kljuc = new Matrica(HillMatrice.kljucZaSimulaciju());
+    int[] vremenaIzvodenja = new int[duljineTekstova.length];
+    Stoperica stoperica = new Stoperica();
+    for (int i = 0; i < duljineTekstova.length; i++) {
+      for(int t = 0; t < brojIteracija; t++) {
+        String tekst = HillFilter.odreziOstatak(HillFilter.filtriraj(
+            GeneratorTeksta.generirajTekst(duljineTekstova[i]), kljuc.getN()), kljuc.getN());
+        stoperica.resetiraj();
+        stoperica.pokreni();
+        switch (vrstaSimulacije) {
+          case SIFRIRAJ -> hillKriptosustav.sifriraj(tekst, kljuc);
+          case DESIFRIRAJ -> hillKriptosustav.desifriraj(tekst, kljuc);
+        }
+        stoperica.zaustavi();
+        vremenaIzvodenja[i] += stoperica.vrijeme();
+      }
+      vremenaIzvodenja[i] = vremenaIzvodenja[i] / brojIteracija;
+    }
+
+    return vremenaIzvodenja;
   }
 }

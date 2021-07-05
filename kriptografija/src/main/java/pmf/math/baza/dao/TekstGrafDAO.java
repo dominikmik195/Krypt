@@ -13,9 +13,11 @@ import java.util.List;
 import java.util.Objects;
 import pmf.math.baza.tablice.TekstGrafovi;
 import pmf.math.konstante.ImenaKalkulatora;
+import pmf.math.kriptosustavi.AfiniKriptosustav;
 import pmf.math.kriptosustavi.HillKriptosustav;
 import pmf.math.kriptosustavi.PlayfairKriptosustav;
 import pmf.math.kriptosustavi.StupcanaTranspozicijaSustav;
+import pmf.math.kriptosustavi.VigenereKriptosustav;
 
 public class TekstGrafDAO {
 
@@ -80,6 +82,13 @@ public class TekstGrafDAO {
 
       case STUPCANA_TRANSPOZICIJA -> intRedUString(Objects.requireNonNull(
               StupcanaTranspozicijaSustav.simuliraj(DULJINE_TEKSTOVA_ZA_SIMULACIJU, vrstaSimulacije, brojIteracijaSimulacije)));
+
+      case VIGENEROVA_SIFRA -> intRedUString(Objects.requireNonNull(
+          VigenereKriptosustav.simuliraj(
+              DULJINE_TEKSTOVA_ZA_SIMULACIJU, vrstaSimulacije, brojIteracijaSimulacije)));
+
+      case AFINA_SIFRA -> intRedUString(Objects.requireNonNull(
+              AfiniKriptosustav.simuliraj(DULJINE_TEKSTOVA_ZA_SIMULACIJU, vrstaSimulacije, brojIteracijaSimulacije)));
 
       default -> throw new IllegalStateException("Neočekivana vrijednost: " + imeKalkulatora);
     };

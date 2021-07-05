@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import pmf.math.algoritmi.Matrica;
 import pmf.math.baza.dao.HillDAO;
+import pmf.math.filteri.HillFilter;
 import pmf.math.konstante.HillMatrice;
 import pmf.math.kriptosustavi.HillKriptosustav;
 import pmf.math.router.Konzola;
@@ -284,15 +285,8 @@ public class HillKalkulator {
   }
 
   public void sanitizirajTekst(JTextArea textArea) {
-    String tekst = filtrirajTekst(textArea.getText());
-    StringBuilder izlaz = new StringBuilder();
     int m = dimenzijaSlider.getModel().getValue();
-
-    for (int i = 0; i < tekst.length(); i += m) {
-      izlaz.append(tekst, i, Math.min(i + m, tekst.length()))
-          .append(i + m < tekst.length() ? " " : "");
-    }
-    textArea.setText(izlaz.toString().trim());
+    textArea.setText(HillFilter.filtriraj(textArea.getText(), m));
   }
 
   public void provjeriTipkuZaRacunanjeKljuca() {

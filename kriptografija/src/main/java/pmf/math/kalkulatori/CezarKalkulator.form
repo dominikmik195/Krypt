@@ -28,13 +28,16 @@
               <focusable value="true"/>
               <font name="JetBrains Mono" size="13"/>
               <horizontalAlignment value="4"/>
+              <labelFor value="cb535"/>
               <preferredSize width="120" height="21"/>
               <text value="Pomak"/>
             </properties>
           </component>
           <component id="cb535" class="javax.swing.JSpinner" binding="pomakSpinner">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <minimum-size width="80" height="30"/>
+              </grid>
             </constraints>
             <properties>
               <preferredSize width="60" height="30"/>
@@ -60,6 +63,7 @@
               <focusable value="true"/>
               <font name="JetBrains Mono" size="13"/>
               <horizontalAlignment value="4"/>
+              <labelFor value="6bce9"/>
               <preferredSize width="120" height="21"/>
               <text value="Otvoreni tekst"/>
               <verifyInputWhenFocusTarget value="true"/>
@@ -75,6 +79,7 @@
               <focusable value="true"/>
               <font name="JetBrains Mono" size="13"/>
               <horizontalAlignment value="4"/>
+              <labelFor value="3c142"/>
               <preferredSize width="120" height="21"/>
               <text value="Šifrat"/>
             </properties>

@@ -48,6 +48,7 @@ public class Router extends JPanel implements ActionListener {
   private final CezarKalkulator cezarKalkulator = new CezarKalkulator(konzola);
   private final SupstitucijskaKalkulator supstitucijskaKalkulator =
       new SupstitucijskaKalkulator(konzola);
+  private final AfinaKalkulator afinaKalkulator = new AfinaKalkulator(konzola);
   private final AnalizaTekstaKalkulator analizaTekstaKalkulator =
       new AnalizaTekstaKalkulator(konzola);
   private final StupcanaTranspozicijaKalkulator stupcanaKalkulator =
@@ -88,7 +89,7 @@ public class Router extends JPanel implements ActionListener {
     srednjiStupac.add(ImenaKalkulatora.CEZAROVA_SIFRA.toString(), cezarKalkulator.kalkulatorPanel);
     srednjiStupac.add(
         ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString(), supstitucijskaKalkulator.glavniPanel);
-    //srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), );
+    srednjiStupac.add(ImenaKalkulatora.AFINA_SIFRA.toString(), afinaKalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.HILLOVA_SIFRA.toString(), hillKalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.VIGENEROVA_SIFRA.toString(), vigenereKalkulator.glavniPanel);
     srednjiStupac.add(
@@ -109,7 +110,7 @@ public class Router extends JPanel implements ActionListener {
         opis.postaviTekst(OpisiKalkulatora.HILL_OPIS,
             UputeKalkulatora.HILL_UPUTE,
             imeKalkulatora);
-        new Thread(opis::postaviPrazanGraf).start();
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       case VIGENEROVA_SIFRA -> {
@@ -117,7 +118,7 @@ public class Router extends JPanel implements ActionListener {
         opis.postaviTekst(OpisiKalkulatora.VIGENERE_OPIS,
             UputeKalkulatora.VIGENERE_UPUTE,
             imeKalkulatora);
-        new Thread(opis::postaviPrazanGraf).start();
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       case PLAYFAIROVA_SIFRA -> {
@@ -159,6 +160,15 @@ public class Router extends JPanel implements ActionListener {
             UputeKalkulatora.CEZAR_UPUTE,
             imeKalkulatora);
         new Thread(opis::postaviPrazanGraf).start();
+      }
+
+      case AFINA_SIFRA -> {
+        prikaz.show(srednjiStupac, ImenaKalkulatora.AFINA_SIFRA.toString());
+        opis.postaviTekst(
+                OpisiKalkulatora.AFINA_OPIS,
+                UputeKalkulatora.AFINA_UPUTE,
+                imeKalkulatora);
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       case ANALIZA_TEKSTA -> {

@@ -23,7 +23,13 @@ public class UputeKalkulatora {
       """;
 
   public static final String AFINA_UPUTE = """
-        
+      Za (de)šifriranje pomoću afine šifre potrebno je unijeti vrijednosti parametara a i b.
+      
+      Važno je napomenuti da vrijednost parametra a mora biti broj koji je relativno prost s brojem 26.
+           
+      Također, sav uneseni tekst (otvoreni tekst, šifrat i ključna riječ) smije sadržavati isključivo slova engleske abecede.
+      
+      Za pokretanje postupka, pritisnuti odgovarajuću strelicu ↓ ili ↑.
       """;
 
   public static final String HILL_UPUTE = """

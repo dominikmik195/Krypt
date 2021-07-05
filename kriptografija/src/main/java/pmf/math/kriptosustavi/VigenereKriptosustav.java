@@ -4,7 +4,14 @@ import static pmf.math.algoritmi.Abeceda.inverz;
 import static pmf.math.algoritmi.Abeceda.zbroj;
 
 import java.util.Arrays;
+import pmf.math.algoritmi.Matrica;
+import pmf.math.baza.dao.TekstGrafDAO.VrstaSimulacije;
+import pmf.math.filteri.HillFilter;
+import pmf.math.filteri.VigenereFilter;
 import pmf.math.kalkulatori.VigenereKalkulator.NacinSifriranja;
+import pmf.math.konstante.HillMatrice;
+import pmf.math.pomagala.GeneratorTeksta;
+import pmf.math.pomagala.Stoperica;
 
 public class VigenereKriptosustav {
 
@@ -66,6 +73,34 @@ public class VigenereKriptosustav {
 
   public String desifriraj(String sifrat, String kljuc, NacinSifriranja nacinSifriranja) {
     return vigenere(sifrat, kljuc, nacinSifriranja, false);
+  }
+
+  public static int[] simuliraj(int[] duljineTekstova, VrstaSimulacije vrstaSimulacije, int brojIteracija) {
+    VigenereKriptosustav vigenereKriptosustav = new VigenereKriptosustav();
+    String kljuc = "VIGENERE";
+    NacinSifriranja nacinSifriranja = NacinSifriranja.PONAVLJAJUCI;
+    int[] vremenaIzvodenja = new int[duljineTekstova.length];
+    Stoperica stoperica = new Stoperica();
+    for (int i = 0; i < duljineTekstova.length; i++) {
+      for(int t = 0; t < brojIteracija; t++) {
+        String tekst = VigenereFilter.filtriraj(
+            GeneratorTeksta.generirajTekst(duljineTekstova[i]), kljuc.length(),
+            nacinSifriranja);
+        System.out.println(duljineTekstova[i]);
+        System.out.println(tekst);
+        stoperica.resetiraj();
+        stoperica.pokreni();
+        switch (vrstaSimulacije) {
+          case SIFRIRAJ -> vigenereKriptosustav.sifriraj(tekst, kljuc, nacinSifriranja);
+          case DESIFRIRAJ -> vigenereKriptosustav.desifriraj(tekst, kljuc, nacinSifriranja);
+        }
+        stoperica.zaustavi();
+        vremenaIzvodenja[i] += stoperica.vrijeme();
+      }
+      vremenaIzvodenja[i] = vremenaIzvodenja[i] / brojIteracija;
+    }
+
+    return vremenaIzvodenja;
   }
 
 }

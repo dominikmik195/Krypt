@@ -18,7 +18,7 @@ public class CezarKljucnaRijecKriptosustav extends SupstitucijskaKriptosustav {
     // Ako je upisana kriva ključna riječ, stvori nevažeću permutaciju.
     if (ObradaUnosa.kriviUnos(kljucnaRijec)) {
       Arrays.fill(this.permutacija, 0);
-      Arrays.fill(this.permutacija, 0);
+      Arrays.fill(this.inverznaPermutacija, 0);
       return;
     }
 
