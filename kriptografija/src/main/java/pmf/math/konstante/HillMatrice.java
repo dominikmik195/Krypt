@@ -17,4 +17,12 @@ public class HillMatrice {
     return new String[m];
   }
 
+  public static int[][] kljucZaSimulaciju() {
+    return new int[][] {
+        {4,3,3},
+        {-1,0,1},
+        {-4,-4,-3}
+    };
+  }
+
 }

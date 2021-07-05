@@ -19,6 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import pmf.math.baza.dao.VigenereDAO;
 import pmf.math.baza.tablice.VigenerePovijest;
+import pmf.math.filteri.VigenereFilter;
 import pmf.math.kriptosustavi.VigenereKriptosustav;
 import pmf.math.router.Konzola;
 
@@ -46,7 +47,7 @@ public class VigenereKalkulator {
   private JRadioButton ponavljajuciKljucRadioButton;
   private JRadioButton vigenereovKvadratRadioButton;
   private JPanel nacinSifriranjaPanel;
-  private JButton pronađiKljučButton;
+  private JButton pronadiKljucButton;
   private JButton odustaniButton;
   private JProgressBar progressBar1;
 
@@ -198,24 +199,19 @@ public class VigenereKalkulator {
 
   public void sanitizirajTekst(JTextArea textArea) {
     String tekst = filtrirajTekst(textArea.getText());
+    NacinSifriranja nacinSifriranja = vigenereovKvadratRadioButton.isSelected() ?
+        NacinSifriranja.VIGENEREOV_KVADRAT : NacinSifriranja.PONAVLJAJUCI;
     int m = kljucTextField.getText().length();
-    if (m == 0 || vigenereovKvadratRadioButton.isSelected()) {
-      textArea.setText(tekst);
-      return;
-    }
-    StringBuilder izlaz = new StringBuilder();
 
-    for (int i = 0; i < tekst.length(); i += m) {
-      izlaz.append(tekst, i, Math.min(i + m, tekst.length()))
-          .append(i + m < tekst.length() ? " " : "");
-    }
-    if (!izlaz.toString().equals(textArea.getText())
+    String izlaz = VigenereFilter.filtriraj(tekst, m, nacinSifriranja);
+
+    if (!izlaz.equals(textArea.getText())
         && textArea.getText().replaceAll(" ", "").length() % m != 0) {
       mojaKonzola
           .ispisiGresku("OPREZ! Unos mora biti višekratnik duljine ključa.");
     }
 
-    textArea.setText(izlaz.toString());
+    textArea.setText(izlaz);
   }
 
   public void postaviRubove() {
