@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import javax.swing.SwingUtilities;
 import pmf.math.baza.BazaPodataka;
 import pmf.math.kalkulatori.*;
 import pmf.math.konstante.ImenaKalkulatora;
@@ -186,7 +185,7 @@ public class Router extends JPanel implements ActionListener {
                 OpisiKalkulatora.STUPCANA_OPIS,
                 UputeKalkulatora.STUPCANA_UPUTE,
                 imeKalkulatora);
-        new Thread(opis::postaviPrazanGraf).start();
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       default -> {
