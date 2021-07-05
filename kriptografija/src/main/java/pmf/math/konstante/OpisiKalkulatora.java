@@ -65,7 +65,10 @@ public class OpisiKalkulatora {
       """;
 
   public static final String STUPCANA_OPIS = """
-        
+      Stupčana transpozicija je posebna vrsta transpozicijske šifre. Ideja transpozicijske šifre je da se elementi otvorenog teksta ostave nepromijenjeni, ali da se promjeni njihov međusobni položaj.
+      Podjelu šifri na supstitucijske i transpozicijske uveo u 16. stoljeću Giovanni Porta, a najčešće se upotrebljava upravo stupčana transpozicija.
+      Kod ove šifre se otvoreni tekst upisuje u pravokutnik po redcima, a zatim se poruka čita po stupcima, ali s promijenjenim poretkom stupaca.
+      Ako se posljednji redak ne ispuni do kraja, onda se prazna mjesta popune proizvoljnim slovima ("X") koja ne mijenjaju sadržaj poruke.
       """;
 
   public static final String RSA_OPIS = """

@@ -15,6 +15,7 @@ import pmf.math.baza.tablice.TekstGrafovi;
 import pmf.math.konstante.ImenaKalkulatora;
 import pmf.math.kriptosustavi.HillKriptosustav;
 import pmf.math.kriptosustavi.PlayfairKriptosustav;
+import pmf.math.kriptosustavi.StupcanaTranspozicijaSustav;
 
 public class TekstGrafDAO {
 
@@ -76,6 +77,9 @@ public class TekstGrafDAO {
 
       case HILLOVA_SIFRA -> intRedUString(Objects.requireNonNull(
           HillKriptosustav.simuliraj(DULJINE_TEKSTOVA_ZA_SIMULACIJU, vrstaSimulacije, brojIteracijaSimulacije)));
+
+      case STUPCANA_TRANSPOZICIJA -> intRedUString(Objects.requireNonNull(
+              StupcanaTranspozicijaSustav.simuliraj(DULJINE_TEKSTOVA_ZA_SIMULACIJU, vrstaSimulacije, brojIteracijaSimulacije)));
 
       default -> throw new IllegalStateException("Neočekivana vrijednost: " + imeKalkulatora);
     };

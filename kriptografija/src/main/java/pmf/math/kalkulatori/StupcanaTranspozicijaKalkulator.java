@@ -1,6 +1,5 @@
 package pmf.math.kalkulatori;
 
-import org.jfree.ui.HorizontalAlignment;
 import pmf.math.baza.dao.StupcanaDAO;
 import pmf.math.baza.tablice.StupcanaPovijest;
 import pmf.math.kriptosustavi.StupcanaTranspozicijaSustav;
@@ -9,8 +8,6 @@ import pmf.math.router.Konzola;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.AbstractList;
 import java.util.Vector;
 
@@ -27,13 +24,15 @@ public class StupcanaTranspozicijaKalkulator {
 
   private final Konzola konzola;
   private final Vector<JSpinner> spinnerVector;
-  private StupcanaDAO stupcanaDao = new StupcanaDAO();
+  private final Vector<JButton> povijestTipke;
+  private final StupcanaDAO stupcanaDao = new StupcanaDAO();
 
   private static final StupcanaTranspozicijaSustav stroj = new StupcanaTranspozicijaSustav();
 
   public StupcanaTranspozicijaKalkulator(Konzola _konzola) {
     konzola = _konzola;
     spinnerVector = new Vector<>();
+    povijestTipke = new Vector<>();
     stupciSpinner.setValue(2);
     GridLayout spinnerLayout = new GridLayout(2, 10, 2, 2);
     spinnerlPanel.setLayout(spinnerLayout);
@@ -89,6 +88,7 @@ public class StupcanaTranspozicijaKalkulator {
         e ->
             new Thread(
                     () -> {
+                      onesposobiTipke();
                       stroj.reinicijaliziraj();
                       String unos = otvoreniTekstArea.getText();
                       postaviVrijednosti();
@@ -117,6 +117,7 @@ public class StupcanaTranspozicijaKalkulator {
 
                       SwingUtilities.invokeLater(
                           () -> {
+                            osposobiTipke();
                             if (stroj.isOK()) {
                               otvoreniTekstArea.setText(stroj.formatirajOtvoreniTekst());
                               sifratArea.setText(stroj.getSifrat());
@@ -134,6 +135,7 @@ public class StupcanaTranspozicijaKalkulator {
         e ->
             new Thread(
                     () -> {
+                      onesposobiTipke();
                       stroj.reinicijaliziraj();
                       String sifrat = sifratArea.getText();
                       postaviVrijednosti();
@@ -162,9 +164,12 @@ public class StupcanaTranspozicijaKalkulator {
 
                       SwingUtilities.invokeLater(
                           () -> {
+                            osposobiTipke();
                             if (stroj.isOK()) {
-                              otvoreniTekstArea.setText(stroj.formatirajOtvoreniTekst());
+                              sifratArea.setText(stroj.formatirajSifrat());
                               otvoreniTekstArea.setText(stroj.getOtvoreniTekst());
+                              stupcanaDao.ubaciElement(kljucLabel.getText());
+                              prikaziPovijest();
                               konzola.ispisiPoruku(
                                   "Uspješno dešifriranje stupčanom transpozicijom!");
                             } else {
@@ -204,42 +209,71 @@ public class StupcanaTranspozicijaKalkulator {
     }
   }
 
+  private void onesposobiTipke() {
+    sifrirajButton.setEnabled(false);
+    desifrirajButton.setEnabled(false);
+    stupciSpinner.setEnabled(false);
+    for (JSpinner spin : spinnerVector) {
+      spin.setEnabled(false);
+    }
+    for (JButton tipka : povijestTipke) {
+      tipka.setEnabled(false);
+    }
+    sifratArea.setEnabled(false);
+    otvoreniTekstArea.setEnabled(false);
+  }
+
+  private void osposobiTipke() {
+    sifrirajButton.setEnabled(true);
+    desifrirajButton.setEnabled(true);
+    stupciSpinner.setEnabled(true);
+    for (JSpinner spin : spinnerVector) {
+      spin.setEnabled(true);
+    }
+    for (JButton tipka : povijestTipke) {
+      tipka.setEnabled(true);
+    }
+    sifratArea.setEnabled(true);
+    otvoreniTekstArea.setEnabled(true);
+  }
+
   private void createUIComponents() {
     stupciSpinner = new JSpinner(new SpinnerNumberModel(2, 2, 20, 1));
   }
 
   private void prikaziPovijest() {
-      povijestPanel.removeAll();
-      AbstractList<StupcanaPovijest> pov = (AbstractList<StupcanaPovijest>) stupcanaDao.dohvatiElemente();
-      for (StupcanaPovijest p : pov) {
-          JButton novi = new JButton(p.getKljuc());
-          novi.setHorizontalAlignment(JButton.CENTER);
-          postaviTipkuZaPovijest(novi);
-          povijestPanel.add(novi);
-      }
+    povijestPanel.removeAll();
+    povijestTipke.clear();
+    AbstractList<StupcanaPovijest> pov =
+        (AbstractList<StupcanaPovijest>) stupcanaDao.dohvatiElemente();
+    for (StupcanaPovijest p : pov) {
+      JButton novi = new JButton(p.getKljuc());
+      novi.setHorizontalAlignment(JButton.CENTER);
+      postaviTipkuZaPovijest(novi);
+      povijestTipke.add(novi);
+      povijestPanel.add(novi);
+    }
   }
 
   private void postaviTipkuZaPovijest(JButton tipka) {
-      tipka.addActionListener(new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-              String kljuc = tipka.getText();
-              kljucLabel.setText(kljuc);
-              String[] tmpS = kljuc.split("   ");
-              int velicina = tmpS.length;
-              stupciSpinner.setValue(velicina);
-              spinnerlPanel.removeAll();
-              spinnerVector.clear();
-              for (int i = 0; i < velicina; i++) {
-                  JSpinner tmpJ = new JSpinner(new SpinnerNumberModel(Integer.parseInt(tmpS[i]),
-                          1, velicina, 1));
-                  postaviKljucSpinner(tmpJ);
-                  tmpJ.setMinimumSize(new Dimension(50, 10));
-                  spinnerVector.add(tmpJ);
-                  spinnerlPanel.add(tmpJ);
-              }
-              tekstKljuca();
-          }
-      });
+    tipka.addActionListener(
+        e -> {
+          String kljuc = tipka.getText();
+          kljucLabel.setText(kljuc);
+          String[] tmpS = kljuc.split("   ");
+          int velicina = tmpS.length;
+          stupciSpinner.setValue(velicina);
+          spinnerlPanel.removeAll();
+          spinnerVector.clear();
+            for (String tmp : tmpS) {
+                JSpinner tmpJ =
+                        new JSpinner(new SpinnerNumberModel(Integer.parseInt(tmp), 1, velicina, 1));
+                postaviKljucSpinner(tmpJ);
+                tmpJ.setMinimumSize(new Dimension(50, 10));
+                spinnerVector.add(tmpJ);
+                spinnerlPanel.add(tmpJ);
+            }
+          tekstKljuca();
+        });
   }
 }

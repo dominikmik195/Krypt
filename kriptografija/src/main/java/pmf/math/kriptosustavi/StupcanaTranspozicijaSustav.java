@@ -2,7 +2,11 @@ package pmf.math.kriptosustavi;
 
 import lombok.Getter;
 import lombok.Setter;
+import pmf.math.baza.dao.TekstGrafDAO;
 import pmf.math.obradaunosa.ObradaUnosa;
+import pmf.math.pomagala.GeneratorKljucaStupcana;
+import pmf.math.pomagala.GeneratorTeksta;
+import pmf.math.pomagala.Stoperica;
 
 import java.util.Vector;
 
@@ -42,6 +46,16 @@ public class StupcanaTranspozicijaSustav {
     return noviTekst.toString();
   }
 
+  public String formatirajSifrat() {
+    StringBuilder noviTekst = new StringBuilder();
+    String tmp = ObradaUnosa.ocistiStupcana(sifrat);
+    for (int i = 0; i < tmp.length(); i++) {
+      noviTekst.append(tmp.charAt(i));
+      if(i%brojRedaka == brojRedaka-1) noviTekst.append("\n");
+    }
+    return noviTekst.toString();
+  }
+
   public void sifriraj() {
     brojRedaka = (int)Math.ceil((double)otvoreniTekst.length()/brojStupaca);
     char[][] matricaUnos = new char[brojRedaka][brojStupaca];
@@ -70,7 +84,8 @@ public class StupcanaTranspozicijaSustav {
 
   public void desifriraj() {
     otvoreniTekst = "";
-    brojRedaka = sifrat.length()/brojStupaca;
+    brojRedaka = (int)Math.ceil((double)sifrat.length()/brojStupaca);
+    while(sifrat.length() < brojStupaca*brojRedaka) sifrat += "X";
     char[][] matricaSifrat = new char[brojStupaca][brojRedaka];
     char[][] matricaUnos = new char[brojRedaka][brojStupaca];
     for (int i = 0; i < brojStupaca; i++) {
@@ -104,5 +119,35 @@ public class StupcanaTranspozicijaSustav {
       if (!vrijednosti.contains(broj)) return false;
     }
     return true;
+  }
+
+  public static int[] simuliraj(int[] duljineTekstova, TekstGrafDAO.VrstaSimulacije vrstaSimulacije, int brojIteracija) {
+    StupcanaTranspozicijaSustav stupcanaStroj = new StupcanaTranspozicijaSustav();
+    int[] vremenaIzvodenja = new int[duljineTekstova.length];
+    Stoperica stoperica = new Stoperica();
+    for (int i = 0; i < duljineTekstova.length; i++) {
+      for(int t = 0; t < brojIteracija; t++) {
+        stupcanaStroj.setVrijednosti(GeneratorKljucaStupcana.generiraj(10));
+        stupcanaStroj.setBrojStupaca(10);
+        String tekst = GeneratorTeksta.generirajTekst(duljineTekstova[i]);
+        stoperica.resetiraj();
+        stoperica.pokreni();
+        switch (vrstaSimulacije) {
+          case SIFRIRAJ -> {
+            stupcanaStroj.setOtvoreniTekst(tekst);
+            stupcanaStroj.sifriraj();
+          }
+          case DESIFRIRAJ ->{
+            stupcanaStroj.setSifrat(tekst);
+            stupcanaStroj.desifriraj();
+          }
+        }
+        stoperica.zaustavi();
+        vremenaIzvodenja[i] += stoperica.vrijeme();
+      }
+      vremenaIzvodenja[i] = vremenaIzvodenja[i] / brojIteracija;
+    }
+
+    return vremenaIzvodenja;
   }
 }

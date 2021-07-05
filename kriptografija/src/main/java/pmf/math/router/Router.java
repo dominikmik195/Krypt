@@ -172,6 +172,11 @@ public class Router extends JPanel implements ActionListener {
 
       case STUPCANA_TRANSPOZICIJA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString());
+        opis.postaviTekst(
+                OpisiKalkulatora.STUPCANA_OPIS,
+                UputeKalkulatora.STUPCANA_UPUTE,
+                imeKalkulatora);
+        new Thread(opis::postaviPrazanGraf).start();
       }
 
       default -> {
