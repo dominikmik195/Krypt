@@ -1,28 +1,15 @@
 package pmf.math.router;
 
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import javax.swing.SwingUtilities;
 import pmf.math.baza.BazaPodataka;
-import pmf.math.kalkulatori.AnalizaTekstaKalkulator;
-import pmf.math.kalkulatori.CezarKalkulator;
-import pmf.math.kalkulatori.ElGamalKalkulator;
-import pmf.math.kalkulatori.HillKalkulator;
-import pmf.math.kalkulatori.RSAKalkulator;
-import pmf.math.kalkulatori.PlayfairKalkulator;
-import pmf.math.kalkulatori.SupstitucijskaKalkulator;
-import pmf.math.kalkulatori.VigenereKalkulator;
-import pmf.math.kalkulatori.AfinaKalkulator;
+import pmf.math.kalkulatori.*;
 import pmf.math.konstante.ImenaKalkulatora;
 import pmf.math.konstante.OpisiKalkulatora;
 import pmf.math.konstante.UputeKalkulatora;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Router extends JPanel implements ActionListener {
 
@@ -140,7 +127,7 @@ public class Router extends JPanel implements ActionListener {
         opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS,
             UputeKalkulatora.EL_GAMAL_UPUTE,
             imeKalkulatora);
-        new Thread(opis::postaviPrazanGraf).start();
+        new Thread(opis::postaviPrazanGrafBroj).start();
       }
 
       case RSA_SIFRA -> {
@@ -148,7 +135,7 @@ public class Router extends JPanel implements ActionListener {
         opis.postaviTekst(OpisiKalkulatora.RSA_OPIS,
             UputeKalkulatora.RSA_UPUTE,
             imeKalkulatora);
-        new Thread(opis::postaviPrazanGraf).start();
+        new Thread(()->opis.postaviGraf(false)).start();
       }
 
       case SUPSTITUCIJSKA_SIFRA -> {

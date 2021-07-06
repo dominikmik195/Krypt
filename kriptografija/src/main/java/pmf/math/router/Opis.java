@@ -36,7 +36,9 @@ public class Opis {
 
   public Opis() {
     postaviTipke();
-    new Thread(this::postaviPrazanGraf).start();
+    if(imeKalkulatora == ImenaKalkulatora.EL_GAMALOVA_SIFRA || imeKalkulatora == ImenaKalkulatora.RSA_SIFRA)
+      new Thread(this::postaviPrazanGrafBroj).start();
+    else new Thread(this::postaviPrazanGraf).start();
   }
 
   private void postaviTipke() {
@@ -105,6 +107,8 @@ public class Opis {
     postaviGrafUzPodatke(new DefaultCategoryDataset());
   }
 
+  public void postaviPrazanGrafBroj() {postaviBrojGrafUzPodatke(new DefaultCategoryDataset());}
+
   private String razlomiTekst(String tekst) {
     StringBuilder izlazniTekst = new StringBuilder();
     Arrays.stream(tekst.split("\n"))
@@ -165,7 +169,7 @@ public class Opis {
 
     String label;
     if(imeKalkulatora == ImenaKalkulatora.EL_GAMALOVA_SIFRA) label = "Broj znamenaka prostog broja";
-    else label = "Broj znamenaka prostih brojeva";
+    else label = "Broj znamenaka broja n";
 
     JFreeChart linijskiDijagram =
             ChartFactory.createLineChart(
@@ -198,11 +202,11 @@ public class Opis {
     int[] vremenaIzvodenjaB = stringUIntRed(grafB.getVremenaIzvodenja());
     String vrstaSimulacijeB = grafB.getVrstaSimulacije();
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 8; i++) {
       podaci.addValue(vremenaIzvodenjaA[i], vrstaSimulacijeA, String.valueOf(i+1));
       System.out.println(vremenaIzvodenjaA[i]);
     }
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 8; i++) {
       podaci.addValue(vremenaIzvodenjaB[i], vrstaSimulacijeB, String.valueOf(i+1));
       System.out.println(vremenaIzvodenjaB[i]);
     }

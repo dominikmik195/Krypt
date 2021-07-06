@@ -119,7 +119,7 @@ public class RSAKriptosustav {
   }
 
   public static int[] simuliraj(BrojGrafDAO.VrstaSimulacije vrstaSimulacije, int brojIteracija) {
-    int maxBrojZnamenaka = 4;
+    int maxBrojZnamenaka = 8;
     int[] vremena = new int[maxBrojZnamenaka];
     RSAKriptosustav stroj = new RSAKriptosustav();
     Stoperica stoperica = new Stoperica();
