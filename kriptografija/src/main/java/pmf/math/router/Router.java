@@ -190,6 +190,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case STUPCANA_TRANSPOZICIJA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.STUPCANA_TRANSPOZICIJA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString());
         opis.postaviTekst(
                 OpisiKalkulatora.STUPCANA_OPIS,
