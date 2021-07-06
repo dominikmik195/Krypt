@@ -56,7 +56,6 @@ public class Opis {
   public void postaviGraf(boolean osvjezi) {
     if (imeKalkulatora == ImenaKalkulatora.EL_GAMALOVA_SIFRA
         || imeKalkulatora == ImenaKalkulatora.RSA_SIFRA) {
-      System.out.println("?");
       BrojGrafovi grafSifriraj =
           brojGrafDAO.dohvatiElement(imeKalkulatora, BrojGrafDAO.VrstaSimulacije.SIFRIRAJ, osvjezi);
       BrojGrafovi grafDesifriraj =
@@ -113,9 +112,7 @@ public class Opis {
     StringBuilder izlazniTekst = new StringBuilder();
     Arrays.stream(tekst.split("\n"))
         .forEach(
-            redak -> {
-              izlazniTekst.append(razlomiRedak(redak)).append("\n");
-            });
+            redak -> izlazniTekst.append(razlomiRedak(redak)).append("\n"));
     return izlazniTekst.toString();
   }
 
@@ -204,11 +201,9 @@ public class Opis {
 
     for (int i = 0; i < 8; i++) {
       podaci.addValue(vremenaIzvodenjaA[i], vrstaSimulacijeA, String.valueOf(i+1));
-      System.out.println(vremenaIzvodenjaA[i]);
     }
     for (int i = 0; i < 8; i++) {
       podaci.addValue(vremenaIzvodenjaB[i], vrstaSimulacijeB, String.valueOf(i+1));
-      System.out.println(vremenaIzvodenjaB[i]);
     }
     return podaci;
   }
