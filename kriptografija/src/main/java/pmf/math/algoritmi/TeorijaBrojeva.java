@@ -1,5 +1,8 @@
 package pmf.math.algoritmi;
 
+import pmf.math.kriptosustavi.ElGamalKriptosustav;
+import pmf.math.kriptosustavi.RSAKriptosustav;
+
 import java.math.BigInteger;
 
 public class TeorijaBrojeva {
@@ -19,6 +22,9 @@ public class TeorijaBrojeva {
     BigInteger x = br.mod(mod);
     int potencija = 2;
     while (potencija <= exp) {
+      if(ElGamalKriptosustav.prekid || RSAKriptosustav.prekid){
+        return -1;
+      }
       x = x.pow(2).mod(mod);
       potencija *= 2;
     }
@@ -33,6 +39,9 @@ public class TeorijaBrojeva {
     int red = 1;
     int ostatak = modularnoPotenciranje(element, red, modulo);
     while (ostatak != 1) {
+      if(ElGamalKriptosustav.prekid || RSAKriptosustav.prekid){
+        return -1;
+      }
       red++;
       ostatak = modularnoPotenciranje(element, red, modulo);
     }
@@ -45,6 +54,9 @@ public class TeorijaBrojeva {
     int korijen = 1;
     int red = redElementa(korijen, modulo);
     while (red != modulo - 1) {
+      if(ElGamalKriptosustav.prekid || RSAKriptosustav.prekid){
+        return -1;
+      }
       korijen++;
       red = redElementa(korijen, modulo);
     }

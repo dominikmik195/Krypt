@@ -1,23 +1,23 @@
 package pmf.math.router;
 
-import static pmf.math.konstante.DuljineTeksta.OPIS_TEKST_REDAK_MAX;
-import static pmf.math.pomagala.StringInteger.stringUIntRed;
-
-import java.awt.GridLayout;
-import java.util.Arrays;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import pmf.math.baza.dao.BrojGrafDAO;
 import pmf.math.baza.dao.TekstGrafDAO;
 import pmf.math.baza.dao.TekstGrafDAO.VrstaSimulacije;
+import pmf.math.baza.tablice.BrojGrafovi;
 import pmf.math.baza.tablice.TekstGrafovi;
 import pmf.math.konstante.ImenaKalkulatora;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Arrays;
+
+import static pmf.math.konstante.DuljineTeksta.OPIS_TEKST_REDAK_MAX;
+import static pmf.math.pomagala.StringInteger.stringUIntRed;
 
 public class Opis {
 
@@ -30,12 +30,15 @@ public class Opis {
   private JButton osvjeziGrafButton;
 
   private final TekstGrafDAO tekstGrafDAO = new TekstGrafDAO();
+  private final BrojGrafDAO brojGrafDAO = new BrojGrafDAO();
   private ImenaKalkulatora imeKalkulatora;
   private boolean postavljanjeGrafa = false;
 
   public Opis() {
     postaviTipke();
-    new Thread(this::postaviPrazanGraf).start();
+    if(imeKalkulatora == ImenaKalkulatora.EL_GAMALOVA_SIFRA || imeKalkulatora == ImenaKalkulatora.RSA_SIFRA)
+      new Thread(this::postaviPrazanGrafBroj).start();
+    else new Thread(this::postaviPrazanGraf).start();
   }
 
   private void postaviTipke() {
@@ -51,12 +54,22 @@ public class Opis {
   }
 
   public void postaviGraf(boolean osvjezi) {
-    TekstGrafovi grafSifriraj = tekstGrafDAO
-      .dohvatiElement(imeKalkulatora, VrstaSimulacije.SIFRIRAJ, osvjezi);
-    TekstGrafovi grafDesifriraj = tekstGrafDAO
-        .dohvatiElement(imeKalkulatora, VrstaSimulacije.DESIFRIRAJ, osvjezi);
+    if (imeKalkulatora == ImenaKalkulatora.EL_GAMALOVA_SIFRA
+        || imeKalkulatora == ImenaKalkulatora.RSA_SIFRA) {
+      BrojGrafovi grafSifriraj =
+          brojGrafDAO.dohvatiElement(imeKalkulatora, BrojGrafDAO.VrstaSimulacije.SIFRIRAJ, osvjezi);
+      BrojGrafovi grafDesifriraj =
+          brojGrafDAO.dohvatiElement(
+              imeKalkulatora, BrojGrafDAO.VrstaSimulacije.DESIFRIRAJ, osvjezi);
+      postaviBrojGrafUzPodatke(dohvatiBrojPodatke(grafSifriraj, grafDesifriraj));
+    } else {
+      TekstGrafovi grafSifriraj =
+          tekstGrafDAO.dohvatiElement(imeKalkulatora, VrstaSimulacije.SIFRIRAJ, osvjezi);
+      TekstGrafovi grafDesifriraj =
+          tekstGrafDAO.dohvatiElement(imeKalkulatora, VrstaSimulacije.DESIFRIRAJ, osvjezi);
 
-    postaviGrafUzPodatke(dohvatiPodatke(grafSifriraj, grafDesifriraj));
+      postaviGrafUzPodatke(dohvatiPodatke(grafSifriraj, grafDesifriraj));
+    }
   }
 
   public void postaviGrafUzPodatke(DefaultCategoryDataset podaci) {
@@ -66,12 +79,16 @@ public class Opis {
     postavljanjeGrafa = true;
     osvjeziGrafButton.setEnabled(false);
 
-    JFreeChart linijskiDijagram = ChartFactory.createLineChart(
-        "",
-        "Duljina teksta (broj slova)", "Vrijeme (µs)",
-        podaci,
-        PlotOrientation.VERTICAL,
-        true, false, false);
+    JFreeChart linijskiDijagram =
+        ChartFactory.createLineChart(
+            "",
+            "Duljina teksta (broj slova)",
+            "Vrijeme (µs)",
+            podaci,
+            PlotOrientation.VERTICAL,
+            true,
+            false,
+            false);
     linijskiDijagram.setBackgroundPaint(grafPanel.getBackground());
 
     grafPanel.removeAll();
@@ -89,11 +106,13 @@ public class Opis {
     postaviGrafUzPodatke(new DefaultCategoryDataset());
   }
 
+  public void postaviPrazanGrafBroj() {postaviBrojGrafUzPodatke(new DefaultCategoryDataset());}
+
   private String razlomiTekst(String tekst) {
     StringBuilder izlazniTekst = new StringBuilder();
-    Arrays.stream(tekst.split("\n")).forEach(redak -> {
-      izlazniTekst.append(razlomiRedak(redak)).append("\n");
-    });
+    Arrays.stream(tekst.split("\n"))
+        .forEach(
+            redak -> izlazniTekst.append(razlomiRedak(redak)).append("\n"));
     return izlazniTekst.toString();
   }
 
@@ -102,8 +121,8 @@ public class Opis {
     int div = redak.length() / OPIS_TEKST_REDAK_MAX;
     for (int i = 1; i <= div; i++) {
       int pozicija = OPIS_TEKST_REDAK_MAX * i - 1;
-      if (pozicija + 2 <= izlazniString.length() &&
-          izlazniString.substring(pozicija, pozicija + 2).matches("[a-zA-Z0-9čćšđžČĆŠŽĐ]*")) {
+      if (pozicija + 2 <= izlazniString.length()
+          && izlazniString.substring(pozicija, pozicija + 2).matches("[a-zA-Z0-9čćšđžČĆŠŽĐ]*")) {
         if (izlazniString.substring(pozicija - 1, pozicija).matches("[a-zA-Z0-9čćšđžČĆŠŽĐ]*")) {
           izlazniString = dodajUString(izlazniString, pozicija, "-");
         } else {
@@ -134,6 +153,67 @@ public class Opis {
     }
     for (int i = 0; i < duljineTekstaB.length; i++) {
       podaci.addValue(duljineTekstaB[i], vrstaSimulacijeB, String.valueOf(vremenaIzvodenjaB[i]));
+    }
+    return podaci;
+  }
+
+  public void postaviBrojGrafUzPodatke(DefaultCategoryDataset podaci) {
+    if (postavljanjeGrafa) {
+      return;
+    }
+    postavljanjeGrafa = true;
+    osvjeziGrafButton.setEnabled(false);
+
+    String label, vrijemeL;
+    if(imeKalkulatora == ImenaKalkulatora.EL_GAMALOVA_SIFRA){
+      label = "Broj znamenaka prostog broja";
+      vrijemeL = "Vrijeme (µs)";
+    }
+    else{
+      label = "Broj znamenaka broja n";
+      vrijemeL = "Vrijeme(ms)";
+    }
+
+    JFreeChart linijskiDijagram =
+            ChartFactory.createLineChart(
+                    "",
+                    label,
+                    vrijemeL,
+                    podaci,
+                    PlotOrientation.VERTICAL,
+                    true,
+                    false,
+                    false);
+    linijskiDijagram.setBackgroundPaint(grafPanel.getBackground());
+
+    grafPanel.removeAll();
+    grafPanel.setLayout(new GridLayout());
+
+    ChartPanel grafPodloga = new ChartPanel(linijskiDijagram);
+    grafPanel.add(grafPodloga);
+    grafPanel.revalidate();
+
+    osvjeziGrafButton.setEnabled(true);
+    postavljanjeGrafa = false;
+  }
+
+  public DefaultCategoryDataset dohvatiBrojPodatke(BrojGrafovi grafA, BrojGrafovi grafB) {
+    DefaultCategoryDataset podaci = new DefaultCategoryDataset();
+    int[] vremenaIzvodenjaA = stringUIntRed(grafA.getVremenaIzvodenja());
+    String vrstaSimulacijeA = grafA.getVrstaSimulacije();
+
+    int[] vremenaIzvodenjaB = stringUIntRed(grafB.getVremenaIzvodenja());
+    String vrstaSimulacijeB = grafB.getVrstaSimulacije();
+
+    int maxBr;
+    if(imeKalkulatora == ImenaKalkulatora.RSA_SIFRA) maxBr = BrojGrafDAO.maxBrojZnamenakaRSA;
+    else maxBr = BrojGrafDAO.maxBrojZnamenakaEG;
+
+    for (int i = 0; i < maxBr; i++) {
+      podaci.addValue(vremenaIzvodenjaA[i], vrstaSimulacijeA, String.valueOf(i+1));
+    }
+    for (int i = 0; i < maxBr; i++) {
+      podaci.addValue(vremenaIzvodenjaB[i], vrstaSimulacijeB, String.valueOf(i+1));
     }
     return podaci;
   }

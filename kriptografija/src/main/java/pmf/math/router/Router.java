@@ -133,7 +133,7 @@ public class Router extends JPanel implements ActionListener {
         opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS,
             UputeKalkulatora.EL_GAMAL_UPUTE,
             imeKalkulatora);
-        new Thread(opis::postaviPrazanGraf).start();
+        new Thread(()->opis.postaviGraf(false)).start();
       }
 
       case RSA_SIFRA -> {
@@ -141,7 +141,7 @@ public class Router extends JPanel implements ActionListener {
         opis.postaviTekst(OpisiKalkulatora.RSA_OPIS,
             UputeKalkulatora.RSA_UPUTE,
             imeKalkulatora);
-        new Thread(opis::postaviPrazanGraf).start();
+        new Thread(()->opis.postaviGraf(false)).start();
       }
 
       case SUPSTITUCIJSKA_SIFRA -> {
