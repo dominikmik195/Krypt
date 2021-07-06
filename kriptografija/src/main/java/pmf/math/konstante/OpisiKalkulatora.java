@@ -176,5 +176,8 @@ public class OpisiKalkulatora {
       NJEMAČKI:
       EIN, ICH, NDE, DIE, UND, DER, CHE, END
       
+      
+      Još jedna korisna informacija u tekstu jest odnos samoglasnika i suglasnika.
+      Primjerice, u stupčanoj transpoziciji je moguće potvrditi valjanost dimenzije ključa ukoliko je omjer samoglasnika i suglasnika (HRVATSKI jezik) 43% : 57%.
       """;
 }
