@@ -77,6 +77,7 @@ public class SupstitucijskaKalkulator {
         e -> {
           for (int i = 0; i < 26; i++) textFields[i].setValue(Abeceda.uSlovo(i));
           azurirajSlovaLabele();
+          for (int i = 0; i < 26; i++) textFields[i].setBackground(Color.white);
         });
 
     // Sva napisana slova se automatski prebacuju u velika. Ažuriramo label preostalih slova.
@@ -103,19 +104,26 @@ public class SupstitucijskaKalkulator {
     int[] permutacija = dohvatiTextFields();
     HashSet<Integer> duplicirani = new HashSet<>();
     for (int i = 0; i < 26; i++)
-      for (int j = 0; j < 26; j++)
-        if (i != j && permutacija[i] == permutacija[j]) duplicirani.add(i);
+      if (permutacija[i] != -1) {
+        for (int j = 0; j < 26; j++)
+          if (i != j && permutacija[i] == permutacija[j]) duplicirani.add(i);
+      }
 
     for (int i = 0; i < 26; i++) {
       if (duplicirani.contains(permutacija[i]))
         textFields[i].setBackground(new Color(239, 120, 120));
-      else textFields[i].setBackground(new Color(255, 255, 255));
+      else textFields[i].setBackground(Color.white);
+    }
+
+    for (Integer slovo : duplicirani) {
+      System.out.println(slovo);
     }
   }
 
   private void ocistiKljuc() {
     for (int i = 0; i < 26; i++) textFields[i].setValue(null);
     azurirajSlovaLabele();
+    for (int i = 0; i < 26; i++) textFields[i].setBackground(Color.white);
   }
 
   private void ocistiPolja() {
@@ -162,7 +170,7 @@ public class SupstitucijskaKalkulator {
   }
 
   public JButton stvoriGumbPovijesti(SupstitucijskaPovijest povijest) {
-    String tekst = povijest.getPermutacija();
+    String tekst = (povijest.getPermutacija()).replaceAll("([A-Z])", "$0 ");
     JButton noviGumb = new JButton(tekst);
 
     noviGumb.addActionListener(
@@ -176,6 +184,7 @@ public class SupstitucijskaKalkulator {
   public void osvjeziPovijest() {
     povijestPanel.removeAll();
     povijestPanel.setLayout(new GridLayout(5, 1));
+    povijestPanel.setBorder(BorderFactory.createLineBorder(new Color(175, 175, 175)));
     supstitucijskaDAO
         .dohvatiElemente()
         .forEach(element -> povijestPanel.add(stvoriGumbPovijesti(element)));

@@ -1008,7 +1008,9 @@
           </grid>
         </constraints>
         <properties/>
-        <border type="line"/>
+        <border type="none">
+          <color color="-6225408"/>
+        </border>
         <children/>
       </grid>
       <component id="78bca" class="javax.swing.JLabel">
