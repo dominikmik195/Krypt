@@ -55,12 +55,14 @@ public class UputeKalkulatora {
       """;
 
   public static final String STUPCANA_UPUTE = """
-        
+      Za šifriranje ili dešifriranje je potrebno odabrati broj stupaca s kojima želite raditi (barem dva, najviše 20).
+      Potom birate koja je permutacija stupaca, a valjanost odabranih vrijednosti će biti potvrđena ili opovrgnuta bojom ključa.
+      Potom unesite tekst koji želite (de)šifrirati i pritisnite odgovarajuću tipku.
       """;
 
   public static final String RSA_UPUTE = """
       Za šifriranje je potrebno unijeti broj n (ili brojeve p i q), i broj e. Također, u polje 'Broj' je potrebno unijeti proizvoljan prirodan broj. Za pokretanje postupka, pritisnete strelicu ↓.
-      Za dešifriranje je potrebno unijeti broj n (ili brojeve p i q), i broj d. U polje za šifrat treba unijeti proizvoljan prirodan broj. Za pokretanje postupka, pritisnete strelicu ↑.      
+      Za dešifriranje je potrebno unijeti broj n (ili brojeve p i q), i broj d. U polje za šifrat treba unijeti proizvoljan prirodan broj. Za pokretanje postupka, pritisnete strelicu ↑.     
       Ukoliko želite provjeriti jesu li vaši podatci valjani, tj. međusobno kompatibilni, pritisnite odgovarajuću tipku.     
       Ako podatci nisu u redu, tim postupkom će biti ispravljeni. Da bi to bilo moguće, potrebno je unijeti barem broj n ili brojeve p i q.
       """;

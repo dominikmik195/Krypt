@@ -1,5 +1,14 @@
 package pmf.math.router;
 
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import pmf.math.baza.BazaPodataka;
 import pmf.math.kalkulatori.*;
 import pmf.math.konstante.ImenaKalkulatora;
@@ -46,6 +55,8 @@ public class Router extends JPanel implements ActionListener {
   private final AfinaKalkulator afinaKalkulator = new AfinaKalkulator(konzola);
   private final AnalizaTekstaKalkulator analizaTekstaKalkulator =
       new AnalizaTekstaKalkulator(konzola);
+  private final StupcanaTranspozicijaKalkulator stupcanaKalkulator =
+          new StupcanaTranspozicijaKalkulator(konzola);
 
   public void Main() {
     stvoriGUI();
@@ -87,7 +98,7 @@ public class Router extends JPanel implements ActionListener {
     srednjiStupac.add(ImenaKalkulatora.VIGENEROVA_SIFRA.toString(), vigenereKalkulator.glavniPanel);
     srednjiStupac.add(
         ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString(), playfairKalkulator.glavniPanel);
-    //srednjiStupac.add(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString(), );
+    srednjiStupac.add(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString(),stupcanaKalkulator.glavniPanel );
     srednjiStupac.add(ImenaKalkulatora.RSA_SIFRA.toString(), RSAkalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString(), elGamalKalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.ANALIZA_TEKSTA.toString(), analizaTekstaKalkulator.glavniPanel);
@@ -171,6 +182,15 @@ public class Router extends JPanel implements ActionListener {
             UputeKalkulatora.ANALIZA_TEKSTA_UPUTE,
             imeKalkulatora);
         new Thread(opis::postaviPrazanGraf).start();
+      }
+
+      case STUPCANA_TRANSPOZICIJA -> {
+        prikaz.show(srednjiStupac, ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString());
+        opis.postaviTekst(
+                OpisiKalkulatora.STUPCANA_OPIS,
+                UputeKalkulatora.STUPCANA_UPUTE,
+                imeKalkulatora);
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       default -> {
@@ -261,6 +281,11 @@ public class Router extends JPanel implements ActionListener {
       omoguciSveTipke();
       omoguciTipku(analizaTekstaButton, false);
       postaviKalkulator(ImenaKalkulatora.ANALIZA_TEKSTA);
+    });
+    stupcanaButton.addActionListener(e -> {
+      omoguciSveTipke();
+      omoguciTipku(stupcanaButton, false);
+      postaviKalkulator(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA);
     });
   }
 
