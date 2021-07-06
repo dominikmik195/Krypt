@@ -1,6 +1,8 @@
 package pmf.math.kalkulatori;
 
 import pmf.math.algoritmi.Abeceda;
+import pmf.math.baza.dao.SupstitucijskaDAO;
+import pmf.math.baza.tablice.SupstitucijskaPovijest;
 import pmf.math.kriptosustavi.SupstitucijskaKriptosustav;
 import pmf.math.obradaunosa.ObradaUnosa;
 import pmf.math.router.Konzola;
@@ -8,6 +10,7 @@ import pmf.math.router.Konzola;
 import javax.swing.*;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,8 +19,10 @@ import java.text.ParseException;
 import java.util.Arrays;
 
 public class SupstitucijskaKalkulator {
+  private final JFormattedTextField[] textFields = new JFormattedTextField[26];
+  private final SupstitucijskaDAO supstitucijskaDAO = new SupstitucijskaDAO();
+  private final Konzola konzola; // Za ispis greške.
   public JPanel glavniPanel;
-
   private JTextArea otvoreniTekstArea;
   private JButton sifrirajButton;
   private JButton desifrirajButton;
@@ -53,15 +58,13 @@ public class SupstitucijskaKalkulator {
   private JButton identitetaButton;
   private JButton ocistiSveButton;
   private JLabel iskoristenaLabel;
-
-  private final JFormattedTextField[] textFields = new JFormattedTextField[26];
-
-  private final Konzola konzola; // Za ispis greške.
+  private JPanel povijestPanel;
 
   public SupstitucijskaKalkulator(Konzola konzola) {
     this.konzola = konzola;
     napuniTextFields();
     postaviTextFields();
+    osvjeziPovijest();
 
     sifrirajButton.addActionListener(new Sifriraj());
     desifrirajButton.addActionListener(new Desifriraj());
@@ -117,60 +120,6 @@ public class SupstitucijskaKalkulator {
     iskoristenaLabel.setText(novaIskoristena.toString().replaceAll("([A-Z])", "$0 "));
   }
 
-  // -----------------------------------------------------------------------------------------------------------------
-  // Listeneri.
-  private class Sifriraj implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-      String otvoreniTekst = otvoreniTekstArea.getText();
-      int[] permutacija = dohvatiTextFields(); // Permutacija kojom šifriramo.
-
-      // Provjeri unose (zbog ispisa poruka).
-      boolean greska = false;
-      if (ObradaUnosa.kriviUnos(permutacija)) {
-        konzola.ispisiGresku("Niti jedna dva slova ključa ne smiju biti ista!");
-        greska = true;
-      }
-      if (ObradaUnosa.kriviUnos(otvoreniTekst)) {
-        konzola.ispisiGresku("Otvoreni tekst smije sadržavati samo slova engleske abecede!");
-        greska = true;
-      }
-
-      // Šifriraj (ako je moguće).
-      if (!greska) {
-        String sifrat = (new SupstitucijskaKriptosustav(permutacija)).sifriraj(otvoreniTekst);
-        sifratArea.setText(sifrat);
-        konzola.ispisiPoruku("Poruka uspješno šifrirana općom supstitucijskom šifrom.");
-      }
-    }
-  }
-
-  private class Desifriraj implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-      String sifrat = sifratArea.getText();
-      int[] permutacija = dohvatiTextFields(); // Permutacija kojom šifriramo.
-
-      // Provjeri unose (zbog ispisa poruka).
-      boolean greska = false;
-      if (ObradaUnosa.kriviUnos(permutacija)) {
-        konzola.ispisiGresku("Niti jedna dva slova se ne smiju preslikati u isto!");
-        greska = true;
-      }
-      if (ObradaUnosa.kriviUnos(sifrat)) {
-        konzola.ispisiGresku("Šifrat smije sadržavati samo slova engleske abecede!");
-        greska = true;
-      }
-
-      // Dešifriraj (ako je moguće).
-      if (!greska) {
-        String otvoreniTekst = (new SupstitucijskaKriptosustav(permutacija)).desifriraj(sifrat);
-        otvoreniTekstArea.setText(otvoreniTekst);
-        konzola.ispisiPoruku("Poruka uspješno dešifrirana općom supstitucijskom šifrom.");
-      }
-    }
-  }
-
   // Dohvaća vrijednost text fieldova i vraća pripadnu permutaciju (s brojevima).
   private int[] dohvatiTextFields() {
     int[] vrijednosti = new int[26];
@@ -194,6 +143,27 @@ public class SupstitucijskaKalkulator {
     } catch (ParseException e) {
       e.printStackTrace();
     }
+  }
+
+  public JButton stvoriGumbPovijesti(SupstitucijskaPovijest povijest) {
+    String tekst = povijest.getPermutacija();
+    JButton noviGumb = new JButton(tekst);
+
+    noviGumb.addActionListener(
+        e -> {
+          for (int i = 0; i < 26; i++) textFields[i].setValue(tekst.charAt(i));
+        });
+
+    return noviGumb;
+  }
+
+  public void osvjeziPovijest() {
+    povijestPanel.removeAll();
+    povijestPanel.setLayout(new GridLayout(5, 1));
+    supstitucijskaDAO
+        .dohvatiElemente()
+        .forEach(element -> povijestPanel.add(stvoriGumbPovijesti(element)));
+    povijestPanel.revalidate();
   }
 
   private void napuniTextFields() {
@@ -223,5 +193,69 @@ public class SupstitucijskaKalkulator {
     textFields[23] = textField23;
     textFields[24] = textField24;
     textFields[25] = textField25;
+  }
+
+  // -----------------------------------------------------------------------------------------------------------------
+  // Listeneri.
+  private class Sifriraj implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      String otvoreniTekst = otvoreniTekstArea.getText();
+      int[] permutacija = dohvatiTextFields(); // Permutacija kojom šifriramo.
+
+      // Provjeri unose (zbog ispisa poruka).
+      boolean greska = false;
+      if (ObradaUnosa.kriviUnos(permutacija)) {
+        konzola.ispisiGresku("Niti jedna dva slova ključa ne smiju biti ista!");
+        greska = true;
+      }
+      if (ObradaUnosa.kriviUnos(otvoreniTekst)) {
+        konzola.ispisiGresku("Otvoreni tekst smije sadržavati samo slova engleske abecede!");
+        greska = true;
+      }
+
+      // Šifriraj (ako je moguće).
+      if (!greska) {
+        String sifrat = (new SupstitucijskaKriptosustav(permutacija)).sifriraj(otvoreniTekst);
+        sifratArea.setText(sifrat);
+        konzola.ispisiPoruku("Poruka uspješno šifrirana općom supstitucijskom šifrom.");
+
+        // Ispis i ažuriranje povijesti.
+        supstitucijskaDAO.ubaciElement(
+            (new SupstitucijskaKriptosustav(permutacija).dohvatiPermutacijuString()));
+        osvjeziPovijest();
+      }
+    }
+  }
+
+  private class Desifriraj implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      String sifrat = sifratArea.getText();
+      int[] permutacija = dohvatiTextFields(); // Permutacija kojom šifriramo.
+
+      // Provjeri unose (zbog ispisa poruka).
+      boolean greska = false;
+      if (ObradaUnosa.kriviUnos(permutacija)) {
+        konzola.ispisiGresku("Niti jedna dva slova se ne smiju preslikati u isto!");
+        greska = true;
+      }
+      if (ObradaUnosa.kriviUnos(sifrat)) {
+        konzola.ispisiGresku("Šifrat smije sadržavati samo slova engleske abecede!");
+        greska = true;
+      }
+
+      // Dešifriraj (ako je moguće).
+      if (!greska) {
+        String otvoreniTekst = (new SupstitucijskaKriptosustav(permutacija)).desifriraj(sifrat);
+        otvoreniTekstArea.setText(otvoreniTekst);
+        konzola.ispisiPoruku("Poruka uspješno dešifrirana općom supstitucijskom šifrom.");
+
+        // Ispis i ažuriranje povijesti.
+        supstitucijskaDAO.ubaciElement(
+            (new SupstitucijskaKriptosustav(permutacija).dohvatiPermutacijuString()));
+        osvjeziPovijest();
+      }
+    }
   }
 }
