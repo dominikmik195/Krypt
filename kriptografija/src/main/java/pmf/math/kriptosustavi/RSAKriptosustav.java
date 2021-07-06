@@ -3,7 +3,12 @@ package pmf.math.kriptosustavi;
 import lombok.Getter;
 import lombok.Setter;
 import pmf.math.algoritmi.TeorijaBrojeva;
+import pmf.math.baza.dao.BrojGrafDAO;
+import pmf.math.konstante.RSAPrimjeri;
 import pmf.math.obradaunosa.ObradaUnosaRSA;
+import pmf.math.pomagala.Stoperica;
+
+import java.util.Random;
 
 @Getter
 @Setter
@@ -17,6 +22,7 @@ public class RSAKriptosustav {
   private String poruke;
   private boolean OK;
   private int napredak;
+  public static boolean prekid;
 
   public RSAKriptosustav() {
     p = -1;
@@ -25,6 +31,7 @@ public class RSAKriptosustav {
     d = -1;
     e = -1;
     sifrat = 0;
+    prekid = false;
   }
 
   public RSAKriptosustav(int _p, int _q) {
@@ -111,5 +118,38 @@ public class RSAKriptosustav {
       }
     }
     return pq;
+  }
+
+  public static int[] simuliraj(BrojGrafDAO.VrstaSimulacije vrstaSimulacije, int brojIteracija, int maxBrojZnamenaka) {
+    int[] vremena = new int[maxBrojZnamenaka];
+    RSAKriptosustav stroj = new RSAKriptosustav();
+    Stoperica stoperica = new Stoperica();
+    Random r = new Random();
+    for (int i = 0; i < maxBrojZnamenaka; i++) {
+      for (int j = 0; j < brojIteracija; j++) {
+        int[][] primjeri = RSAPrimjeri.PRIMJERI[i];
+        int pozicija = r.nextInt(primjeri.length);
+        int[] primjer = primjeri[pozicija];
+        int broj = r.nextInt(primjer[2]);
+        stroj.setP(primjer[0]);
+        stroj.setQ(primjer[1]);
+        stroj.setN(primjer[2]);
+        stroj.setD(primjer[3]);
+        stroj.setE(primjer[4]);
+        stoperica.resetiraj();
+        stoperica.pokreni();
+        switch (vrstaSimulacije) {
+          case SIFRIRAJ -> stroj.sifriraj(broj);
+          case DESIFRIRAJ ->{
+            stroj.setSifrat(broj);
+            stroj.desifriraj();
+          }
+        }
+        stoperica.zaustavi();
+        vremena[i] += stoperica.vrijemeMili();
+      }
+      vremena[i] = vremena[i] / brojIteracija;
+    }
+    return vremena;
   }
 }
