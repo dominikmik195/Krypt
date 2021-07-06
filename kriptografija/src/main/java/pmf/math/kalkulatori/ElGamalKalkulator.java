@@ -7,6 +7,8 @@ import pmf.math.obradaunosa.ObradaUnosaElGamal;
 import pmf.math.router.Konzola;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ElGamalKalkulator {
   private static final ElGamalKriptosustav stroj = new ElGamalKriptosustav();
@@ -40,6 +42,7 @@ public class ElGamalKalkulator {
   private JLabel tbBazaLabel;
   private JButton odaberiPodatkeButton;
   private JPanel podatciJPanel;
+  private JButton prekidButton;
 
   private final ElGamalDAO elGamalDao = new ElGamalDAO();
   private int trenutniPrikaz = 0;
@@ -171,6 +174,13 @@ public class ElGamalKalkulator {
       betaField.setText(betaBazaLabel.getText());
       tajniBrojField.setText(tbBazaLabel.getText());
     });
+
+    prekidButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        ElGamalKriptosustav.prekid = true;
+      }
+    });
   }
 
   private int dohvatiVarijablu(int kod) {
@@ -297,9 +307,10 @@ public class ElGamalKalkulator {
       }
 
       SwingUtilities.invokeLater(() -> {
-        konzola.ispisiPoruku(stroj.dohvatiPoruke());
-        omoguciSucelje();
-        if(stroj.isOK()){
+        if(ElGamalKriptosustav.prekid)
+          konzola.ispisiGresku("Proces prekinut.");
+        else if(stroj.isOK()){
+          konzola.ispisiPoruku(stroj.dohvatiPoruke());
           prostBrojField.setText(String.valueOf(stroj.prostBroj));
           tajniKljucField.setText(String.valueOf(stroj.getTajniKljuc()));
           alfaField.setText(String.valueOf(stroj.alfa));
@@ -307,8 +318,11 @@ public class ElGamalKalkulator {
           tajniBrojField.setText(String.valueOf(stroj.getTajniBroj()));
           noviElement(stroj.prostBroj, stroj.getTajniKljuc(), stroj.alfa, stroj.beta, stroj.getTajniBroj());
         }
-        else
+        else {
+          konzola.ispisiPoruku(stroj.dohvatiPoruke());
           konzola.ispisiGresku("Podatci nisu kompatibilni. Ispravak nije uspješan!");
+        }
+        omoguciSucelje();
       });
     }).start();
 
@@ -333,6 +347,7 @@ public class ElGamalKalkulator {
     desifrirajButton.setEnabled(false);
     sifratArea.setEnabled(false);
     otvoreniTekstArea.setEnabled(false);
+    prekidButton.setEnabled(true);
   }
 
   public void omoguciSucelje() {
@@ -349,6 +364,8 @@ public class ElGamalKalkulator {
     sifratArea.setEnabled(true);
     otvoreniTekstArea.setEnabled(true);
     progressBar.setVisible(false);
+    prekidButton.setEnabled(false);
+    ElGamalKriptosustav.prekid = false;
   }
 
   private void prikaziTrenutni() {

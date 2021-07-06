@@ -7,6 +7,8 @@ import pmf.math.obradaunosa.ObradaUnosaRSA;
 import pmf.math.router.Konzola;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class RSAKalkulator extends JDialog {
   private final Konzola konzola;
@@ -34,6 +36,7 @@ public class RSAKalkulator extends JDialog {
   private JLabel eLabelBaza;
   private JPanel podatciPanel;
     private JProgressBar progressBar;
+    private JButton prekidButton;
 
     private final static RSAKriptosustav stroj = new RSAKriptosustav();
   private final RSADAO RSADao = new RSADAO();
@@ -186,6 +189,13 @@ public class RSAKalkulator extends JDialog {
       nBrojField.setText(nLabelBaza.getText());
       dBrojField.setText(dLabelBaza.getText());
       eBrojField.setText(eLabelBaza.getText());
+    });
+
+    prekidButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        RSAKriptosustav.prekid = true;
+      }
     });
   }
 
@@ -381,8 +391,11 @@ public class RSAKalkulator extends JDialog {
       }
 
       SwingUtilities.invokeLater(() -> {
-        konzola.ispisiPoruku(stroj.getPoruke());
-        if(stroj.isOK()) {
+        if(RSAKriptosustav.prekid) {
+          konzola.ispisiGresku("Prekid procesa.");
+        }
+        else if(stroj.isOK()) {
+          konzola.ispisiPoruku(stroj.getPoruke());
           pBrojField.setText(String.valueOf(stroj.getP()));
           qBrojField.setText(String.valueOf(stroj.getQ()));
           nBrojField.setText(String.valueOf(stroj.getN()));
@@ -391,6 +404,7 @@ public class RSAKalkulator extends JDialog {
           noviElement(stroj.getP(), stroj.getQ(), stroj.getN(), stroj.getD(), stroj.getE());
         }
         else {
+          konzola.ispisiPoruku(stroj.getPoruke());
           konzola.ispisiGresku("Neuspješan ispravak!");
         }
         omoguciSucelje();
@@ -418,6 +432,7 @@ public class RSAKalkulator extends JDialog {
     sifratArea.setEnabled(false);
     otvoreniTekstArea.setEnabled(false);
     odaberiPodatkeButton.setEnabled(false);
+    prekidButton.setEnabled(true);
   }
 
   public void omoguciSucelje() {
@@ -434,6 +449,8 @@ public class RSAKalkulator extends JDialog {
     otvoreniTekstArea.setEnabled(true);
     provjeriTipkeLijevoDesno();
     progressBar.setVisible(false);
+    prekidButton.setEnabled(false);
+    RSAKriptosustav.prekid = false;
   }
 
   private void prikaziTrenutni() {

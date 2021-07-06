@@ -199,10 +199,14 @@ public class Opis {
     int[] vremenaIzvodenjaB = stringUIntRed(grafB.getVremenaIzvodenja());
     String vrstaSimulacijeB = grafB.getVrstaSimulacije();
 
-    for (int i = 0; i < 8; i++) {
+    int maxBr;
+    if(imeKalkulatora == ImenaKalkulatora.RSA_SIFRA) maxBr = BrojGrafDAO.maxBrojZnamenakaRSA;
+    else maxBr = BrojGrafDAO.maxBrojZnamenakaEG;
+
+    for (int i = 0; i < maxBr; i++) {
       podaci.addValue(vremenaIzvodenjaA[i], vrstaSimulacijeA, String.valueOf(i+1));
     }
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < maxBr; i++) {
       podaci.addValue(vremenaIzvodenjaB[i], vrstaSimulacijeB, String.valueOf(i+1));
     }
     return podaci;

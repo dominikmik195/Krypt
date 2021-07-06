@@ -1,8 +1,11 @@
 package pmf.math.kriptosustavi;
 
 import pmf.math.algoritmi.TeorijaBrojeva;
+import pmf.math.baza.dao.BrojGrafDAO;
+import pmf.math.pomagala.Stoperica;
 
 import java.math.BigInteger;
+import java.util.Random;
 
 public class ElGamalKriptosustav {
   public int prostBroj, alfa, beta;
@@ -13,6 +16,7 @@ public class ElGamalKriptosustav {
   public int[] sifrat = new int[2];
 
   private String poruke;
+  public static boolean prekid;
 
   private int napredak;
 
@@ -24,6 +28,7 @@ public class ElGamalKriptosustav {
     beta = -1;
     poruke = "";
     OK = true;
+    prekid = false;
   }
 
   public ElGamalKriptosustav(int pB, int al, int be) {
@@ -123,5 +128,18 @@ public class ElGamalKriptosustav {
     String[] lista = novi.split(",");
     sifrat[0] = Integer.parseInt(lista[0].strip());
     sifrat[1] = Integer.parseInt(lista[1].strip());
+  }
+
+  public static int[] simuliraj(BrojGrafDAO.VrstaSimulacije vrstaSimulacije, int brojIteracija, int maxBrojZnamenaka) {
+    int[] vremena = new int[maxBrojZnamenaka];
+    ElGamalKriptosustav stroj = new ElGamalKriptosustav();
+    Stoperica stoperica = new Stoperica();
+    Random r = new Random();
+    for (int i = 0; i < maxBrojZnamenaka; i++) {
+      for (int j = 0; j < brojIteracija; j++) {
+
+      }
+    }
+    return vremena;
   }
 }

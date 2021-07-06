@@ -22,6 +22,7 @@ public class RSAKriptosustav {
   private String poruke;
   private boolean OK;
   private int napredak;
+  public static boolean prekid;
 
   public RSAKriptosustav() {
     p = -1;
@@ -30,6 +31,7 @@ public class RSAKriptosustav {
     d = -1;
     e = -1;
     sifrat = 0;
+    prekid = false;
   }
 
   public RSAKriptosustav(int _p, int _q) {
@@ -118,8 +120,7 @@ public class RSAKriptosustav {
     return pq;
   }
 
-  public static int[] simuliraj(BrojGrafDAO.VrstaSimulacije vrstaSimulacije, int brojIteracija) {
-    int maxBrojZnamenaka = 8;
+  public static int[] simuliraj(BrojGrafDAO.VrstaSimulacije vrstaSimulacije, int brojIteracija, int maxBrojZnamenaka) {
     int[] vremena = new int[maxBrojZnamenaka];
     RSAKriptosustav stroj = new RSAKriptosustav();
     Stoperica stoperica = new Stoperica();

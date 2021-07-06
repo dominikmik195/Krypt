@@ -5,6 +5,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.table.TableUtils;
 import pmf.math.baza.tablice.BrojGrafovi;
 import pmf.math.konstante.ImenaKalkulatora;
+import pmf.math.kriptosustavi.ElGamalKriptosustav;
 import pmf.math.kriptosustavi.RSAKriptosustav;
 
 import java.sql.SQLException;
@@ -17,6 +18,8 @@ import static pmf.math.pomagala.StringInteger.intRedUString;
 public class BrojGrafDAO {
     private Dao<BrojGrafovi, String> brojGrafDao;
     public final int brojIteracijaSimulacije = 10;
+    public static final int maxBrojZnamenakaRSA = 8;
+    public static final int maxBrojZnamenakaEG = 6;
 
     public enum VrstaSimulacije {
         SIFRIRAJ,
@@ -67,7 +70,10 @@ public class BrojGrafDAO {
                                     BrojGrafDAO.VrstaSimulacije vrstaSimulacije) {
         String vremenaIzvodenja = switch (imeKalkulatora) {
             case RSA_SIFRA -> intRedUString(Objects.requireNonNull(
-                    RSAKriptosustav.simuliraj(vrstaSimulacije, brojIteracijaSimulacije)));
+                    RSAKriptosustav.simuliraj(vrstaSimulacije, brojIteracijaSimulacije, maxBrojZnamenakaRSA)));
+
+            case EL_GAMALOVA_SIFRA -> intRedUString(Objects.requireNonNull(
+                    ElGamalKriptosustav.simuliraj(vrstaSimulacije, brojIteracijaSimulacije, maxBrojZnamenakaEG)));
 
             default -> throw new IllegalStateException("Neočekivana vrijednost: " + imeKalkulatora);
         };
