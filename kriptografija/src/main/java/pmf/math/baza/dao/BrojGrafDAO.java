@@ -19,7 +19,7 @@ public class BrojGrafDAO {
     private Dao<BrojGrafovi, String> brojGrafDao;
     public final int brojIteracijaSimulacije = 10;
     public static final int maxBrojZnamenakaRSA = 8;
-    public static final int maxBrojZnamenakaEG = 6;
+    public static final int maxBrojZnamenakaEG = 5;
 
     public enum VrstaSimulacije {
         SIFRIRAJ,

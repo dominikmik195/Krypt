@@ -2,6 +2,7 @@ package pmf.math.kriptosustavi;
 
 import pmf.math.algoritmi.TeorijaBrojeva;
 import pmf.math.baza.dao.BrojGrafDAO;
+import pmf.math.konstante.ElGamalPrimjeri;
 import pmf.math.pomagala.Stoperica;
 
 import java.math.BigInteger;
@@ -137,8 +138,32 @@ public class ElGamalKriptosustav {
     Random r = new Random();
     for (int i = 0; i < maxBrojZnamenaka; i++) {
       for (int j = 0; j < brojIteracija; j++) {
-
+        int[][] primjeri = ElGamalPrimjeri.PRIMJERI[i];
+        int pozicija = r.nextInt(primjeri.length);
+        int[] primjer = primjeri[pozicija];
+        int broj = r.nextInt(primjer[0]);
+        int[] s = {r.nextInt(primjer[0]), r.nextInt(primjer[0])};
+        stroj.prostBroj = primjer[0];
+        stroj.setTajniKljuc(primjer[1]);
+        stroj.alfa = primjer[2];
+        stroj.beta = primjer[3];
+        stroj.setTajniBroj(primjer[4]);
+        stoperica.resetiraj();
+        stoperica.pokreni();
+        switch (vrstaSimulacije) {
+          case SIFRIRAJ ->{
+            stroj.otvoreniTekst = broj;
+            stroj.sifriraj();
+          }
+          case DESIFRIRAJ ->{
+            stroj.sifrat = s;
+            stroj.desifriraj();
+          }
+        }
+        stoperica.zaustavi();
+        vremena[i] += stoperica.vrijeme();
       }
+      vremena[i] = vremena[i] / brojIteracija;
     }
     return vremena;
   }

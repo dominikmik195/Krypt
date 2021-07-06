@@ -53,7 +53,7 @@ public class ElGamalKalkulator {
     provjeriTipkeLijevoDesno();
 
     sifrirajButton.addActionListener(
-            e -> {
+            e ->  new Thread(() -> {
               onemoguciSucelje();
               stroj.setOK(true);
               stroj.reinicijalizirajPoruke();
@@ -94,7 +94,8 @@ public class ElGamalKalkulator {
                   konzola.ispisiGresku("Šifriranje neuspješno!");
                 omoguciSucelje();
               });
-            });
+            }).start()
+    );
 
     desifrirajButton.addActionListener(
             e -> new Thread(() -> {
@@ -175,12 +176,7 @@ public class ElGamalKalkulator {
       tajniBrojField.setText(tbBazaLabel.getText());
     });
 
-    prekidButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        ElGamalKriptosustav.prekid = true;
-      }
-    });
+    prekidButton.addActionListener(e -> ElGamalKriptosustav.prekid = true);
   }
 
   private int dohvatiVarijablu(int kod) {
@@ -244,6 +240,7 @@ public class ElGamalKalkulator {
 
   private void provjeriIIspravi() {
     new Thread(() -> {
+      prekidButton.setEnabled(true);
       onemoguciSucelje();
       stroj.setNapredak(0);
       stroj.reinicijalizirajPoruke();
@@ -336,6 +333,8 @@ public class ElGamalKalkulator {
 
   public void onemoguciSucelje() {
     odaberiPodatkeButton.setEnabled(false);
+    lijevoButton.setEnabled(false);
+    desnoButton.setEnabled(false);
     prostBrojField.setEnabled(false);
     tajniKljucField.setEnabled(false);
     tajniBrojField.setEnabled(false);
@@ -347,7 +346,6 @@ public class ElGamalKalkulator {
     desifrirajButton.setEnabled(false);
     sifratArea.setEnabled(false);
     otvoreniTekstArea.setEnabled(false);
-    prekidButton.setEnabled(true);
   }
 
   public void omoguciSucelje() {

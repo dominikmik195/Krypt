@@ -191,12 +191,7 @@ public class RSAKalkulator extends JDialog {
       eBrojField.setText(eLabelBaza.getText());
     });
 
-    prekidButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        RSAKriptosustav.prekid = true;
-      }
-    });
+    prekidButton.addActionListener(e -> RSAKriptosustav.prekid = true);
   }
 
   private int[] dohvatiNPQ() {
@@ -289,6 +284,7 @@ public class RSAKalkulator extends JDialog {
   private void provjeriIspravi() {
     // Funkcija koja izvršava provjere unesenih brojeva i, po mogućnosti, ispravlja unose.
     new Thread(() -> {
+      prekidButton.setEnabled(true);
       onemoguciSucelje();
       stroj.setNapredak(0);
       stroj.setPoruke("");
@@ -432,7 +428,8 @@ public class RSAKalkulator extends JDialog {
     sifratArea.setEnabled(false);
     otvoreniTekstArea.setEnabled(false);
     odaberiPodatkeButton.setEnabled(false);
-    prekidButton.setEnabled(true);
+    desnoButton.setEnabled(false);
+    lijevoButton.setEnabled(false);
   }
 
   public void omoguciSucelje() {

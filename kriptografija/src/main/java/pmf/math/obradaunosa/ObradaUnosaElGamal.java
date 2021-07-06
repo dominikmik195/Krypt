@@ -7,7 +7,7 @@ import java.math.BigInteger;
 public class ObradaUnosaElGamal {
   public static boolean provjeriAlfa(int _alfa, int _pB) {
     // Funkcija koja provjerava je li alfa primitivni korijen danog prostog broja.
-    if (_alfa < 0) return false;
+    if (_alfa < 0 || _alfa == _pB) return false;
     return TeorijaBrojeva.primitivniKorijen(_alfa, _pB);
   }
 

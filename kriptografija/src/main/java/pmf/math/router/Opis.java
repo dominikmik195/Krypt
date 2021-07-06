@@ -164,15 +164,21 @@ public class Opis {
     postavljanjeGrafa = true;
     osvjeziGrafButton.setEnabled(false);
 
-    String label;
-    if(imeKalkulatora == ImenaKalkulatora.EL_GAMALOVA_SIFRA) label = "Broj znamenaka prostog broja";
-    else label = "Broj znamenaka broja n";
+    String label, vrijemeL;
+    if(imeKalkulatora == ImenaKalkulatora.EL_GAMALOVA_SIFRA){
+      label = "Broj znamenaka prostog broja";
+      vrijemeL = "Vrijeme (µs)";
+    }
+    else{
+      label = "Broj znamenaka broja n";
+      vrijemeL = "Vrijeme(ms)";
+    }
 
     JFreeChart linijskiDijagram =
             ChartFactory.createLineChart(
                     "",
                     label,
-                    "Vrijeme (ms)",
+                    vrijemeL,
                     podaci,
                     PlotOrientation.VERTICAL,
                     true,

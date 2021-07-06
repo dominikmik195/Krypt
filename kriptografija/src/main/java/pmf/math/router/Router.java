@@ -15,11 +15,6 @@ import pmf.math.konstante.ImenaKalkulatora;
 import pmf.math.konstante.OpisiKalkulatora;
 import pmf.math.konstante.UputeKalkulatora;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public class Router extends JPanel implements ActionListener {
 
   private static JFrame myFrame;
@@ -138,7 +133,7 @@ public class Router extends JPanel implements ActionListener {
         opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS,
             UputeKalkulatora.EL_GAMAL_UPUTE,
             imeKalkulatora);
-        new Thread(opis::postaviPrazanGrafBroj).start();
+        new Thread(()->opis.postaviGraf(false)).start();
       }
 
       case RSA_SIFRA -> {
