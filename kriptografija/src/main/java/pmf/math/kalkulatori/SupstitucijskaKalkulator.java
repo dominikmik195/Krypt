@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.HashSet;
 
 public class SupstitucijskaKalkulator {
   private final JFormattedTextField[] textFields = new JFormattedTextField[26];
@@ -92,8 +93,23 @@ public class SupstitucijskaKalkulator {
             public void keyReleased(KeyEvent e) {
               tf.setText(tf.getText().toUpperCase());
               azurirajSlovaLabele();
+              obojajDuplikate();
             }
           });
+    }
+  }
+
+  private void obojajDuplikate() {
+    int[] permutacija = dohvatiTextFields();
+    HashSet<Integer> duplicirani = new HashSet<>();
+    for (int i = 0; i < 26; i++)
+      for (int j = 0; j < 26; j++)
+        if (i != j && permutacija[i] == permutacija[j]) duplicirani.add(i);
+
+    for (int i = 0; i < 26; i++) {
+      if (duplicirani.contains(permutacija[i]))
+        textFields[i].setBackground(new Color(239, 120, 120));
+      else textFields[i].setBackground(new Color(255, 255, 255));
     }
   }
 
