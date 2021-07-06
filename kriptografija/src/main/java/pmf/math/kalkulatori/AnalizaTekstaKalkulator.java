@@ -43,6 +43,8 @@ public class AnalizaTekstaKalkulator {
   private JLabel bigramiLabel;
   private JPanel analizaPanel;
   private JButton ocistiButton;
+  private JLabel samoglasniciSuglasniciLabel;
+  private JPanel detaljiPanel;
   public Konzola mojaKonzola;
   private ButtonGroup grupaZaIsticanjeMultigrama;
   private Map<String, List<Integer>> mapaBigrama;
@@ -66,12 +68,14 @@ public class AnalizaTekstaKalkulator {
       postaviSlova();
       postaviBigrame();
       postaviTrigrame();
+      postaviSamoglasnikeSuglasnike();
     });
 
     // Očisti
     ocistiButton.addActionListener(e -> {
       unosTekst.setText("");
       analiziraniTekst.setText("");
+      samoglasniciSuglasniciLabel.setText("");
       postaviSlova();
       postaviBigrame();
       postaviTrigrame();
@@ -110,8 +114,7 @@ public class AnalizaTekstaKalkulator {
           if (count.get() == MAX_BROJ_REDAKA) {
             trigramiPanel.revalidate();
             return;
-          }
-          else {
+          } else {
             count.getAndIncrement();
           }
           if (vrijednost.size() > 1) {
@@ -131,8 +134,7 @@ public class AnalizaTekstaKalkulator {
           if (count.get() == MAX_BROJ_REDAKA) {
             trigramiPanel.revalidate();
             return;
-          }
-          else {
+          } else {
             count.getAndIncrement();
           }
           if (vrijednost.size() > 1) {
@@ -140,6 +142,18 @@ public class AnalizaTekstaKalkulator {
           }
         });
     trigramiPanel.revalidate();
+  }
+
+  public void postaviSamoglasnikeSuglasnike() {
+    int brojSlova = analiziraniTekst.getText().length();
+    if (brojSlova == 0) {
+      return;
+    }
+    int postotakSamoglasnika =
+        analizaTeksta.pronadiSamoglasnike(analiziraniTekst.getText()) * 100 / brojSlova;
+    int postotakSuglasnika = 100 - postotakSamoglasnika;
+
+    samoglasniciSuglasniciLabel.setText(postotakSamoglasnika + "% / " + postotakSuglasnika + "%");
   }
 
   public JPanel stvoriRedakSaTipkom(String multigram, int vrijednost) {
@@ -221,6 +235,22 @@ public class AnalizaTekstaKalkulator {
 
   public void postaviRubove() {
     unosTekst.setMargin(new Insets(10, 10, 10, 10));
+  }
+
+  public boolean samoglasnik(String slovo) {
+    if (slovo.length() != 1) {
+      return false;
+    }
+    String slovoUpper = slovo.toUpperCase(Locale.ROOT);
+    if (slovoUpper.contains("A") ||
+        slovoUpper.contains("E") ||
+        slovoUpper.contains("I") ||
+        slovoUpper.contains("O") ||
+        slovoUpper.contains("U")) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -43,6 +44,17 @@ public class AnalizaTeksta {
 
   public Map<String, List<Integer>> pronadiTrigrame(String tekst) {
     return pronadiMultigram(tekst, 3);
+  }
+
+  public int pronadiSamoglasnike(String tekst) {
+    tekst = tekst.replaceAll(" ", "").toUpperCase(Locale.ROOT);
+    return (int) Arrays.stream(tekst.split(""))
+        .filter(s ->
+            s.equals("A") ||
+            s.equals("E") ||
+            s.equals("I") ||
+            s.equals("O") ||
+            s.equals("U")).count();
   }
 
   private Map<String, Integer> sortirajMapu(Map<String, Integer> mapa) {

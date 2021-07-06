@@ -16,10 +16,7 @@ import pmf.math.algoritmi.Matrica;
 import pmf.math.algoritmi.Vektor;
 import pmf.math.baza.dao.TekstGrafDAO.VrstaSimulacije;
 import pmf.math.filteri.HillFilter;
-import pmf.math.filteri.PlayfairFilter;
 import pmf.math.konstante.HillMatrice;
-import pmf.math.konstante.PlayfairAbecede;
-import pmf.math.kriptosustavi.PlayfairKriptosustav.Jezik;
 import pmf.math.pomagala.GeneratorTeksta;
 import pmf.math.pomagala.Stoperica;
 

@@ -8,26 +8,47 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+import lombok.Setter;
 
+@Setter
 public class Konzola {
 
   public JPanel glavniPanel;
   private JTextPane ispisKonzole;
+  private String podnaslov = "";
 
   public void ispisiPoruku(String poruka){
     SimpleAttributeSet set = new SimpleAttributeSet();
-    StyleConstants.setForeground(set, Color.WHITE);
     StyledDocument tekst = ispisKonzole.getStyledDocument();
-    try { tekst.insertString(tekst.getLength(), dohvatiVrijeme() + " " + poruka + "\n", set); }
+
+    StyleConstants.setForeground(set, Color.WHITE);
+    try { tekst.insertString(tekst.getLength(), dohvatiVrijeme() + " ", set); }
+    catch (BadLocationException ignored) { }
+
+    StyleConstants.setForeground(set, Color.BLUE);
+    try { tekst.insertString(tekst.getLength(), podnaslov, set); }
+    catch (BadLocationException ignored) { }
+
+    StyleConstants.setForeground(set, Color.WHITE);
+    try { tekst.insertString(tekst.getLength(), poruka + "\n", set); }
     catch (BadLocationException ignored) { }
     glavniPanel.revalidate();
   }
 
   public void ispisiGresku(String poruka) {
     SimpleAttributeSet set = new SimpleAttributeSet();
-    StyleConstants.setForeground(set, Color.RED);
     StyledDocument tekst = ispisKonzole.getStyledDocument();
-    try { tekst.insertString(tekst.getLength(), dohvatiVrijeme() + " " + poruka + "\n", set); }
+
+    StyleConstants.setForeground(set, Color.WHITE);
+    try { tekst.insertString(tekst.getLength(), dohvatiVrijeme() + " ", set); }
+    catch (BadLocationException ignored) { }
+
+    StyleConstants.setForeground(set, Color.BLUE);
+    try { tekst.insertString(tekst.getLength(), podnaslov, set); }
+    catch (BadLocationException ignored) { }
+
+    StyleConstants.setForeground(set, Color.RED);
+    try { tekst.insertString(tekst.getLength(), poruka + "\n", set); }
     catch (BadLocationException ignored) { }
     glavniPanel.revalidate();
   }
