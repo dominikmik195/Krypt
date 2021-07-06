@@ -84,7 +84,12 @@ public class OpisiKalkulatora {
       """;
 
   public static final String STUPCANA_OPIS = """
-        
+      Stupčana transpozicija je posebna vrsta transpozicijske šifre. Ideja transpozicijske šifre je da se elementi otvorenog teksta ostave nepromijenjeni, ali da se promjeni njihov međusobni položaj.
+      Podjelu šifri na supstitucijske i transpozicijske uveo u 16. stoljeću Giovanni Porta, a najčešće se upotrebljava upravo stupčana transpozicija.
+      Kod ove šifre se otvoreni tekst upisuje u pravokutnik po redcima, a zatim se poruka čita po stupcima, ali s promijenjenim poretkom stupaca.
+      Ako se posljednji redak ne ispuni do kraja, onda se prazna mjesta popune proizvoljnim slovima ("X") koja ne mijenjaju sadržaj poruke.
+      
+      Simulacije šifriranja i dešifriranja za kreiranje grafova su rađene pomoću nasumičnog ključa duljine 10 i nasumičnih tekstova različitih duljina (specificiranih na x-osi).
       """;
 
   public static final String RSA_OPIS = """
@@ -93,6 +98,8 @@ public class OpisiKalkulatora {
         Sastoji se od javnih ključeva: n i e, te privatnih vrijednosti: p, q i d. Broj n je pritom umnožak prostih brojeva p i q, a umnožak brojeva d i e pri djeljenju brojem n daje ostatak 1.
         Šifriranje se odvija tako da se broj potencira na e-tu potenciju te se onda računa ostatak dobivenog broja pri djeljenju s n.
         Dešifriranje se odvija tako da se broj potencira na d-tu potenciju te se onda računa ostatak dobivenog broja pri djeljenju s n.
+        
+        Simulacije šifriranja i dešifriranja za kreiranje grafova su rađene pomoću unaprijed određenih ključeva, podijeljenih u grupe u ovisnosti o broju znamenaka broja n.
       """;
 
   public static final String EL_GAMAL_OPIS = """
@@ -102,6 +109,8 @@ public class OpisiKalkulatora {
       Šifriranje se odvija tako da se nasumično odabere tajni broj k pomoću kojeg se onda - uz p, alfa i beta - otvoreni tekst šifrira kao uređeni par dvaju brojeva.
       Upravo u tome leži teškoća razbijanja šifre, jer da bi netko znao koliki je k, ili mora poznavati tajni ključ ili morao biti u mogućnosti riješiti problem diskretnog logaritma.
       Stoga se dešifriranje vrši pomoću brojeva p, alfa, beta i tajnog ključa.
+      
+      Simulacije šifriranja i dešifriranja za kreiranje grafova su rađene pomoću unaprijed određenih ključeva, podijeljenih u grupe u ovisnosti o broju znamenaka prostog broja, tajnog ključa i tajnog broja (pritom sva tri broja imaju isti broj znamenaka).
       """;
 
   public static final String ANALIZA_TEKSTA_OPIS = """

@@ -21,6 +21,14 @@ public class Stoperica {
     return (int) ((kraj - pocetak) /  1000);
   }
 
+  public int vrijemeMili() {
+    if(pocetak == -1L || kraj == -1L) {
+      return 0;
+    }
+    // milisekunde
+    return (int) ((kraj - pocetak) /  1000000);
+  }
+
   public void resetiraj() {
     pocetak = -1L;
     kraj = -1L;

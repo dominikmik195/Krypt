@@ -16,6 +16,7 @@ import pmf.math.konstante.ImenaKalkulatora;
 import pmf.math.kriptosustavi.AfiniKriptosustav;
 import pmf.math.kriptosustavi.HillKriptosustav;
 import pmf.math.kriptosustavi.PlayfairKriptosustav;
+import pmf.math.kriptosustavi.StupcanaTranspozicijaSustav;
 import pmf.math.kriptosustavi.VigenereKriptosustav;
 
 public class TekstGrafDAO {
@@ -78,6 +79,9 @@ public class TekstGrafDAO {
 
       case HILLOVA_SIFRA -> intRedUString(Objects.requireNonNull(
           HillKriptosustav.simuliraj(DULJINE_TEKSTOVA_ZA_SIMULACIJU, vrstaSimulacije, brojIteracijaSimulacije)));
+
+      case STUPCANA_TRANSPOZICIJA -> intRedUString(Objects.requireNonNull(
+              StupcanaTranspozicijaSustav.simuliraj(DULJINE_TEKSTOVA_ZA_SIMULACIJU, vrstaSimulacije, brojIteracijaSimulacije)));
 
       case VIGENEROVA_SIFRA -> intRedUString(Objects.requireNonNull(
           VigenereKriptosustav.simuliraj(
