@@ -1,7 +1,10 @@
 package pmf.math.kriptosustavi;
 
 import pmf.math.algoritmi.Abeceda;
+import pmf.math.baza.dao.TekstGrafDAO;
 import pmf.math.obradaunosa.ObradaUnosa;
+import pmf.math.pomagala.GeneratorTeksta;
+import pmf.math.pomagala.Stoperica;
 
 import java.util.Arrays;
 
@@ -42,5 +45,27 @@ public class CezarKljucnaRijecKriptosustav extends SupstitucijskaKriptosustav {
         ++j;
       }
     }
+  }
+
+  public static int[] simuliraj(int[] duljineTekstova, TekstGrafDAO.VrstaSimulacije vrstaSimulacije, int brojIteracija) {
+    CezarKljucnaRijecKriptosustav cezarKljucnaRijecKriptosustav = new CezarKljucnaRijecKriptosustav("KRIPTOGRAFIJA", 8);
+    int[] vremenaIzvodenja = new int[duljineTekstova.length];
+    Stoperica stoperica = new Stoperica();
+    for (int i = 0; i < duljineTekstova.length; i++) {
+      for(int t = 0; t < brojIteracija; t++) {
+        String tekst = GeneratorTeksta.generirajTekst(duljineTekstova[i]);
+        stoperica.resetiraj();
+        stoperica.pokreni();
+        switch (vrstaSimulacije) {
+          case SIFRIRAJ -> cezarKljucnaRijecKriptosustav.sifriraj(tekst);
+          case DESIFRIRAJ -> cezarKljucnaRijecKriptosustav.desifriraj(tekst);
+        }
+        stoperica.zaustavi();
+        vremenaIzvodenja[i] += stoperica.vrijeme();
+      }
+      vremenaIzvodenja[i] = vremenaIzvodenja[i] / brojIteracija;
+    }
+
+    return vremenaIzvodenja;
   }
 }
