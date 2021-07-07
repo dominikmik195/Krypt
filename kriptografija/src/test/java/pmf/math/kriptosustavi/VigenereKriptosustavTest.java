@@ -2,6 +2,7 @@ package pmf.math.kriptosustavi;
 
 import junit.framework.TestCase;
 import pmf.math.kalkulatori.VigenereKalkulator.NacinSifriranja;
+import pmf.math.kriptosustavi.VigenereKriptosustav.Jezik;
 
 public class VigenereKriptosustavTest extends TestCase {
 
@@ -25,6 +26,30 @@ public class VigenereKriptosustavTest extends TestCase {
 
     assertEquals(vigenereKriptosustav.sifriraj(otvoreniTekst, kljuc, nacin), sifrat);
     assertEquals(vigenereKriptosustav.desifriraj(sifrat, kljuc, nacin), otvoreniTekst);
+  }
+
+  public void testPronadiKljuc() {
+    String sifrat =
+          "GSIQITUKQIEAOHRVUGLTAZGHXUHLPJMRTTNQRBZIAVBTG"
+        + "QTBYMYAIVOMZTAIXJBTEDEWVQWADVWGOOKNQNTCIPEGPY"
+        + "BOKUSECNWELLCPZUMIVWFUIJMYATUEXISLMZTNPGUJHTM"
+        + "ERXJSYSIVWABGVWFDTZILNTIEDEFJMFAMPNQZBRSDIZPR"
+        + "MLGVKFEDZXMVXVQMJXWSLEEQRMAEPRUJXIMFNT";
+    Jezik jezik = Jezik.HRVATSKI;
+    int m = 5;
+
+    assertEquals(vigenereKriptosustav.pronadiDuljinuKljuca(jezik, sifrat), m);
+
+
+    sifrat = "OVOJENEKITEKSTOVOJENEKITEKST";
+    m = 1;
+
+    assertEquals(vigenereKriptosustav.pronadiDuljinuKljuca(jezik, sifrat), m);
+
+    sifrat = "";
+    m = 0;
+
+    assertEquals(vigenereKriptosustav.pronadiDuljinuKljuca(jezik, sifrat), m);
   }
 
 }

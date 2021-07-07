@@ -13,6 +13,7 @@ import pmf.math.baza.BazaPodataka;
 import pmf.math.kalkulatori.*;
 import pmf.math.konstante.ImenaKalkulatora;
 import pmf.math.konstante.OpisiKalkulatora;
+import pmf.math.konstante.PodnasloviKonzole;
 import pmf.math.konstante.UputeKalkulatora;
 
 public class Router extends JPanel implements ActionListener {
@@ -105,6 +106,7 @@ public class Router extends JPanel implements ActionListener {
     CardLayout prikaz = (CardLayout) srednjiStupac.getLayout();
     switch (imeKalkulatora) {
       case HILLOVA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.HILLOVA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.HILLOVA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.HILL_OPIS,
             UputeKalkulatora.HILL_UPUTE,
@@ -114,6 +116,7 @@ public class Router extends JPanel implements ActionListener {
 
       case VIGENEROVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.VIGENEROVA_SIFRA.toString());
+        konzola.setPodnaslov(PodnasloviKonzole.VIGENEREOVA_SIFRA_PODNASLOV);
         opis.postaviTekst(OpisiKalkulatora.VIGENERE_OPIS,
             UputeKalkulatora.VIGENERE_UPUTE,
             imeKalkulatora);
@@ -121,6 +124,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case PLAYFAIROVA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.PLAYFAIROVA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.PLAYFAIR_OPIS,
             UputeKalkulatora.PLAYFAIR_UPUTE,
@@ -129,6 +133,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case EL_GAMALOVA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.EL_GAMALOVA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS,
             UputeKalkulatora.EL_GAMAL_UPUTE,
@@ -137,6 +142,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case RSA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.RSA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.RSA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.RSA_OPIS,
             UputeKalkulatora.RSA_UPUTE,
@@ -145,6 +151,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case SUPSTITUCIJSKA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.SUPSTITUCIJSKA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.SUPSTITUCIJA_OPIS,
             UputeKalkulatora.SUPSTITUCIJA_UPUTE,
@@ -153,6 +160,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case CEZAROVA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.CEZAROVA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.CEZAROVA_SIFRA.toString());
         opis.postaviTekst(
             OpisiKalkulatora.CEZAR_OPIS,
@@ -162,6 +170,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case AFINA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.AFINA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.AFINA_SIFRA.toString());
         opis.postaviTekst(
                 OpisiKalkulatora.AFINA_OPIS,
@@ -171,6 +180,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case ANALIZA_TEKSTA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.ANALIZA_TEKSTA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.ANALIZA_TEKSTA.toString());
         opis.postaviTekst(
             OpisiKalkulatora.ANALIZA_TEKSTA_OPIS,
@@ -180,6 +190,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case STUPCANA_TRANSPOZICIJA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.STUPCANA_TRANSPOZICIJA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString());
         opis.postaviTekst(
                 OpisiKalkulatora.STUPCANA_OPIS,
@@ -189,6 +200,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       default -> {
+        konzola.setPodnaslov("");
         prikaz.show(srednjiStupac, "NULL");
         opis.postaviTekst("", "", null);
         new Thread(opis::postaviPrazanGraf).start();

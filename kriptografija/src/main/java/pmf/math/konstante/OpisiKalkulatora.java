@@ -66,6 +66,11 @@ public class OpisiKalkulatora {
           
       U slučaju Vigenèreovog kvadrata otvoreni tekst/sifrat OTVORENITEKST / SIFRAT šifrira/dešifrira se u riječ REZULTAT uz sljedeće transformacije:
       + KLJUCOTVORENITEKST / - KLJUCREZULTAT
+      
+      Promatranjem indeksa koincidencije moguće je procijeniti radi li se doista o smislenom tekstu ili ne.
+      Stoga ako podijelimo tekst na m traka tako da svaka traka sadrži svako m-to slovo teksta za neki potencijalni m (duljina ključa), možemo vidjeti je li ključ doista te duljine.
+      
+      Indeks koincidencije jest suma frekvencija pojedinih slova u određenom tekstu. U HRVATSKOM jeziku ta vrijednost u prosjeku iznosi 0.064, u ENGLESKOM jeziku 0.065, a u NJEMAČKOM jeziku 0.076.
       """;
 
   public static final String PLAYFAIR_OPIS = """
@@ -177,5 +182,8 @@ public class OpisiKalkulatora {
       NJEMAČKI:
       EIN, ICH, NDE, DIE, UND, DER, CHE, END
       
+      
+      Još jedna korisna informacija u tekstu jest odnos samoglasnika i suglasnika.
+      Primjerice, u stupčanoj transpoziciji je moguće potvrditi valjanost dimenzije ključa ukoliko je omjer samoglasnika i suglasnika (HRVATSKI jezik) 43% : 57%.
       """;
 }

@@ -6,7 +6,6 @@ import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -17,10 +16,12 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import pmf.math.baza.dao.VigenereDAO;
 import pmf.math.baza.tablice.VigenerePovijest;
 import pmf.math.filteri.VigenereFilter;
 import pmf.math.kriptosustavi.VigenereKriptosustav;
+import pmf.math.kriptosustavi.VigenereKriptosustav.Jezik;
 import pmf.math.router.Konzola;
 
 public class VigenereKalkulator {
@@ -49,7 +50,8 @@ public class VigenereKalkulator {
   private JPanel nacinSifriranjaPanel;
   private JButton pronadiKljucButton;
   private JButton odustaniButton;
-  private JProgressBar progressBar1;
+  private JProgressBar kljucProgressBar;
+  private JComboBox jezikComboBox;
 
   public enum NacinSifriranja {
     PONAVLJAJUCI,
@@ -61,6 +63,7 @@ public class VigenereKalkulator {
     postaviTipke();
     postaviRubove();
     osvjeziFavorite();
+    omoguciSucelje();
   }
 
   private void postaviTipke() {
@@ -166,6 +169,14 @@ public class VigenereKalkulator {
       @Override
       public void focusLost(FocusEvent e) {
         sanitizirajTekst(sifratTextArea);
+        if(sifratTextArea.getText().length() > kljucTextField.getText().length()) {
+          pronadiKljucButton.setEnabled(true);
+          jezikComboBox.setEnabled(true);
+        }
+        else {
+          pronadiKljucButton.setEnabled(false);
+          jezikComboBox.setEnabled(false);
+        }
       }
     });
 
@@ -178,6 +189,36 @@ public class VigenereKalkulator {
       if (!kljucTextField.getText().equals(kljuc)) {
         kljucTextField.setText(kljuc);
       }
+    });
+
+    // Računanje ključa
+    pronadiKljucButton.addActionListener(e -> {
+      new Thread(() -> {
+        onemoguciSucelje();
+        vigenereKriptosustav.setExitThread(false);
+        Jezik jezik = Jezik.values()[jezikComboBox.getSelectedIndex()];
+        final int duljina = vigenereKriptosustav.pronadiDuljinuKljuca(
+            jezik, sifratTextArea.getText());
+        vigenereKriptosustav.setExitThread(true);
+
+        SwingUtilities.invokeLater(() -> {
+          if (duljina != 0) {
+            mojaKonzola.ispisiPoruku(
+                "Vjerojatna duljina ključa za dani šifrat je " + duljina + ".");
+          } else {
+            mojaKonzola.ispisiGresku("Neuspješno računanje duljine ključa.");
+          }
+          omoguciSucelje();
+        });
+      }).start();
+
+      new Thread(() -> {
+        while (kljucProgressBar.isVisible()) {
+          SwingUtilities.invokeLater(() -> {
+            kljucProgressBar.setValue(vigenereKriptosustav.getNapredak());
+          });
+        }
+      }).start();
     });
   }
 
@@ -205,7 +246,7 @@ public class VigenereKalkulator {
 
     String izlaz = VigenereFilter.filtriraj(tekst, m, nacinSifriranja);
 
-    if (!izlaz.equals(textArea.getText())
+    if (m != 0 && !izlaz.equals(textArea.getText())
         && textArea.getText().replaceAll(" ", "").length() % m != 0) {
       mojaKonzola
           .ispisiGresku("OPREZ! Unos mora biti višekratnik duljine ključa.");
@@ -217,6 +258,30 @@ public class VigenereKalkulator {
   public void postaviRubove() {
     otvoreniTekstTextArea.setMargin(new Insets(10, 10, 10, 10));
     sifratTextArea.setMargin(new Insets(10, 10, 10, 10));
+  }
+
+  public void onemoguciSucelje() {
+    kljucTextField.setEnabled(false);
+    otvoreniTekstTextArea.setEnabled(false);
+    sifratTextArea.setEnabled(false);
+    sifrirajButton.setEnabled(false);
+    desifrirajButton.setEnabled(false);
+    favoritiComboBox.setEnabled(false);
+
+    odustaniButton.setEnabled(true);
+    kljucProgressBar.setVisible(true);
+  }
+
+  public void omoguciSucelje() {
+    kljucTextField.setEnabled(true);
+    otvoreniTekstTextArea.setEnabled(true);
+    sifratTextArea.setEnabled(true);
+    sifrirajButton.setEnabled(true);
+    desifrirajButton.setEnabled(true);
+    favoritiComboBox.setEnabled(false);
+
+    odustaniButton.setEnabled(false);
+    kljucProgressBar.setVisible(false);
   }
 
 }
