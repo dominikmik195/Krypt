@@ -19,6 +19,6 @@ jobs:
           java-version: '16'
           distribution: 'adopt'
       - name: Maven Package
-        run: mvn -B clean package -Dmaven.test.skip=true
+        run: mvn -B clean package -DskipTests
       - name: Unit Test
         run: mvn clean test -P unit-test
