@@ -1,7 +1,10 @@
 package pmf.math.kriptosustavi;
 
 import pmf.math.algoritmi.Abeceda;
+import pmf.math.baza.dao.TekstGrafDAO;
 import pmf.math.obradaunosa.ObradaUnosa;
+import pmf.math.pomagala.GeneratorTeksta;
+import pmf.math.pomagala.Stoperica;
 
 import java.util.Arrays;
 
@@ -38,6 +41,7 @@ public class SupstitucijskaKriptosustav {
 
     return sifrat.toString().replaceAll("(.{5})", "$0 "); // Razmak svako peto slovo.
   }
+
   // Dešifrira šifrat i vraća otvoreni tekst.
   public String desifriraj(String sifrat) {
     // Provjeri unos.
@@ -65,5 +69,31 @@ public class SupstitucijskaKriptosustav {
     StringBuilder slova = new StringBuilder();
     for (int i = 0; i < 26; i++) slova.append(Abeceda.uSlovo(permutacija[i]));
     return slova.toString();
+  }
+
+  public static int[] simuliraj(int[] duljineTekstova, TekstGrafDAO.VrstaSimulacije vrstaSimulacije, int brojIteracija) {
+    int[] permutacija = new int[] {
+            0, 25, 4, 17, 19, 24, 20, 8, 14, 15, 16, 18, 3, 5, 6, 7, 9, 10, 11, 12, 22, 23, 2, 21, 1,
+            13
+    };
+    SupstitucijskaKriptosustav supstitucijskaKriptosustav = new SupstitucijskaKriptosustav(permutacija);
+    int[] vremenaIzvodenja = new int[duljineTekstova.length];
+    Stoperica stoperica = new Stoperica();
+    for (int i = 0; i < duljineTekstova.length; i++) {
+      for(int t = 0; t < brojIteracija; t++) {
+        String tekst = GeneratorTeksta.generirajTekst(duljineTekstova[i]);
+        stoperica.resetiraj();
+        stoperica.pokreni();
+        switch (vrstaSimulacije) {
+          case SIFRIRAJ -> supstitucijskaKriptosustav.sifriraj(tekst);
+          case DESIFRIRAJ -> supstitucijskaKriptosustav.desifriraj(tekst);
+        }
+        stoperica.zaustavi();
+        vremenaIzvodenja[i] += stoperica.vrijeme();
+      }
+      vremenaIzvodenja[i] = vremenaIzvodenja[i] / brojIteracija;
+    }
+
+    return vremenaIzvodenja;
   }
 }

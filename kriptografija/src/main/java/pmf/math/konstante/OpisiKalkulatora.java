@@ -8,13 +8,17 @@ public class OpisiKalkulatora {
     Na primjer, s pomakom 3, A se zamjenjuje slovom D, B slovom E itd. 
     
     Ova metoda je dobila ime po Juliju Cezaru, koji ju je koristio za razmjenu poruka sa svojim generalima.
-      """;
+    
+    Simulacije šifriranja i dešifriranja za kreiranje grafova su rađene pomoću unaprijed određenog ključa zadanog s (pomak, ključna riječ) = (8, KRIPTOGRAFIJA). Simulacija je rađena na tekstovima različitih duljina, podijeljenih u grupe u ovisnosti o broju znakova otvorenog teksta, odnosno šifrata.
+    """;
 
   public static final String SUPSTITUCIJA_OPIS = """
     Opća supstitucijska šifra jedna je od najjednostavnijih šifri, u kojoj se svako slovo otvorenog teksta zamjenjuje odgovarajućim slovom abecede, prema zadanoj permutaciji slova.
     
     Postoje i mnoge podvrste supstitucijskih šifri, kao što su na primjer Cezarova šifra, Cezarova šifra s ključnom riječi ili afina šifra. U njima se također svako slovo zamjenjuje nekim drugim, ali prema posebnim pravilima koja određuju korištenu permutaciju slova.
-      """;
+    
+    Simulacije šifriranja i dešifriranja za kreiranje grafova su rađene pomoću unaprijed određenog ključa, koristeći permutaciju slova zadanu s AZERTYUIOPQSDFGHJKLMWXCVBN. Simulacija je rađena na tekstovima različitih duljina, podijeljenih u grupe u ovisnosti o broju znakova otvorenog teksta, odnosno šifrata.
+    """;
 
   public static final String AFINA_OPIS = """
       Afina šifra je jedna od supstitutcijskih šifri, u kojoj se svako slovo otvorenog teksta zamjenjuje odgovarajućim slovom abecede, prema zadanoj permutaciji slova.
@@ -32,6 +36,8 @@ public class OpisiKalkulatora {
       Kako nemaju svi brojevi multiplikativni inverz modulo 26, tako treba postaviti dodatan uvjet na parametar a. Stoga zahtijevamo da je a relativno prost s brojem 26, odnosno da je najveći zajednički djelitelj brojeva a i 26 jednak 1.
       
       Za vrijednost parametra a = 1, ova je šifra upravo jednaka Cezarovoj šifri gdje je pomak određen vrijednošću parametra b.
+      
+      Simulacije šifriranja i dešifriranja za kreiranje grafova su rađene pomoću unaprijed određenog ključa (a, b) = (7, 4). Simulacija je rađena na tekstovima različitih duljina, podijeljenih u grupe u ovisnosti o broju znakova otvorenog teksta, odnosno šifrata.
       """;
 
   public static final String HILL_OPIS = """

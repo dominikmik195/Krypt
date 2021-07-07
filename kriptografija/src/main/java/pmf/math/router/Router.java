@@ -156,7 +156,7 @@ public class Router extends JPanel implements ActionListener {
         opis.postaviTekst(OpisiKalkulatora.SUPSTITUCIJA_OPIS,
             UputeKalkulatora.SUPSTITUCIJA_UPUTE,
             imeKalkulatora);
-        new Thread(opis::postaviPrazanGraf).start();
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       case CEZAROVA_SIFRA -> {
@@ -166,7 +166,7 @@ public class Router extends JPanel implements ActionListener {
             OpisiKalkulatora.CEZAR_OPIS,
             UputeKalkulatora.CEZAR_UPUTE,
             imeKalkulatora);
-        new Thread(opis::postaviPrazanGraf).start();
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       case AFINA_SIFRA -> {

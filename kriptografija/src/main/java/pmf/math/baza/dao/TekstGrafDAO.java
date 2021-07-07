@@ -1,40 +1,25 @@
 package pmf.math.baza.dao;
 
 
-import static pmf.math.pomagala.StringInteger.intRedUString;
-import static pmf.math.baza.BazaPodataka.poveznicaBaze;
-import static pmf.math.konstante.DuljineTeksta.DULJINE_TEKSTOVA_ZA_SIMULACIJU;
-
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.table.TableUtils;
+import pmf.math.baza.tablice.TekstGrafovi;
+import pmf.math.konstante.ImenaKalkulatora;
+import pmf.math.kriptosustavi.*;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
-import pmf.math.baza.tablice.TekstGrafovi;
-import pmf.math.konstante.ImenaKalkulatora;
-import pmf.math.kriptosustavi.AfiniKriptosustav;
-import pmf.math.kriptosustavi.HillKriptosustav;
-import pmf.math.kriptosustavi.PlayfairKriptosustav;
-import pmf.math.kriptosustavi.StupcanaTranspozicijaSustav;
-import pmf.math.kriptosustavi.VigenereKriptosustav;
+
+import static pmf.math.baza.BazaPodataka.poveznicaBaze;
+import static pmf.math.konstante.DuljineTeksta.DULJINE_TEKSTOVA_ZA_SIMULACIJU;
+import static pmf.math.pomagala.StringInteger.intRedUString;
 
 public class TekstGrafDAO {
 
-  private Dao<TekstGrafovi, String> tekstGrafDao;
   public final int brojIteracijaSimulacije = 10;
-
-  public enum VrstaSimulacije {
-    SIFRIRAJ,
-    DESIFRIRAJ
-  }
-
-  public String vrstaSimulacijeToString(VrstaSimulacije vrstaSimulacije) {
-    return switch (vrstaSimulacije) {
-      case SIFRIRAJ -> "Šifriranje";
-      case DESIFRIRAJ -> "Dešifriranje";
-    };
-  }
+  private Dao<TekstGrafovi, String> tekstGrafDao;
 
   public TekstGrafDAO() {
     try {
@@ -43,6 +28,13 @@ public class TekstGrafDAO {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  public String vrstaSimulacijeToString(VrstaSimulacije vrstaSimulacije) {
+    return switch (vrstaSimulacije) {
+      case SIFRIRAJ -> "Šifriranje";
+      case DESIFRIRAJ -> "Dešifriranje";
+    };
   }
 
   public TekstGrafovi dohvatiElement(ImenaKalkulatora imeKalkulatora,
@@ -80,6 +72,12 @@ public class TekstGrafDAO {
       case HILLOVA_SIFRA -> intRedUString(Objects.requireNonNull(
           HillKriptosustav.simuliraj(DULJINE_TEKSTOVA_ZA_SIMULACIJU, vrstaSimulacije, brojIteracijaSimulacije)));
 
+      case SUPSTITUCIJSKA_SIFRA -> intRedUString(Objects.requireNonNull(
+              SupstitucijskaKriptosustav.simuliraj(DULJINE_TEKSTOVA_ZA_SIMULACIJU, vrstaSimulacije, brojIteracijaSimulacije)));
+
+      case CEZAROVA_SIFRA -> intRedUString(Objects.requireNonNull(
+              CezarKljucnaRijecKriptosustav.simuliraj(DULJINE_TEKSTOVA_ZA_SIMULACIJU, vrstaSimulacije, brojIteracijaSimulacije)));
+
       case STUPCANA_TRANSPOZICIJA -> intRedUString(Objects.requireNonNull(
               StupcanaTranspozicijaSustav.simuliraj(DULJINE_TEKSTOVA_ZA_SIMULACIJU, vrstaSimulacije, brojIteracijaSimulacije)));
 
@@ -94,5 +92,10 @@ public class TekstGrafDAO {
     };
     return new TekstGrafovi(0, imeKalkulatora.toString(), vrstaSimulacijeToString(vrstaSimulacije),
         duljineTekstova, vremenaIzvodenja);
+  }
+
+  public enum VrstaSimulacije {
+    SIFRIRAJ,
+    DESIFRIRAJ
   }
 }
