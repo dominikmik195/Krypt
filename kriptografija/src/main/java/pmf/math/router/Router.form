@@ -6,11 +6,11 @@
     </constraints>
     <properties>
       <minimumSize width="24" height="24"/>
-      <preferredSize width="1400" height="960"/>
+      <preferredSize width="1440" height="960"/>
     </properties>
     <border type="none"/>
     <children>
-      <grid id="856b" binding="tipkePanel" layout-manager="GridLayoutManager" row-count="1" column-count="10" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="-1">
+      <grid id="856b" binding="tipkePanel" layout-manager="GridLayoutManager" row-count="1" column-count="11" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints border-constraint="North"/>
         <properties>
@@ -24,12 +24,13 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-4999937"/>
+              <background color="-4079167"/>
               <contentAreaFilled value="true"/>
               <defaultCapable value="true"/>
               <enabled value="true"/>
               <focusPainted value="true"/>
               <focusable value="true"/>
+              <font name="SansSerif" size="14"/>
               <text value="Cezarova Šifra"/>
             </properties>
           </component>
@@ -38,7 +39,8 @@
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-4999937"/>
+              <background color="-4079167"/>
+              <font name="SansSerif" size="14"/>
               <text value="Supstitucijska Šifra"/>
             </properties>
           </component>
@@ -47,7 +49,8 @@
               <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-4999937"/>
+              <background color="-4079167"/>
+              <font name="SansSerif" size="14"/>
               <text value="Hillova Šifra"/>
             </properties>
           </component>
@@ -56,7 +59,8 @@
               <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-4999937"/>
+              <background color="-4079167"/>
+              <font name="SansSerif" size="14"/>
               <text value="Vigenerova Šifra"/>
             </properties>
           </component>
@@ -65,7 +69,8 @@
               <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-4999937"/>
+              <background color="-4079167"/>
+              <font name="SansSerif" size="14"/>
               <text value="Playfairova Šifra"/>
             </properties>
           </component>
@@ -74,7 +79,8 @@
               <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-4999937"/>
+              <background color="-4079167"/>
+              <font name="SansSerif" size="14"/>
               <text value="Stupčana Transpoziija"/>
             </properties>
           </component>
@@ -83,7 +89,8 @@
               <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-4999937"/>
+              <background color="-4079167"/>
+              <font name="SansSerif" size="14"/>
               <text value="RSA Šifra"/>
             </properties>
           </component>
@@ -92,7 +99,8 @@
               <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-4999937"/>
+              <background color="-4079167"/>
+              <font name="SansSerif" size="14"/>
               <text value="El Gamalova Šifra"/>
             </properties>
           </component>
@@ -101,7 +109,8 @@
               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-4999937"/>
+              <background color="-4079167"/>
+              <font name="SansSerif" size="14"/>
               <text value="Afina Šifra"/>
             </properties>
           </component>
@@ -110,13 +119,26 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-2191269"/>
+              <background color="-16770403"/>
+              <font name="SansSerif" size="14"/>
+              <foreground color="-1"/>
               <text value="Analiza Teksta"/>
+            </properties>
+          </component>
+          <component id="da429" class="javax.swing.JButton" binding="uvodnaStranicaButton">
+            <constraints>
+              <grid row="0" column="10" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-5024512"/>
+              <font name="SansSerif" size="14"/>
+              <foreground color="-1"/>
+              <text value="Uvodna stranica"/>
             </properties>
           </component>
         </children>
       </grid>
-      <grid id="2b50c" binding="formPanel" layout-manager="BorderLayout" hgap="10" vgap="0">
+      <grid id="2b50c" binding="formPanel" layout-manager="BorderLayout" hgap="20" vgap="0">
         <constraints border-constraint="Center"/>
         <properties>
           <preferredSize width="1280" height="756"/>
@@ -136,7 +158,7 @@
           <grid id="c63b1" binding="desniStupac" layout-manager="CardLayout" hgap="0" vgap="0">
             <constraints border-constraint="East"/>
             <properties>
-              <preferredSize width="290" height="24"/>
+              <preferredSize width="330" height="24"/>
             </properties>
             <border type="none"/>
             <children/>

@@ -28,6 +28,8 @@ public class Opis {
   private JPanel donjiPanel;
   private JPanel grafPanel;
   private JButton osvjeziGrafButton;
+  private JLabel opisLabel;
+  private JPanel performansePanel;
 
   private final TekstGrafDAO tekstGrafDAO = new TekstGrafDAO();
   private final BrojGrafDAO brojGrafDAO = new BrojGrafDAO();
@@ -51,6 +53,12 @@ public class Opis {
     donjiTextPane.setText(razlomiTekst(donji));
     donjiTextPane.setCaretPosition(0);
     imeKalkulatora = ime;
+    if(imeKalkulatora == ImenaKalkulatora.ANALIZA_TEKSTA) {
+      performansePanel.setVisible(false);
+    }
+    else {
+      performansePanel.setVisible(true);
+    }
   }
 
   public void postaviGraf(boolean osvjezi) {
@@ -216,5 +224,11 @@ public class Opis {
       podaci.addValue(vremenaIzvodenjaB[i], vrstaSimulacijeB, String.valueOf(i+1));
     }
     return podaci;
+  }
+
+  public void prikazi(boolean prikazi) {
+    gornjiPanel.setVisible(prikazi);
+    donjiPanel.setVisible(prikazi);
+    performansePanel.setVisible(prikazi);
   }
 }

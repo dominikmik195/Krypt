@@ -243,7 +243,7 @@ public class SupstitucijskaKalkulator {
       if (!greska) {
         String sifrat = (new SupstitucijskaKriptosustav(permutacija)).sifriraj(otvoreniTekst);
         sifratArea.setText(sifrat);
-        konzola.ispisiPoruku("Poruka uspješno šifrirana općom supstitucijskom šifrom.");
+        konzola.ispisiPoruku("Poruka uspješno šifrirana.");
 
         // Ispis i ažuriranje povijesti.
         supstitucijskaDAO.ubaciElement(
@@ -274,7 +274,7 @@ public class SupstitucijskaKalkulator {
       if (!greska) {
         String otvoreniTekst = (new SupstitucijskaKriptosustav(permutacija)).desifriraj(sifrat);
         otvoreniTekstArea.setText(otvoreniTekst);
-        konzola.ispisiPoruku("Poruka uspješno dešifrirana općom supstitucijskom šifrom.");
+        konzola.ispisiPoruku("Poruka uspješno dešifrirana.");
 
         // Ispis i ažuriranje povijesti.
         supstitucijskaDAO.ubaciElement(
