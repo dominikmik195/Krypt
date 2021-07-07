@@ -5,14 +5,11 @@ import org.junit.Before;
 
 public class ElGamalKriptosustavTest extends TestCase {
 
-  static {
-    System.loadLibrary("TeorijaBrojeva");
-  }
-
   private ElGamalKriptosustav stroj;
 
   @Before
   public void setUp() {
+    System.loadLibrary("TeorijaBrojeva");
     stroj = new ElGamalKriptosustav(107, 2, 94);
     stroj.setOtvoreniTekst(66);
     stroj.setTajniBroj(45);

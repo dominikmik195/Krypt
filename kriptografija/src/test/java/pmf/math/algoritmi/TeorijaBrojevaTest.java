@@ -1,9 +1,12 @@
 package pmf.math.algoritmi;
 
 import junit.framework.TestCase;
+import org.junit.Before;
 
 public class TeorijaBrojevaTest extends TestCase {
-    static {
+
+    @Before
+    public void setUp() {
         System.loadLibrary("TeorijaBrojeva");
     }
 
