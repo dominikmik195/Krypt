@@ -6,34 +6,9 @@ import pmf.math.kriptosustavi.RSAKriptosustav;
 import java.math.BigInteger;
 
 public class TeorijaBrojeva {
-  public static boolean prost(int broj) {
-    if (broj == 1) return false;
-    for (int i = 2; i < Math.floor(Math.sqrt(broj)) + 1; i++) {
-      if (broj % i == 0) return false;
-    }
-    return true;
-  }
+  public static native boolean prost(long broj);
 
-  public static int modularnoPotenciranje(int baza, int exp, int modulo) {
-    // Budući da nam niti klasa BigInteger nije dovoljna za baratanje jako velikim brojevima,
-    // moramo se poslužiti modularnim potenciranjem kako bismo mogli izračunati neke kongruencije.
-    BigInteger br = new BigInteger(String.valueOf(baza));
-    BigInteger mod = new BigInteger(String.valueOf(modulo));
-    BigInteger x = br.mod(mod);
-    int potencija = 2;
-    while (potencija <= exp) {
-      if(ElGamalKriptosustav.prekid || RSAKriptosustav.prekid){
-        return -1;
-      }
-      x = x.pow(2).mod(mod);
-      potencija *= 2;
-    }
-    potencija /= 2;
-    for (int i = potencija; i < exp; i++) {
-      x = x.multiply(br.mod(mod)).mod(mod);
-    }
-    return x.intValue();
-  }
+  public static native int modularnoPotenciranje(long baza, long exp, long modulo);
 
   public static int redElementa(int element, int modulo) {
     int red = 1;
