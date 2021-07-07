@@ -94,7 +94,7 @@ public class ElGamalKriptosustav {
   public void sifriraj() {
     BigInteger br = new BigInteger(String.valueOf(otvoreniTekst));
     BigInteger pB = new BigInteger(String.valueOf(prostBroj));
-    sifrat[0] = TeorijaBrojeva.modularnoPotenciranje(alfa, tajniBroj, prostBroj);
+    sifrat[0] = (int)TeorijaBrojeva.modularnoPotenciranje(alfa, tajniBroj, prostBroj);
     sifrat[1] =
         (br.mod(pB)
                 .multiply(
@@ -106,7 +106,7 @@ public class ElGamalKriptosustav {
   }
 
   public int desifriraj() {
-    int temp = TeorijaBrojeva.modularnoPotenciranje(sifrat[0], tajniKljuc, prostBroj);
+    int temp = (int)TeorijaBrojeva.modularnoPotenciranje(sifrat[0], tajniKljuc, prostBroj);
     return (TeorijaBrojeva.inverz(temp, prostBroj) * sifrat[1]) % prostBroj;
   }
 
@@ -117,7 +117,7 @@ public class ElGamalKriptosustav {
 
   public static int noviBeta(int pB, int a, int tK) {
     // Funkcija koja računa pripadni broj beta za dane varijable.
-    return TeorijaBrojeva.modularnoPotenciranje(a, tK, pB);
+    return (int)TeorijaBrojeva.modularnoPotenciranje(a, tK, pB);
   }
 
   public String vratiSifrat() {

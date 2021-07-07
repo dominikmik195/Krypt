@@ -3,6 +3,9 @@ package pmf.math.algoritmi;
 import junit.framework.TestCase;
 
 public class TeorijaBrojevaTest extends TestCase {
+    static {
+        System.loadLibrary("TeorijaBrojeva");
+    }
 
     public void testProst() {
       assertTrue(TeorijaBrojeva.prost(4219));

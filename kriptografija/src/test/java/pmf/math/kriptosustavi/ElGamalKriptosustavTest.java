@@ -5,6 +5,10 @@ import org.junit.Before;
 
 public class ElGamalKriptosustavTest extends TestCase {
 
+  static {
+    System.loadLibrary("TeorijaBrojeva");
+  }
+
   private ElGamalKriptosustav stroj;
 
   @Before

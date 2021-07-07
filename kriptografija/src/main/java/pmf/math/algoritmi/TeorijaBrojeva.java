@@ -8,17 +8,18 @@ import java.math.BigInteger;
 public class TeorijaBrojeva {
   public static native boolean prost(long broj);
 
-  public static native int modularnoPotenciranje(long baza, long exp, long modulo);
+  public static native long modularnoPotenciranje(long baza, long exp, long modulo);
 
   public static int redElementa(int element, int modulo) {
     int red = 1;
-    int ostatak = modularnoPotenciranje(element, red, modulo);
+    long ostatak = modularnoPotenciranje(element, red, modulo);
     while (ostatak != 1) {
       if(ElGamalKriptosustav.prekid || RSAKriptosustav.prekid){
         return -1;
       }
       red++;
       ostatak = modularnoPotenciranje(element, red, modulo);
+      System.out.println("r " + red + "    ost " + ostatak);
     }
     return red;
   }
@@ -62,6 +63,9 @@ public class TeorijaBrojeva {
     BigInteger mod = new BigInteger(String.valueOf(modulo));
     if (granica < 0) granica = Integer.MAX_VALUE;
     for (int i = 0; i < granica; i++) {
+      if(ElGamalKriptosustav.prekid || RSAKriptosustav.prekid){
+        return -1;
+      }
       if (br.multiply(new BigInteger(String.valueOf(i))).mod(mod).intValue() == 1) {
         return i;
       }
