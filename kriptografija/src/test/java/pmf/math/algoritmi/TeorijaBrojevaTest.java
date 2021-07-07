@@ -9,7 +9,7 @@ public class TeorijaBrojevaTest extends TestCase {
 
   @Before
   public void setUp() {
-    File lib = new File("lib/" + System.mapLibraryName("TeorijaBrojeva"));
+    File lib = new File("lib/TeorijaBrojeva.dll");
     System.load(lib.getAbsolutePath());
   }
 
