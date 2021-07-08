@@ -81,7 +81,7 @@
             <properties>
               <background color="-4079167"/>
               <font name="SansSerif" size="14"/>
-              <text value="Stupčana Transpoziija"/>
+              <text value="Stupčana Transpozicija"/>
             </properties>
           </component>
           <component id="82baf" class="javax.swing.JButton" binding="rsaButton">
