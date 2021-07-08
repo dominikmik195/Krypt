@@ -70,7 +70,7 @@ public class RSAKriptosustav {
   }
 
   public int sifriraj(int broj) {
-    sifrat = TeorijaBrojeva.modularnoPotenciranje(broj, e, n);
+    sifrat = (int)TeorijaBrojeva.modularnoPotenciranje(broj, e, n);
     return sifrat;
   }
 
@@ -83,7 +83,7 @@ public class RSAKriptosustav {
   }
 
   public int desifriraj() {
-    return TeorijaBrojeva.modularnoPotenciranje(sifrat, d, n);
+    return (int)TeorijaBrojeva.modularnoPotenciranje(sifrat, d, n);
   }
 
   public static int nadjiDiliE(int zadani, int _p, int _q) {
@@ -146,7 +146,7 @@ public class RSAKriptosustav {
           }
         }
         stoperica.zaustavi();
-        vremena[i] += stoperica.vrijemeMili();
+        vremena[i] += stoperica.vrijeme();
       }
       vremena[i] = vremena[i] / brojIteracija;
     }

@@ -1,37 +1,46 @@
 package pmf.math.algoritmi;
 
 import junit.framework.TestCase;
+import org.junit.Before;
+
+import java.io.File;
 
 public class TeorijaBrojevaTest extends TestCase {
 
-    public void testProst() {
-      assertTrue(TeorijaBrojeva.prost(4219));
-      assertFalse(TeorijaBrojeva.prost(104524));
-    }
+  @Before
+  public void setUp() {
+    File lib = new File("lib/TeorijaBrojeva.dll");
+    System.load(lib.getAbsolutePath());
+  }
 
-    public void testModularnoPotenciranje() {
-      assertEquals(819, TeorijaBrojeva.modularnoPotenciranje(24, 7, 3579));
-      assertEquals(5115, TeorijaBrojeva.modularnoPotenciranje(13, 8, 25846));
-    }
+  public void testProst() {
+    assertTrue(TeorijaBrojeva.prost(4219));
+    assertFalse(TeorijaBrojeva.prost(104524));
+  }
 
-    public void testRedElementa() {
-      assertEquals(5, TeorijaBrojeva.redElementa(3, 242));
-      assertEquals(11, TeorijaBrojeva.redElementa(7, 329554457));
-    }
+  public void testModularnoPotenciranje() {
+    assertEquals(819, TeorijaBrojeva.modularnoPotenciranje(24, 7, 3579));
+    assertEquals(5115, TeorijaBrojeva.modularnoPotenciranje(13, 8, 25846));
+  }
 
-    public void testNajmanjiPrimitivniKorijen() {
-      assertEquals(3, TeorijaBrojeva.najmanjiPrimitivniKorijen(223));
-      assertEquals(7, TeorijaBrojeva.najmanjiPrimitivniKorijen(2111));
-    }
+  public void testRedElementa() {
+    assertEquals(5, TeorijaBrojeva.redElementa(3, 242));
+    assertEquals(11, TeorijaBrojeva.redElementa(7, 329554457));
+  }
 
-    public void testInverz() {
-      assertEquals(4, TeorijaBrojeva.inverz(3, 11));
-      assertEquals(12, TeorijaBrojeva.inverz(10, 17));
-    }
+  public void testNajmanjiPrimitivniKorijen() {
+    assertEquals(3, TeorijaBrojeva.najmanjiPrimitivniKorijen(223));
+    assertEquals(7, TeorijaBrojeva.najmanjiPrimitivniKorijen(2111));
+  }
 
-    public void testRelativnoProsti() {
-      assertTrue(TeorijaBrojeva.relativnoProsti(12, 25));
-      assertTrue(TeorijaBrojeva.relativnoProsti(9335088, 9150625));
-      assertFalse(TeorijaBrojeva.relativnoProsti(2578125, 3226944));
-    }
+  public void testInverz() {
+    assertEquals(4, TeorijaBrojeva.inverz(3, 11));
+    assertEquals(12, TeorijaBrojeva.inverz(10, 17));
+  }
+
+  public void testRelativnoProsti() {
+    assertTrue(TeorijaBrojeva.relativnoProsti(12, 25));
+    assertTrue(TeorijaBrojeva.relativnoProsti(9335088, 9150625));
+    assertFalse(TeorijaBrojeva.relativnoProsti(2578125, 3226944));
+  }
 }

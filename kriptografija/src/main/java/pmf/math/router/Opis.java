@@ -174,21 +174,19 @@ public class Opis {
     postavljanjeGrafa = true;
     osvjeziGrafButton.setEnabled(false);
 
-    String label, vrijemeL;
+    String label;
     if(imeKalkulatora == ImenaKalkulatora.EL_GAMALOVA_SIFRA){
       label = "Broj znamenaka prostog broja";
-      vrijemeL = "Vrijeme (µs)";
     }
     else{
       label = "Broj znamenaka broja n";
-      vrijemeL = "Vrijeme(ms)";
     }
 
     JFreeChart linijskiDijagram =
             ChartFactory.createLineChart(
                     "",
                     label,
-                    vrijemeL,
+                    "Vrijeme (µs)",
                     podaci,
                     PlotOrientation.VERTICAL,
                     true,

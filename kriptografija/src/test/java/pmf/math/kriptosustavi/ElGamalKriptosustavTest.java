@@ -3,12 +3,16 @@ package pmf.math.kriptosustavi;
 import junit.framework.TestCase;
 import org.junit.Before;
 
+import java.io.File;
+
 public class ElGamalKriptosustavTest extends TestCase {
 
   private ElGamalKriptosustav stroj;
 
   @Before
   public void setUp() {
+    File lib = new File("lib/TeorijaBrojeva.dll");
+    System.load(lib.getAbsolutePath());
     stroj = new ElGamalKriptosustav(107, 2, 94);
     stroj.setOtvoreniTekst(66);
     stroj.setTajniBroj(45);
