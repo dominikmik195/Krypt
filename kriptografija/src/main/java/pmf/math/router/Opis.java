@@ -37,10 +37,12 @@ public class Opis {
   private boolean postavljanjeGrafa = false;
 
   public Opis() {
-    postaviTipke();
-    if(imeKalkulatora == ImenaKalkulatora.EL_GAMALOVA_SIFRA || imeKalkulatora == ImenaKalkulatora.RSA_SIFRA)
-      new Thread(this::postaviPrazanGrafBroj).start();
-    else new Thread(this::postaviPrazanGraf).start();
+    SwingUtilities.invokeLater(() -> {
+      postaviTipke();
+      if(imeKalkulatora == ImenaKalkulatora.EL_GAMALOVA_SIFRA || imeKalkulatora == ImenaKalkulatora.RSA_SIFRA)
+        new Thread(this::postaviPrazanGrafBroj).start();
+      else new Thread(this::postaviPrazanGraf).start();
+    });
   }
 
   private void postaviTipke() {

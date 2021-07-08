@@ -35,77 +35,78 @@ public class CezarKalkulator extends JPanel {
 
   public CezarKalkulator(Konzola konzola) {
     this.konzola = konzola;
+    SwingUtilities.invokeLater(() -> {
+      prikaziTrenutni(); // Povijest.
 
-    prikaziTrenutni(); // Povijest.
+      sifrirajButton.addActionListener(new Sifriraj());
+      desifrirajButton.addActionListener(new Desifriraj());
 
-    sifrirajButton.addActionListener(new Sifriraj());
-    desifrirajButton.addActionListener(new Desifriraj());
+      // O(ne)mogućavanje unosa ključne riječi.
+      kljucCheckBox.addItemListener(
+          e -> kljucnaRijecTextField.setEditable(e.getStateChange() != ItemEvent.DESELECTED));
 
-    // O(ne)mogućavanje unosa ključne riječi.
-    kljucCheckBox.addItemListener(
-        e -> kljucnaRijecTextField.setEditable(e.getStateChange() != ItemEvent.DESELECTED));
+      // Prikaz supstitucije u UI-ju.
+      pomakSpinner.addChangeListener(e -> (new Permutacija()).azuriraj());
+      kljucCheckBox.addItemListener(e -> (new Permutacija()).azuriraj());
 
-    // Prikaz supstitucije u UI-ju.
-    pomakSpinner.addChangeListener(e -> (new Permutacija()).azuriraj());
-    kljucCheckBox.addItemListener(e -> (new Permutacija()).azuriraj());
+      kljucnaRijecTextField
+          .getDocument()
+          .addDocumentListener(
+              new DocumentListener() {
+                private void update() {
+                  (new Permutacija()).azuriraj();
+                }
 
-    kljucnaRijecTextField
-        .getDocument()
-        .addDocumentListener(
-            new DocumentListener() {
-              private void update() {
-                (new Permutacija()).azuriraj();
-              }
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                  update();
+                }
 
-              @Override
-              public void insertUpdate(DocumentEvent e) {
-                update();
-              }
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                  update();
+                }
 
-              @Override
-              public void removeUpdate(DocumentEvent e) {
-                update();
-              }
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                  update();
+                }
+              });
 
-              @Override
-              public void changedUpdate(DocumentEvent e) {
-                update();
-              }
-            });
+      // Buttoni za povijest.
+      odaberiButton.addActionListener(
+          e -> {
+            if (pomakLabel.getText().equals("-")) return;
 
-    // Buttoni za povijest.
-    odaberiButton.addActionListener(
-        e -> {
-          if (pomakLabel.getText().equals("-")) return;
+            int pomak = Integer.parseInt(pomakLabel.getText());
+            String kljucnaRijec = kljucLabel.getText();
 
-          int pomak = Integer.parseInt(pomakLabel.getText());
-          String kljucnaRijec = kljucLabel.getText();
+            pomakSpinner.setValue(pomak);
+            if (!kljucnaRijec.equals("-")) {
+              kljucnaRijecTextField.setText(kljucnaRijec);
+              kljucCheckBox.setSelected(true);
+            } else {
+              kljucnaRijecTextField.setText("");
+              kljucCheckBox.setSelected(false);
+            }
+          });
 
-          pomakSpinner.setValue(pomak);
-          if (!kljucnaRijec.equals("-")) {
-            kljucnaRijecTextField.setText(kljucnaRijec);
-            kljucCheckBox.setSelected(true);
-          } else {
-            kljucnaRijecTextField.setText("");
-            kljucCheckBox.setSelected(false);
-          }
-        });
+      lijevoButton.addActionListener(
+          e -> {
+            if (cezarDAO.brojElemenata() == 0) return;
 
-    lijevoButton.addActionListener(
-        e -> {
-          if (cezarDAO.brojElemenata() == 0) return;
+            indeksPovijest = (indeksPovijest - 1 + cezarDAO.brojElemenata) % cezarDAO.brojElemenata;
+            prikaziTrenutni();
+          });
 
-          indeksPovijest = (indeksPovijest - 1 + cezarDAO.brojElemenata) % cezarDAO.brojElemenata;
-          prikaziTrenutni();
-        });
+      desnoButton.addActionListener(
+          e -> {
+            if (cezarDAO.brojElemenata() == 0) return;
 
-    desnoButton.addActionListener(
-        e -> {
-          if (cezarDAO.brojElemenata() == 0) return;
-
-          indeksPovijest = (indeksPovijest + 1) % cezarDAO.brojElemenata;
-          prikaziTrenutni();
-        });
+            indeksPovijest = (indeksPovijest + 1) % cezarDAO.brojElemenata;
+            prikaziTrenutni();
+          });
+    });
   }
 
   private void provjeriGumbe() {
