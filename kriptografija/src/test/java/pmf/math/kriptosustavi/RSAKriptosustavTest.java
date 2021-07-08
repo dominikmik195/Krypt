@@ -3,11 +3,15 @@ package pmf.math.kriptosustavi;
 import junit.framework.TestCase;
 import org.junit.Before;
 
+import java.io.File;
+
 public class RSAKriptosustavTest extends TestCase {
     private RSAKriptosustav stroj;
 
     @Before
     public void setUp() throws Exception {
+        File lib = new File("lib/TeorijaBrojeva.dll");
+        System.load(lib.getAbsolutePath());
         stroj = new RSAKriptosustav(3, 11);
         assertNotNull(stroj);
     }
@@ -30,13 +34,13 @@ public class RSAKriptosustavTest extends TestCase {
     }
 
     public void testNadjiDiE() {
-        int de[] = RSAKriptosustav.nadjiDiE(3, 11);
+        int[] de = RSAKriptosustav.nadjiDiE(3, 11);
         assertEquals(3, de[0]);
         assertEquals(7, de[1]);
     }
 
     public void testRastaviNNaPiQ() {
-        int pq[] = RSAKriptosustav.rastaviNNaPiQ(33);
+        int[] pq = RSAKriptosustav.rastaviNNaPiQ(33);
         assertEquals(3, pq[0]);
         assertEquals(11, pq[1]);
     }
