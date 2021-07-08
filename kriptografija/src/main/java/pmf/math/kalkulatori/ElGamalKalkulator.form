@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="pmf.math.kalkulatori.ElGamalKalkulator">
-  <grid id="27dc6" binding="glavniPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="5" left="5" bottom="5" right="5"/>
+  <grid id="27dc6" binding="glavniPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="736" height="668"/>
+      <xy x="20" y="20" width="746" height="706"/>
     </constraints>
     <properties>
       <preferredSize width="600" height="500"/>
     </properties>
-    <border type="line" title="Kalkulator"/>
+    <border type="none"/>
     <children>
-      <grid id="b0541" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="5" left="5" bottom="5" right="5"/>
+      <grid id="b0541" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="c9c69" layout-manager="GridLayoutManager" row-count="7" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="c9c69" layout-manager="GridLayoutManager" row-count="6" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="5" left="5" bottom="5" right="0"/>
             <constraints>
-              <grid row="0" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
               <component id="f9c13" class="javax.swing.JLabel" binding="prostBrojLabel">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="80" height="-1"/>
+                  </grid>
                 </constraints>
                 <properties>
-                  <font size="14"/>
+                  <font name="SansSerif" size="14"/>
+                  <horizontalAlignment value="4"/>
                   <labelFor value="f8f45"/>
-                  <text value="Prost broj"/>
+                  <text value="Prost broj:"/>
                 </properties>
               </component>
               <component id="f8f45" class="javax.swing.JTextField" binding="prostBrojField">
@@ -44,18 +47,21 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <font size="13"/>
+                  <font name="SansSerif" size="14"/>
                   <text value=""/>
                 </properties>
               </component>
               <component id="486f6" class="javax.swing.JLabel" binding="tajniKljucLabel">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="80" height="-1"/>
+                  </grid>
                 </constraints>
                 <properties>
-                  <font size="14"/>
+                  <font name="SansSerif" size="14"/>
+                  <horizontalAlignment value="4"/>
                   <labelFor value="dc15c"/>
-                  <text value="Tajni ključ"/>
+                  <text value="Tajni ključ:"/>
                 </properties>
               </component>
               <component id="dc15c" class="javax.swing.JTextField" binding="tajniKljucField">
@@ -66,17 +72,20 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <font size="13"/>
+                  <font name="SansSerif" size="14"/>
                 </properties>
               </component>
               <component id="c0967" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="80" height="-1"/>
+                  </grid>
                 </constraints>
                 <properties>
-                  <font size="14"/>
+                  <font name="SansSerif" size="14"/>
+                  <horizontalAlignment value="4"/>
                   <labelFor value="5e230"/>
-                  <text value="Alfa"/>
+                  <text value="Alfa:"/>
                 </properties>
               </component>
               <component id="5e230" class="javax.swing.JTextField" binding="alfaField">
@@ -88,16 +97,19 @@
                 </constraints>
                 <properties>
                   <editable value="true"/>
-                  <font size="13"/>
+                  <font name="SansSerif" size="14"/>
                 </properties>
               </component>
               <component id="4f06e" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="80" height="-1"/>
+                  </grid>
                 </constraints>
                 <properties>
-                  <font size="14"/>
-                  <text value="Beta"/>
+                  <font name="SansSerif" size="14"/>
+                  <horizontalAlignment value="4"/>
+                  <text value="Beta:"/>
                 </properties>
               </component>
               <component id="ebd74" class="javax.swing.JTextField" binding="betaField">
@@ -109,16 +121,19 @@
                 </constraints>
                 <properties>
                   <editable value="true"/>
-                  <font size="13"/>
+                  <font name="SansSerif" size="14"/>
                 </properties>
               </component>
               <component id="3fc13" class="javax.swing.JLabel" binding="tajniBrojLabel">
                 <constraints>
-                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="80" height="-1"/>
+                  </grid>
                 </constraints>
                 <properties>
-                  <font size="14"/>
-                  <text value="Tajni broj"/>
+                  <font name="SansSerif" size="14"/>
+                  <horizontalAlignment value="4"/>
+                  <text value="Tajni broj:"/>
                 </properties>
               </component>
               <component id="84403" class="javax.swing.JTextField" binding="tajniBrojField">
@@ -129,46 +144,46 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <font size="13"/>
+                  <font name="SansSerif" size="14"/>
                 </properties>
               </component>
-              <grid id="f8c67" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="f8c67" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="5" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
                   <component id="a773a" class="javax.swing.JButton" binding="provjeriIIspraviButton" default-binding="true">
                     <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                         <minimum-size width="50" height="30"/>
                       </grid>
                     </constraints>
                     <properties>
-                      <font size="14"/>
+                      <font name="SansSerif" size="14"/>
                       <text value="Provjeri i ispravi"/>
                     </properties>
                   </component>
                   <component id="69572" class="javax.swing.JButton" binding="ocistiPoljaButton">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                         <minimum-size width="50" height="30"/>
                       </grid>
                     </constraints>
                     <properties>
-                      <font size="14"/>
+                      <font name="SansSerif" size="14"/>
                       <text value="Očisti polja"/>
                     </properties>
                   </component>
                   <component id="67c37" class="javax.swing.JButton" binding="prekidButton">
                     <constraints>
-                      <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <enabled value="false"/>
-                      <font size="14"/>
+                      <font name="SansSerif" size="14"/>
                       <text value="Prekid"/>
                     </properties>
                   </component>
@@ -176,10 +191,10 @@
               </grid>
             </children>
           </grid>
-          <grid id="c5b28" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="5" left="5" bottom="5" right="5"/>
+          <grid id="c5b28" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="1" row-span="3" col-span="2" vsize-policy="3" hsize-policy="3" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="line" title="Povijest"/>
@@ -191,7 +206,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <font size="13"/>
+                  <font name="SansSerif" size="14"/>
                   <text value="&lt;"/>
                 </properties>
               </component>
@@ -200,12 +215,12 @@
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <font size="13"/>
+                  <font name="SansSerif" size="14"/>
                   <text value="&gt;"/>
                 </properties>
               </component>
               <grid id="daf47" binding="podatciJPanel" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="2" left="3" bottom="2" right="3"/>
+                <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -214,12 +229,14 @@
                 <children>
                   <component id="6f0b6" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false">
                         <minimum-size width="80" height="-1"/>
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Prost broj"/>
+                      <font name="SansSerif" size="14"/>
+                      <horizontalAlignment value="4"/>
+                      <text value="Prost broj:"/>
                     </properties>
                   </component>
                   <component id="ce4c3" class="javax.swing.JLabel" binding="pbBazaLabel">
@@ -229,6 +246,7 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <font name="SansSerif" size="14"/>
                       <horizontalAlignment value="4"/>
                       <horizontalTextPosition value="11"/>
                       <text value=""/>
@@ -236,12 +254,14 @@
                   </component>
                   <component id="e0c91" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false">
                         <minimum-size width="80" height="-1"/>
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Tajni ključ"/>
+                      <font name="SansSerif" size="14"/>
+                      <horizontalAlignment value="4"/>
+                      <text value="Tajni ključ:"/>
                     </properties>
                   </component>
                   <component id="940a7" class="javax.swing.JLabel" binding="tkBazaLabel">
@@ -251,6 +271,7 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <font name="SansSerif" size="14"/>
                       <horizontalAlignment value="4"/>
                       <horizontalTextPosition value="11"/>
                       <text value=""/>
@@ -258,12 +279,14 @@
                   </component>
                   <component id="952c7" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false">
                         <minimum-size width="80" height="-1"/>
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Alfa"/>
+                      <font name="SansSerif" size="14"/>
+                      <horizontalAlignment value="4"/>
+                      <text value="Alfa:"/>
                     </properties>
                   </component>
                   <component id="470de" class="javax.swing.JLabel" binding="alfaBazaLabel">
@@ -273,6 +296,7 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <font name="SansSerif" size="14"/>
                       <horizontalAlignment value="4"/>
                       <horizontalTextPosition value="11"/>
                       <text value=""/>
@@ -280,12 +304,14 @@
                   </component>
                   <component id="7f5b1" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false">
                         <minimum-size width="80" height="-1"/>
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Beta"/>
+                      <font name="SansSerif" size="14"/>
+                      <horizontalAlignment value="4"/>
+                      <text value="Beta:"/>
                     </properties>
                   </component>
                   <component id="b1c76" class="javax.swing.JLabel" binding="betaBazaLabel">
@@ -295,6 +321,7 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <font name="SansSerif" size="14"/>
                       <horizontalAlignment value="4"/>
                       <horizontalTextPosition value="11"/>
                       <text value=""/>
@@ -302,12 +329,14 @@
                   </component>
                   <component id="b173d" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false">
                         <minimum-size width="80" height="-1"/>
                       </grid>
                     </constraints>
                     <properties>
-                      <text value="Tajni broj"/>
+                      <font name="SansSerif" size="14"/>
+                      <horizontalAlignment value="4"/>
+                      <text value="Tajni broj:"/>
                     </properties>
                   </component>
                   <component id="bd9e5" class="javax.swing.JLabel" binding="tbBazaLabel">
@@ -317,6 +346,7 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <font name="SansSerif" size="14"/>
                       <horizontalAlignment value="4"/>
                       <horizontalTextPosition value="11"/>
                       <text value=""/>
@@ -326,123 +356,137 @@
               </grid>
               <component id="f9b9" class="javax.swing.JButton" binding="odaberiPodatkeButton">
                 <constraints>
-                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <font name="SansSerif" size="14"/>
                   <text value="Odaberi podatke"/>
                 </properties>
               </component>
             </children>
           </grid>
-          <grid id="84e24" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="30" left="5" bottom="5" right="5"/>
+          <grid id="84e24" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="100" left="5" bottom="5" right="5"/>
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="96b53" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
+              <grid id="96b53" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="150" bottom="0" right="150"/>
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="7ab3" class="javax.swing.JButton" binding="sifrirajButton">
+                  <grid id="e459f" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <minimum-size width="60" height="45"/>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                        <preferred-size width="300" height="-1"/>
                       </grid>
                     </constraints>
-                    <properties>
-                      <text value="↓"/>
-                    </properties>
-                  </component>
-                  <hspacer id="39478">
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="ede38" class="javax.swing.JTextField" binding="otvoreniTekstArea">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="4" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <minimum-size width="-1" height="30"/>
+                            <preferred-size width="150" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <font name="SansSerif" size="14"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="5a1ac" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
-                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
-                  </hspacer>
-                  <component id="57d10" class="javax.swing.JButton" binding="desifrirajButton">
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="7ab3" class="javax.swing.JButton" binding="sifrirajButton">
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <minimum-size width="60" height="45"/>
+                            <preferred-size width="60" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <font name="SansSerif" size="14"/>
+                          <text value="↓"/>
+                        </properties>
+                      </component>
+                      <component id="57d10" class="javax.swing.JButton" binding="desifrirajButton">
+                        <constraints>
+                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <minimum-size width="60" height="45"/>
+                            <preferred-size width="60" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <font name="SansSerif" size="14"/>
+                          <text value="↑"/>
+                        </properties>
+                      </component>
+                      <hspacer id="79837">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </hspacer>
+                      <hspacer id="fe94b">
+                        <constraints>
+                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </hspacer>
+                    </children>
+                  </grid>
+                  <grid id="56dd4" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
-                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <minimum-size width="60" height="45"/>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                        <preferred-size width="300" height="-1"/>
                       </grid>
                     </constraints>
-                    <properties>
-                      <text value="↑"/>
-                    </properties>
-                  </component>
-                  <hspacer id="45b5c">
-                    <constraints>
-                      <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                  </hspacer>
-                  <hspacer id="6ded0">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                  </hspacer>
-                </children>
-              </grid>
-              <grid id="e459f" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="ede38" class="javax.swing.JTextField" binding="otvoreniTekstArea">
-                    <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="4" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                        <minimum-size width="-1" height="30"/>
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties>
-                      <font size="13"/>
-                    </properties>
-                  </component>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="2b178" class="javax.swing.JTextField" binding="sifratArea">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                            <minimum-size width="-1" height="30"/>
+                            <preferred-size width="150" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <font name="SansSerif" size="14"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
                   <component id="7f6d6" class="javax.swing.JLabel" binding="otvoreniTekstLabel">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <font size="14"/>
+                      <font name="SansSerif" size="14"/>
                       <text value="Broj:"/>
                     </properties>
                   </component>
-                </children>
-              </grid>
-              <grid id="56dd4" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
                   <component id="a0fd4" class="javax.swing.JLabel" binding="sifratLabel">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="6" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <font size="14"/>
-                      <text value="Šifrat"/>
-                    </properties>
-                  </component>
-                  <component id="2b178" class="javax.swing.JTextField" binding="sifratArea">
-                    <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                        <minimum-size width="-1" height="30"/>
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties>
-                      <font size="13"/>
+                      <font name="SansSerif" size="14"/>
+                      <text value="Šifrat:"/>
                     </properties>
                   </component>
                 </children>
@@ -453,12 +497,22 @@
       </grid>
       <component id="433b5" class="javax.swing.JProgressBar" binding="progressBar">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <visible value="false"/>
         </properties>
       </component>
+      <vspacer id="8b39e">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="a2131">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
     </children>
   </grid>
 </form>

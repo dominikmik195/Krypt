@@ -3,6 +3,7 @@ package pmf.math.kalkulatori;
 import static pmf.math.algoritmi.Abeceda.filtrirajTekst;
 import static pmf.math.konstante.DuljineTeksta.ANALIZIRANI_TEKST_REDAK_MAX;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.Style;
@@ -158,17 +160,17 @@ public class AnalizaTekstaKalkulator {
 
   public JPanel stvoriRedakSaTipkom(String multigram, int vrijednost) {
     JPanel povratniPanel = new JPanel();
-    povratniPanel.setLayout(new GridLayout(0, 3));
+    povratniPanel.setLayout(new BorderLayout());
     JLabel multigramLabel = new JLabel(multigram + ":");
     multigramLabel.setFont(new Font("Monospaced", Font.PLAIN, 16));
-    povratniPanel.add(multigramLabel);
-    povratniPanel.add(new JLabel(String.valueOf(vrijednost)));
+    povratniPanel.add(multigramLabel, BorderLayout.WEST);
+    povratniPanel.add(new JLabel(String.valueOf(vrijednost)), BorderLayout.CENTER);
     JRadioButton tipkaZaIsticanjeMultigrama = new JRadioButton();
     grupaZaIsticanjeMultigrama.add(tipkaZaIsticanjeMultigrama);
     tipkaZaIsticanjeMultigrama.addActionListener(e -> {
       istakniMultigram(multigram);
     });
-    povratniPanel.add(tipkaZaIsticanjeMultigrama);
+    povratniPanel.add(tipkaZaIsticanjeMultigrama, BorderLayout.EAST);
     return povratniPanel;
   }
 
@@ -234,7 +236,7 @@ public class AnalizaTekstaKalkulator {
   }
 
   public void postaviRubove() {
-    unosTekst.setMargin(new Insets(10, 10, 10, 10));
+    unosTekst.setMargin(new Insets(12, 12, 12, 12));
   }
 
   public boolean samoglasnik(String slovo) {

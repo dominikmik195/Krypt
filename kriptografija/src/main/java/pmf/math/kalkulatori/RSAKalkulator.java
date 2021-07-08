@@ -24,8 +24,6 @@ public class RSAKalkulator extends JDialog {
   private JTextField eBrojField;
   private JButton provjeriIIspraviPodatkeButton;
   private JButton ocistiPoljaButton;
-  private JLabel otvoreniTekstLabel;
-  private JLabel sifratLabel;
   private JButton lijevoButton;
   private JButton desnoButton;
     private JButton odaberiPodatkeButton;
@@ -37,8 +35,10 @@ public class RSAKalkulator extends JDialog {
   private JPanel podatciPanel;
     private JProgressBar progressBar;
     private JButton prekidButton;
+  private JLabel otvoreniTekstLabel;
+  private JLabel sifratLabel;
 
-    private final static RSAKriptosustav stroj = new RSAKriptosustav();
+  private final static RSAKriptosustav stroj = new RSAKriptosustav();
   private final RSADAO RSADao = new RSADAO();
   private int trenutniPrikaz = 0;
 

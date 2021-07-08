@@ -74,7 +74,7 @@ public class AfinaKalkulator {
 
       if (!greska) {
         sifratArea.setText(sifrat);
-        konzola.ispisiPoruku("Poruka uspješno šifrirana afinom šifrom.");
+        konzola.ispisiPoruku("Poruka uspješno šifrirana.");
 
         // Ispis i ažuriranje povijesti.
         afinaDAO.ubaciElement((Integer) aSpinner.getValue(), (Integer) bSpinner.getValue());
@@ -105,7 +105,7 @@ public class AfinaKalkulator {
 
       if (!greska) {
         otvoreniTekstArea.setText(otvoreniTekst);
-        konzola.ispisiPoruku("Poruka uspješno dešifrirana afinom šifrom.");
+        konzola.ispisiPoruku("Poruka uspješno dešifrirana.");
 
         // Ispis i ažuriranje povijesti.
         afinaDAO.ubaciElement((Integer) aSpinner.getValue(), (Integer) bSpinner.getValue());

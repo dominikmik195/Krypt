@@ -160,7 +160,7 @@ public class CezarKalkulator extends JPanel {
 
       if (!greska) {
         sifratArea.setText(sifrat);
-        konzola.ispisiPoruku("Poruka uspješno šifrirana Cezarovom šifrom.");
+        konzola.ispisiPoruku("Poruka uspješno šifrirana.");
 
         cezarDAO.ubaciElement(pomak, kljucCheckBox.isSelected() ? kljucnaRijec : "-");
         indeksPovijest = 0; // Resetiraj prikaz.
@@ -195,7 +195,7 @@ public class CezarKalkulator extends JPanel {
 
       if (!greska) {
         otvoreniTekstArea.setText(otvoreniTekst);
-        konzola.ispisiPoruku("Poruka uspješno dešifrirana Cezarovom šifrom.");
+        konzola.ispisiPoruku("Poruka uspješno dešifrirana.");
 
         cezarDAO.ubaciElement(pomak, kljucCheckBox.isSelected() ? kljucnaRijec : "-");
         indeksPovijest = (indeksPovijest + 1) % cezarDAO.brojElemenata;
