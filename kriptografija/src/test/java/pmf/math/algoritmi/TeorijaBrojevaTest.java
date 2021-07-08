@@ -1,16 +1,20 @@
 package pmf.math.algoritmi;
 
+import java.net.URL;
+import java.util.Objects;
 import junit.framework.TestCase;
 import org.junit.Before;
 
 import java.io.File;
+import pmf.math.MainClass;
 
 public class TeorijaBrojevaTest extends TestCase {
 
   @Before
   public void setUp() {
-    File lib = new File("lib/TeorijaBrojeva.dll");
-    System.load(lib.getAbsolutePath());
+    URL url = Objects.requireNonNull(
+        MainClass.class.getClassLoader().getResource("TeorijaBrojeva.dll"));
+    System.load(url.getPath());
   }
 
   public void testProst() {

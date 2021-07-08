@@ -1,9 +1,12 @@
 package pmf.math.kriptosustavi;
 
+import java.net.URL;
+import java.util.Objects;
 import junit.framework.TestCase;
 import org.junit.Before;
 
 import java.io.File;
+import pmf.math.MainClass;
 
 public class ElGamalKriptosustavTest extends TestCase {
 
@@ -11,8 +14,9 @@ public class ElGamalKriptosustavTest extends TestCase {
 
   @Before
   public void setUp() {
-    File lib = new File("lib/TeorijaBrojeva.dll");
-    System.load(lib.getAbsolutePath());
+    URL url = Objects.requireNonNull(
+        MainClass.class.getClassLoader().getResource("TeorijaBrojeva.dll"));
+    System.load(url.getPath());
     stroj = new ElGamalKriptosustav(107, 2, 94);
     stroj.setOtvoreniTekst(66);
     stroj.setTajniBroj(45);

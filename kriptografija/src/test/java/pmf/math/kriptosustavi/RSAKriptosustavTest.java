@@ -1,17 +1,21 @@
 package pmf.math.kriptosustavi;
 
+import java.net.URL;
+import java.util.Objects;
 import junit.framework.TestCase;
 import org.junit.Before;
 
 import java.io.File;
+import pmf.math.MainClass;
 
 public class RSAKriptosustavTest extends TestCase {
     private RSAKriptosustav stroj;
 
     @Before
     public void setUp() throws Exception {
-        File lib = new File("lib/TeorijaBrojeva.dll");
-        System.load(lib.getAbsolutePath());
+        URL url = Objects.requireNonNull(
+            MainClass.class.getClassLoader().getResource("TeorijaBrojeva.dll"));
+        System.load(url.getPath());
         stroj = new RSAKriptosustav(3, 11);
         assertNotNull(stroj);
     }
