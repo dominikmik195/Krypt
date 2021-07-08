@@ -32,24 +32,25 @@ public class AfinaKalkulator {
 
   public AfinaKalkulator(Konzola konzola) {
     this.konzola = konzola;
+    SwingUtilities.invokeLater(() -> {
+      sifrirajButton.addActionListener(new Sifriraj());
+      desifrirajButton.addActionListener(new Desifriraj());
 
-    sifrirajButton.addActionListener(new Sifriraj());
-    desifrirajButton.addActionListener(new Desifriraj());
+      aSpinner.addChangeListener(e -> (new Permutacija()).azuriraj());
+      bSpinner.addChangeListener(e -> (new Permutacija()).azuriraj());
 
-    aSpinner.addChangeListener(e -> (new Permutacija()).azuriraj());
-    bSpinner.addChangeListener(e -> (new Permutacija()).azuriraj());
+      ocistiButton.addActionListener(
+          e -> {
+            otvoreniTekstArea.setText("");
+            sifratArea.setText("");
+            aSpinner.setValue(1);
+            bSpinner.setValue(0);
+          });
 
-    ocistiButton.addActionListener(
-        e -> {
-          otvoreniTekstArea.setText("");
-          sifratArea.setText("");
-          aSpinner.setValue(1);
-          bSpinner.setValue(0);
-        });
+      aSpinner.setValue(1); // Identiteta.
 
-    aSpinner.setValue(1); // Identiteta.
-
-    osvjeziPovijest();
+      osvjeziPovijest();
+    });
   }
 
   private class Sifriraj implements ActionListener {
