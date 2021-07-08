@@ -266,7 +266,6 @@ public class VigenereKalkulator {
     sifratTextArea.setEnabled(false);
     sifrirajButton.setEnabled(false);
     desifrirajButton.setEnabled(false);
-    favoritiComboBox.setEnabled(false);
 
     odustaniButton.setEnabled(true);
     kljucProgressBar.setVisible(true);
@@ -278,7 +277,6 @@ public class VigenereKalkulator {
     sifratTextArea.setEnabled(true);
     sifrirajButton.setEnabled(true);
     desifrirajButton.setEnabled(true);
-    favoritiComboBox.setEnabled(false);
 
     odustaniButton.setEnabled(false);
     kljucProgressBar.setVisible(false);
