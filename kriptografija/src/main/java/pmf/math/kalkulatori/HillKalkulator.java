@@ -128,10 +128,10 @@ public class HillKalkulator {
         return;
       }
       try {
-        if (!dohvatiTablicu(kljucTable).regularna()) {
+        Matrica kljuc = dohvatiTablicu(kljucTable);
+        if (!kljuc.regularna()) {
           mojaKonzola.ispisiGresku("Matrica ključa nije regularna.");
         } else {
-          Matrica kljuc = dohvatiTablicu(kljucTable);
           sifratTextArea.setText(
               hillKriptosustav.sifriraj(otvoreniTekstTextArea.getText(), kljuc));
           provjeriTipkuZaRacunanjeKljuca();
@@ -319,7 +319,7 @@ public class HillKalkulator {
   public void provjeriTipkeZaFavorite() {
     int brojFavorita = hillDao.brojElemenata();
     prethodniFavorit.setEnabled(trenutniFavorit > 0);
-    sljedeciFavorit.setEnabled(trenutniFavorit < brojFavorita);
+    sljedeciFavorit.setEnabled(trenutniFavorit + 1 < brojFavorita);
     postaviKljucButton.setEnabled(brojFavorita != 0);
   }
 
@@ -336,7 +336,7 @@ public class HillKalkulator {
   public void dodajNoviFavorit() {
     hillDao.ubaciElement(hillDao.intToStringTablica(dohvatiTablicu(kljucTable).getMatrica()));
     trenutniFavorit = 0;
-    postaviFavorit();
+    prikaziFavorit();
     provjeriTipkeZaFavorite();
   }
 
