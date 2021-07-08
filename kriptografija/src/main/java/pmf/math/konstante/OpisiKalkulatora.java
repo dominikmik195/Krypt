@@ -8,13 +8,17 @@ public class OpisiKalkulatora {
     Na primjer, s pomakom 3, A se zamjenjuje slovom D, B slovom E itd. 
     
     Ova metoda je dobila ime po Juliju Cezaru, koji ju je koristio za razmjenu poruka sa svojim generalima.
-      """;
+    
+    Simulacije šifriranja i dešifriranja za kreiranje grafova su rađene pomoću unaprijed određenog ključa zadanog s (pomak, ključna riječ) = (8, KRIPTOGRAFIJA). Simulacija je rađena na tekstovima različitih duljina, podijeljenih u grupe u ovisnosti o broju znakova otvorenog teksta, odnosno šifrata.
+    """;
 
   public static final String SUPSTITUCIJA_OPIS = """
     Opća supstitucijska šifra jedna je od najjednostavnijih šifri, u kojoj se svako slovo otvorenog teksta zamjenjuje odgovarajućim slovom abecede, prema zadanoj permutaciji slova.
     
     Postoje i mnoge podvrste supstitucijskih šifri, kao što su na primjer Cezarova šifra, Cezarova šifra s ključnom riječi ili afina šifra. U njima se također svako slovo zamjenjuje nekim drugim, ali prema posebnim pravilima koja određuju korištenu permutaciju slova.
-      """;
+    
+    Simulacije šifriranja i dešifriranja za kreiranje grafova su rađene pomoću unaprijed određenog ključa, koristeći permutaciju slova zadanu s AZERTYUIOPQSDFGHJKLMWXCVBN. Simulacija je rađena na tekstovima različitih duljina, podijeljenih u grupe u ovisnosti o broju znakova otvorenog teksta, odnosno šifrata.
+    """;
 
   public static final String AFINA_OPIS = """
       Afina šifra je jedna od supstitutcijskih šifri, u kojoj se svako slovo otvorenog teksta zamjenjuje odgovarajućim slovom abecede, prema zadanoj permutaciji slova.
@@ -32,6 +36,8 @@ public class OpisiKalkulatora {
       Kako nemaju svi brojevi multiplikativni inverz modulo 26, tako treba postaviti dodatan uvjet na parametar a. Stoga zahtijevamo da je a relativno prost s brojem 26, odnosno da je najveći zajednički djelitelj brojeva a i 26 jednak 1.
       
       Za vrijednost parametra a = 1, ova je šifra upravo jednaka Cezarovoj šifri gdje je pomak određen vrijednošću parametra b.
+      
+      Simulacije šifriranja i dešifriranja za kreiranje grafova su rađene pomoću unaprijed određenog ključa (a, b) = (7, 4). Simulacija je rađena na tekstovima različitih duljina, podijeljenih u grupe u ovisnosti o broju znakova otvorenog teksta, odnosno šifrata.
       """;
 
   public static final String HILL_OPIS = """
@@ -60,6 +66,11 @@ public class OpisiKalkulatora {
           
       U slučaju Vigenèreovog kvadrata otvoreni tekst/sifrat OTVORENITEKST / SIFRAT šifrira/dešifrira se u riječ REZULTAT uz sljedeće transformacije:
       + KLJUCOTVORENITEKST / - KLJUCREZULTAT
+      
+      Promatranjem indeksa koincidencije moguće je procijeniti radi li se doista o smislenom tekstu ili ne.
+      Stoga ako podijelimo tekst na m traka tako da svaka traka sadrži svako m-to slovo teksta za neki potencijalni m (duljina ključa), možemo vidjeti je li ključ doista te duljine.
+      
+      Indeks koincidencije jest suma frekvencija pojedinih slova u određenom tekstu. U HRVATSKOM jeziku ta vrijednost u prosjeku iznosi 0.064, u ENGLESKOM jeziku 0.065, a u NJEMAČKOM jeziku 0.076.
       """;
 
   public static final String PLAYFAIR_OPIS = """
@@ -171,5 +182,8 @@ public class OpisiKalkulatora {
       NJEMAČKI:
       EIN, ICH, NDE, DIE, UND, DER, CHE, END
       
+      
+      Još jedna korisna informacija u tekstu jest odnos samoglasnika i suglasnika.
+      Primjerice, u stupčanoj transpoziciji je moguće potvrditi valjanost dimenzije ključa ukoliko je omjer samoglasnika i suglasnika (HRVATSKI jezik) 43% : 57%.
       """;
 }

@@ -1,5 +1,7 @@
 package pmf.math.kalkulatori;
 
+import pmf.math.baza.dao.CezarDAO;
+import pmf.math.baza.tablice.CezarPovijest;
 import pmf.math.kriptosustavi.CezarKljucnaRijecKriptosustav;
 import pmf.math.kriptosustavi.CezarKriptosustav;
 import pmf.math.obradaunosa.ObradaUnosa;
@@ -13,8 +15,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
 public class CezarKalkulator extends JPanel {
+  private final Konzola konzola; // Za ispis greške.
+  private final CezarDAO cezarDAO = new CezarDAO();
   public JPanel kalkulatorPanel;
-
   private JSpinner pomakSpinner;
   private JCheckBox kljucCheckBox;
   private JTextArea otvoreniTekstArea;
@@ -23,11 +26,17 @@ public class CezarKalkulator extends JPanel {
   private JButton desifrirajButton;
   private JTextField kljucnaRijecTextField;
   private JLabel permutacijaLabel;
-
-  private final Konzola konzola; // Za ispis greške.
+  private JButton desnoButton;
+  private JButton lijevoButton;
+  private JLabel pomakLabel;
+  private JLabel kljucLabel;
+  private JButton odaberiButton;
+  private int indeksPovijest = 0;
 
   public CezarKalkulator(Konzola konzola) {
     this.konzola = konzola;
+
+    prikaziTrenutni(); // Povijest.
 
     sifrirajButton.addActionListener(new Sifriraj());
     desifrirajButton.addActionListener(new Desifriraj());
@@ -63,6 +72,64 @@ public class CezarKalkulator extends JPanel {
                 update();
               }
             });
+
+    // Buttoni za povijest.
+    odaberiButton.addActionListener(
+        e -> {
+          if (pomakLabel.getText().equals("-")) return;
+
+          int pomak = Integer.parseInt(pomakLabel.getText());
+          String kljucnaRijec = kljucLabel.getText();
+
+          pomakSpinner.setValue(pomak);
+          if (!kljucnaRijec.equals("-")) {
+            kljucnaRijecTextField.setText(kljucnaRijec);
+            kljucCheckBox.setSelected(true);
+          } else {
+            kljucnaRijecTextField.setText("");
+            kljucCheckBox.setSelected(false);
+          }
+        });
+
+    lijevoButton.addActionListener(
+        e -> {
+          if (cezarDAO.brojElemenata() == 0) return;
+
+          indeksPovijest = (indeksPovijest - 1 + cezarDAO.brojElemenata) % cezarDAO.brojElemenata;
+          prikaziTrenutni();
+        });
+
+    desnoButton.addActionListener(
+        e -> {
+          if (cezarDAO.brojElemenata() == 0) return;
+
+          indeksPovijest = (indeksPovijest + 1) % cezarDAO.brojElemenata;
+          prikaziTrenutni();
+        });
+  }
+
+  private void provjeriGumbe() {
+    if (cezarDAO.brojElemenata() == 0) {
+      lijevoButton.setEnabled(false);
+      desnoButton.setEnabled(true);
+      odaberiButton.setEnabled(false);
+      return;
+    }
+
+    lijevoButton.setEnabled(indeksPovijest != 0);
+    desnoButton.setEnabled(indeksPovijest != (cezarDAO.brojElemenata() - 1));
+    odaberiButton.setEnabled(true);
+  }
+
+  private void prikaziTrenutni() {
+    if (cezarDAO.brojElemenata() == 0) return;
+
+    CezarPovijest trenutni = cezarDAO.dohvatiElement(indeksPovijest);
+    if (trenutni != null) {
+      pomakLabel.setText(String.valueOf(trenutni.getPomak()));
+      kljucLabel.setText(trenutni.getKljucnaRijec());
+    }
+    provjeriGumbe();
   }
 
   // -----------------------------------------------------------------------------------------------------------------
@@ -93,7 +160,11 @@ public class CezarKalkulator extends JPanel {
 
       if (!greska) {
         sifratArea.setText(sifrat);
-        konzola.ispisiPoruku("Poruka uspješno šifrirana Cezarovom šifrom.");
+        konzola.ispisiPoruku("Poruka uspješno šifrirana.");
+
+        cezarDAO.ubaciElement(pomak, kljucCheckBox.isSelected() ? kljucnaRijec : "-");
+        indeksPovijest = 0; // Resetiraj prikaz.
+        prikaziTrenutni();
       }
     }
   }
@@ -124,10 +195,16 @@ public class CezarKalkulator extends JPanel {
 
       if (!greska) {
         otvoreniTekstArea.setText(otvoreniTekst);
-        konzola.ispisiPoruku("Poruka uspješno dešifrirana Cezarovom šifrom.");
+        konzola.ispisiPoruku("Poruka uspješno dešifrirana.");
+
+        cezarDAO.ubaciElement(pomak, kljucCheckBox.isSelected() ? kljucnaRijec : "-");
+        indeksPovijest = (indeksPovijest + 1) % cezarDAO.brojElemenata;
+        indeksPovijest = 0; // Resetiraj prikaz.
+        prikaziTrenutni();
       }
     }
   }
+
   // Za prikaz supstitucije u UI-ju.
   private class Permutacija {
     private void azuriraj() {

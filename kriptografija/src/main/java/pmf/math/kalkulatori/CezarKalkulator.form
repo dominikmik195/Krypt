@@ -1,149 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="pmf.math.kalkulatori.CezarKalkulator">
-  <grid id="27dc6" binding="kalkulatorPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="kalkulatorPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="5">
+    <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="616" height="518"/>
+      <xy x="20" y="20" width="803" height="920"/>
     </constraints>
     <properties>
+      <font size="14"/>
       <preferredSize width="500" height="768"/>
     </properties>
     <border type="none"/>
     <children>
-      <grid id="5193c" layout-manager="GridLayoutManager" row-count="7" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="5193c" layout-manager="GridLayoutManager" row-count="12" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
-        <border type="line" title="Kalkulator">
+        <border type="none">
           <color color="-16777216"/>
         </border>
         <children>
-          <component id="a781f" class="javax.swing.JLabel">
+          <grid id="b77f4" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="80"/>
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <focusable value="true"/>
-              <font name="JetBrains Mono" size="13"/>
-              <horizontalAlignment value="4"/>
-              <labelFor value="cb535"/>
-              <preferredSize width="120" height="21"/>
-              <text value="Pomak"/>
-            </properties>
-          </component>
-          <component id="cb535" class="javax.swing.JSpinner" binding="pomakSpinner">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                <minimum-size width="80" height="30"/>
-              </grid>
-            </constraints>
-            <properties>
-              <preferredSize width="60" height="30"/>
-            </properties>
-          </component>
-          <component id="67a48" class="javax.swing.JCheckBox" binding="kljucCheckBox">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <focusable value="true"/>
-              <font name="JetBrains Mono" size="13"/>
-              <horizontalAlignment value="4"/>
-              <preferredSize width="120" height="26"/>
-              <text value="Ključ"/>
-            </properties>
-          </component>
-          <component id="d8bc0" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <focusable value="true"/>
-              <font name="JetBrains Mono" size="13"/>
-              <horizontalAlignment value="4"/>
-              <labelFor value="6bce9"/>
-              <preferredSize width="120" height="21"/>
-              <text value="Otvoreni tekst"/>
-              <verifyInputWhenFocusTarget value="true"/>
-              <verticalAlignment value="1"/>
-              <verticalTextPosition value="1"/>
-            </properties>
-          </component>
-          <component id="7a5bd" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <focusable value="true"/>
-              <font name="JetBrains Mono" size="13"/>
-              <horizontalAlignment value="4"/>
-              <labelFor value="3c142"/>
-              <preferredSize width="120" height="21"/>
-              <text value="Šifrat"/>
-            </properties>
-          </component>
-          <grid id="b77f4" layout-manager="FlowLayout" hgap="20" vgap="5" flow-align="1">
-            <constraints>
-              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="4c6d4" class="javax.swing.JButton" binding="sifrirajButton">
-                <constraints/>
+              <component id="7a5bd" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false">
+                    <preferred-size width="100" height="-1"/>
+                  </grid>
+                </constraints>
                 <properties>
+                  <focusable value="true"/>
+                  <font name="SansSerif" size="14"/>
+                  <horizontalAlignment value="2"/>
+                  <labelFor value="3c142"/>
+                  <preferredSize width="120" height="21"/>
+                  <text value="Šifrat:"/>
+                  <verticalAlignment value="3"/>
+                  <verticalTextPosition value="3"/>
+                </properties>
+              </component>
+              <component id="4c6d4" class="javax.swing.JButton" binding="sifrirajButton">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                    <preferred-size width="60" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="SansSerif" size="14"/>
                   <preferredSize width="75" height="50"/>
                   <text value="↓"/>
                 </properties>
               </component>
               <component id="f92ec" class="javax.swing.JButton" binding="desifrirajButton">
-                <constraints/>
+                <constraints>
+                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                    <preferred-size width="60" height="50"/>
+                  </grid>
+                </constraints>
                 <properties>
+                  <font name="SansSerif" size="14"/>
                   <preferredSize width="75" height="50"/>
                   <text value="↑"/>
                 </properties>
               </component>
+              <hspacer id="e220">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+              <hspacer id="52ad8">
+                <constraints>
+                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
             </children>
           </grid>
-          <component id="aeda9" class="javax.swing.JTextField" binding="kljucnaRijecTextField">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <editable value="false"/>
-              <font name="JetBrains Mono"/>
-              <preferredSize width="250" height="30"/>
-            </properties>
-          </component>
           <component id="d4276" class="javax.swing.JLabel">
             <constraints>
-              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="2" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="JetBrains Mono" size="14"/>
+              <font name="Courier New" size="16"/>
               <text value="A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"/>
             </properties>
           </component>
           <component id="c8831" class="javax.swing.JLabel" binding="permutacijaLabel">
             <constraints>
-              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="2" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="JetBrains Mono" size="14"/>
+              <font name="Courier New" size="16"/>
               <text value="A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"/>
             </properties>
           </component>
           <scrollpane id="8f265">
             <constraints>
-              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <minimum-size width="-1" height="100"/>
+                <preferred-size width="-1" height="250"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <verticalScrollBarPolicy value="22"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="6bce9" class="javax.swing.JTextArea" binding="otvoreniTekstArea">
@@ -151,9 +117,10 @@
                 <properties>
                   <alignmentX value="1.0"/>
                   <alignmentY value="1.0"/>
-                  <font name="JetBrains Mono"/>
+                  <font name="Courier New" size="16"/>
                   <lineWrap value="true"/>
                   <margin top="5" left="5" bottom="5" right="5"/>
+                  <preferredSize width="775" height="31"/>
                   <rows value="1"/>
                 </properties>
               </component>
@@ -161,24 +128,257 @@
           </scrollpane>
           <scrollpane id="6a5e8">
             <constraints>
-              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+              <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <minimum-size width="-1" height="100"/>
+                <preferred-size width="-1" height="250"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <verticalScrollBarPolicy value="22"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="3c142" class="javax.swing.JTextArea" binding="sifratArea">
                 <constraints/>
                 <properties>
-                  <font name="JetBrains Mono"/>
+                  <font name="Courier New" size="16"/>
                   <lineWrap value="true"/>
                   <margin top="5" left="5" bottom="5" right="5"/>
+                  <preferredSize width="775" height="31"/>
                   <rows value="1"/>
+                  <text value=""/>
                 </properties>
               </component>
             </children>
           </scrollpane>
+          <grid id="2d365" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="5" left="0" bottom="5" right="0"/>
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none" title="Povijest"/>
+            <children>
+              <component id="11811" class="javax.swing.JButton" binding="desnoButton">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="60" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="SansSerif" size="14"/>
+                  <text value="🡒"/>
+                </properties>
+              </component>
+              <component id="19c7b" class="javax.swing.JButton" binding="lijevoButton">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="60" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="SansSerif" size="14"/>
+                  <text value="🡐 "/>
+                </properties>
+              </component>
+              <grid id="c7a0d" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="380" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="8fcf0" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                        <minimum-size width="50" height="-1"/>
+                        <preferred-size width="50" height="-1"/>
+                        <maximum-size width="50" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="ba472" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <font name="SansSerif" size="14"/>
+                          <text value="Pomak:"/>
+                        </properties>
+                      </component>
+                      <component id="6a08b" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <font name="SansSerif" size="14"/>
+                          <text value="Ključ:"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="9dc43" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                        <minimum-size width="330" height="-1"/>
+                        <preferred-size width="330" height="-1"/>
+                        <maximum-size width="330" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <font name="Courier New" size="14"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="e6f20" class="javax.swing.JLabel" binding="pomakLabel">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <font style="0"/>
+                          <text value="-"/>
+                        </properties>
+                      </component>
+                      <component id="a374b" class="javax.swing.JLabel" binding="kljucLabel">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <font style="0"/>
+                          <text value="-"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+            </children>
+          </grid>
+          <grid id="adff0" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <hspacer id="b52dc">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+              <component id="d8bc0" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <focusable value="true"/>
+                  <font name="SansSerif" size="14"/>
+                  <horizontalAlignment value="2"/>
+                  <labelFor value="6bce9"/>
+                  <preferredSize width="120" height="21"/>
+                  <text value="Otvoreni tekst:"/>
+                  <verifyInputWhenFocusTarget value="true"/>
+                  <verticalAlignment value="3"/>
+                  <verticalTextPosition value="3"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="d00b6" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="cb535" class="javax.swing.JSpinner" binding="pomakSpinner">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                    <minimum-size width="80" height="30"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="SansSerif" size="14"/>
+                  <preferredSize width="60" height="30"/>
+                </properties>
+              </component>
+              <component id="a781f" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <focusable value="true"/>
+                  <font name="SansSerif" size="14"/>
+                  <horizontalAlignment value="4"/>
+                  <labelFor value="cb535"/>
+                  <preferredSize width="120" height="21"/>
+                  <text value="Pomak:"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="eb492" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="aeda9" class="javax.swing.JTextField" binding="kljucnaRijecTextField">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                  <font name="SansSerif" size="14"/>
+                  <preferredSize width="250" height="30"/>
+                </properties>
+              </component>
+              <component id="67a48" class="javax.swing.JCheckBox" binding="kljucCheckBox">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <focusable value="true"/>
+                  <font name="SansSerif" size="14"/>
+                  <horizontalAlignment value="4"/>
+                  <preferredSize width="120" height="26"/>
+                  <text value="Ključ:"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <vspacer id="f92f8">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <vspacer id="d185">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <component id="d3032" class="javax.swing.JButton" binding="odaberiButton">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="SansSerif" size="14"/>
+              <text value="Odaberi podatke"/>
+            </properties>
+          </component>
         </children>
       </grid>
     </children>

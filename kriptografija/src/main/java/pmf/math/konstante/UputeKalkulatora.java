@@ -46,6 +46,8 @@ public class UputeKalkulatora {
       Za šifriranje/dešifiranje potrebno je postaviti ključ(riječ) te kliknuti pripadni gumb ↓ ↑.
       
       Klikom na pripadnu tipku mogu se izmijeniti načini korištenja ključa.
+      
+      Klikom na tipku "Pronađi duljinu ključa" moguće je procijeniti duljinu ključa ovisno o unesenom šifratu (potrebno da nije prazan tekst).
       """;
 
   public static final String PLAYFAIR_UPUTE = """

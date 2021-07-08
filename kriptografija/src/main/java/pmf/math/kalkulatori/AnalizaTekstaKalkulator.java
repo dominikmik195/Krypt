@@ -3,6 +3,7 @@ package pmf.math.kalkulatori;
 import static pmf.math.algoritmi.Abeceda.filtrirajTekst;
 import static pmf.math.konstante.DuljineTeksta.ANALIZIRANI_TEKST_REDAK_MAX;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.Style;
@@ -43,6 +45,8 @@ public class AnalizaTekstaKalkulator {
   private JLabel bigramiLabel;
   private JPanel analizaPanel;
   private JButton ocistiButton;
+  private JLabel samoglasniciSuglasniciLabel;
+  private JPanel detaljiPanel;
   public Konzola mojaKonzola;
   private ButtonGroup grupaZaIsticanjeMultigrama;
   private Map<String, List<Integer>> mapaBigrama;
@@ -66,12 +70,14 @@ public class AnalizaTekstaKalkulator {
       postaviSlova();
       postaviBigrame();
       postaviTrigrame();
+      postaviSamoglasnikeSuglasnike();
     });
 
     // Očisti
     ocistiButton.addActionListener(e -> {
       unosTekst.setText("");
       analiziraniTekst.setText("");
+      samoglasniciSuglasniciLabel.setText("");
       postaviSlova();
       postaviBigrame();
       postaviTrigrame();
@@ -110,8 +116,7 @@ public class AnalizaTekstaKalkulator {
           if (count.get() == MAX_BROJ_REDAKA) {
             trigramiPanel.revalidate();
             return;
-          }
-          else {
+          } else {
             count.getAndIncrement();
           }
           if (vrijednost.size() > 1) {
@@ -131,8 +136,7 @@ public class AnalizaTekstaKalkulator {
           if (count.get() == MAX_BROJ_REDAKA) {
             trigramiPanel.revalidate();
             return;
-          }
-          else {
+          } else {
             count.getAndIncrement();
           }
           if (vrijednost.size() > 1) {
@@ -142,19 +146,31 @@ public class AnalizaTekstaKalkulator {
     trigramiPanel.revalidate();
   }
 
+  public void postaviSamoglasnikeSuglasnike() {
+    int brojSlova = analiziraniTekst.getText().length();
+    if (brojSlova == 0) {
+      return;
+    }
+    int postotakSamoglasnika =
+        analizaTeksta.pronadiSamoglasnike(analiziraniTekst.getText()) * 100 / brojSlova;
+    int postotakSuglasnika = 100 - postotakSamoglasnika;
+
+    samoglasniciSuglasniciLabel.setText(postotakSamoglasnika + "% / " + postotakSuglasnika + "%");
+  }
+
   public JPanel stvoriRedakSaTipkom(String multigram, int vrijednost) {
     JPanel povratniPanel = new JPanel();
-    povratniPanel.setLayout(new GridLayout(0, 3));
+    povratniPanel.setLayout(new BorderLayout());
     JLabel multigramLabel = new JLabel(multigram + ":");
     multigramLabel.setFont(new Font("Monospaced", Font.PLAIN, 16));
-    povratniPanel.add(multigramLabel);
-    povratniPanel.add(new JLabel(String.valueOf(vrijednost)));
+    povratniPanel.add(multigramLabel, BorderLayout.WEST);
+    povratniPanel.add(new JLabel(String.valueOf(vrijednost)), BorderLayout.CENTER);
     JRadioButton tipkaZaIsticanjeMultigrama = new JRadioButton();
     grupaZaIsticanjeMultigrama.add(tipkaZaIsticanjeMultigrama);
     tipkaZaIsticanjeMultigrama.addActionListener(e -> {
       istakniMultigram(multigram);
     });
-    povratniPanel.add(tipkaZaIsticanjeMultigrama);
+    povratniPanel.add(tipkaZaIsticanjeMultigrama, BorderLayout.EAST);
     return povratniPanel;
   }
 
@@ -220,7 +236,23 @@ public class AnalizaTekstaKalkulator {
   }
 
   public void postaviRubove() {
-    unosTekst.setMargin(new Insets(10, 10, 10, 10));
+    unosTekst.setMargin(new Insets(12, 12, 12, 12));
+  }
+
+  public boolean samoglasnik(String slovo) {
+    if (slovo.length() != 1) {
+      return false;
+    }
+    String slovoUpper = slovo.toUpperCase(Locale.ROOT);
+    if (slovoUpper.contains("A") ||
+        slovoUpper.contains("E") ||
+        slovoUpper.contains("I") ||
+        slovoUpper.contains("O") ||
+        slovoUpper.contains("U")) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

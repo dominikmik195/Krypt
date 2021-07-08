@@ -2,8 +2,12 @@ package pmf.math.router;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Objects;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,6 +17,7 @@ import pmf.math.baza.BazaPodataka;
 import pmf.math.kalkulatori.*;
 import pmf.math.konstante.ImenaKalkulatora;
 import pmf.math.konstante.OpisiKalkulatora;
+import pmf.math.konstante.PodnasloviKonzole;
 import pmf.math.konstante.UputeKalkulatora;
 
 public class Router extends JPanel implements ActionListener {
@@ -35,6 +40,7 @@ public class Router extends JPanel implements ActionListener {
   private JPanel desniStupac;
   private JPanel srednjiStupac;
   private JButton analizaTekstaButton;
+  private JButton uvodnaStranicaButton;
 
   private final BazaPodataka baza = new BazaPodataka();
   private final Konzola konzola = new Konzola();
@@ -52,6 +58,10 @@ public class Router extends JPanel implements ActionListener {
       new AnalizaTekstaKalkulator(konzola);
   private final StupcanaTranspozicijaKalkulator stupcanaKalkulator =
           new StupcanaTranspozicijaKalkulator(konzola);
+  private final UvodnaStranica uvodnaStranica = new UvodnaStranica();
+
+  private final int sirinaOpisa = 420;
+  private final int sirinaKonzole = 330;
 
   public void Main() {
     stvoriGUI();
@@ -73,6 +83,11 @@ public class Router extends JPanel implements ActionListener {
     myFrame.setLocationRelativeTo(null);
     myFrame.setResizable(false);
     myFrame.setVisible(true);
+    try {
+      myFrame.setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/logo.png"))));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
     konzola.ispisiPoruku("Uspješno pokrenuta aplikacija!");
     konzola.ispisiGresku("Ovako izgleda ispis greške...");
@@ -97,14 +112,26 @@ public class Router extends JPanel implements ActionListener {
     srednjiStupac.add(ImenaKalkulatora.RSA_SIFRA.toString(), RSAkalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString(), elGamalKalkulator.glavniPanel);
     srednjiStupac.add(ImenaKalkulatora.ANALIZA_TEKSTA.toString(), analizaTekstaKalkulator.glavniPanel);
-
-    cezarButton.doClick();
+    srednjiStupac.add(ImenaKalkulatora.UVODNA_STRANICA.toString(), uvodnaStranica.glavniPanel);
   }
 
   private void postaviKalkulator(ImenaKalkulatora imeKalkulatora) {
     CardLayout prikaz = (CardLayout) srednjiStupac.getLayout();
+    if(imeKalkulatora == ImenaKalkulatora.UVODNA_STRANICA) {
+      konzola.prikazi(false);
+      desniStupac.setPreferredSize(new Dimension(0, 0));
+      opis.prikazi(false);
+      lijeviStupac.setPreferredSize(new Dimension(0,0));
+    }
+    else {
+      konzola.prikazi(true);
+      desniStupac.setPreferredSize(new Dimension(330, 0));
+      opis.prikazi(true);
+      lijeviStupac.setPreferredSize(new Dimension(420,0));
+    }
     switch (imeKalkulatora) {
       case HILLOVA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.HILLOVA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.HILLOVA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.HILL_OPIS,
             UputeKalkulatora.HILL_UPUTE,
@@ -114,6 +141,7 @@ public class Router extends JPanel implements ActionListener {
 
       case VIGENEROVA_SIFRA -> {
         prikaz.show(srednjiStupac, ImenaKalkulatora.VIGENEROVA_SIFRA.toString());
+        konzola.setPodnaslov(PodnasloviKonzole.VIGENEREOVA_SIFRA_PODNASLOV);
         opis.postaviTekst(OpisiKalkulatora.VIGENERE_OPIS,
             UputeKalkulatora.VIGENERE_UPUTE,
             imeKalkulatora);
@@ -121,6 +149,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case PLAYFAIROVA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.PLAYFAIROVA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.PLAYFAIROVA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.PLAYFAIR_OPIS,
             UputeKalkulatora.PLAYFAIR_UPUTE,
@@ -129,6 +158,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case EL_GAMALOVA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.EL_GAMALOVA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.EL_GAMALOVA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.EL_GAMAL_OPIS,
             UputeKalkulatora.EL_GAMAL_UPUTE,
@@ -137,6 +167,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case RSA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.RSA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.RSA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.RSA_OPIS,
             UputeKalkulatora.RSA_UPUTE,
@@ -145,23 +176,26 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case SUPSTITUCIJSKA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.SUPSTITUCIJSKA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA.toString());
         opis.postaviTekst(OpisiKalkulatora.SUPSTITUCIJA_OPIS,
             UputeKalkulatora.SUPSTITUCIJA_UPUTE,
             imeKalkulatora);
-        new Thread(opis::postaviPrazanGraf).start();
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       case CEZAROVA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.CEZAROVA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.CEZAROVA_SIFRA.toString());
         opis.postaviTekst(
             OpisiKalkulatora.CEZAR_OPIS,
             UputeKalkulatora.CEZAR_UPUTE,
             imeKalkulatora);
-        new Thread(opis::postaviPrazanGraf).start();
+        new Thread(() -> opis.postaviGraf(false)).start();
       }
 
       case AFINA_SIFRA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.AFINA_SIFRA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.AFINA_SIFRA.toString());
         opis.postaviTekst(
                 OpisiKalkulatora.AFINA_OPIS,
@@ -171,6 +205,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case ANALIZA_TEKSTA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.ANALIZA_TEKSTA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.ANALIZA_TEKSTA.toString());
         opis.postaviTekst(
             OpisiKalkulatora.ANALIZA_TEKSTA_OPIS,
@@ -180,6 +215,7 @@ public class Router extends JPanel implements ActionListener {
       }
 
       case STUPCANA_TRANSPOZICIJA -> {
+        konzola.setPodnaslov(PodnasloviKonzole.STUPCANA_TRANSPOZICIJA_PODNASLOV);
         prikaz.show(srednjiStupac, ImenaKalkulatora.STUPCANA_TRANSPOZICIJA.toString());
         opis.postaviTekst(
                 OpisiKalkulatora.STUPCANA_OPIS,
@@ -188,7 +224,12 @@ public class Router extends JPanel implements ActionListener {
         new Thread(() -> opis.postaviGraf(false)).start();
       }
 
+      case UVODNA_STRANICA -> {
+        prikaz.show(srednjiStupac, ImenaKalkulatora.UVODNA_STRANICA.toString());
+      }
+
       default -> {
+        konzola.setPodnaslov("");
         prikaz.show(srednjiStupac, "NULL");
         opis.postaviTekst("", "", null);
         new Thread(opis::postaviPrazanGraf).start();
@@ -212,6 +253,7 @@ public class Router extends JPanel implements ActionListener {
     omoguciTipku(rsaButton, true);
     omoguciTipku(elgamalButton, true);
     omoguciTipku(analizaTekstaButton, true);
+    omoguciTipku(uvodnaStranicaButton, true);
   }
 
   private void omoguciTipku(JButton button, boolean omoguci) {
@@ -231,57 +273,76 @@ public class Router extends JPanel implements ActionListener {
       omoguciSveTipke();
       omoguciTipku(cezarButton, false);
       postaviKalkulator(ImenaKalkulatora.CEZAROVA_SIFRA);
+      srednjiStupac.requestFocus();
     });
     supstitucijskaButton.addActionListener(e -> {
       omoguciSveTipke();
       omoguciTipku(supstitucijskaButton, false);
       postaviKalkulator(ImenaKalkulatora.SUPSTITUCIJSKA_SIFRA);
+      srednjiStupac.requestFocus();
     });
     afinaButton.addActionListener(e -> {
       omoguciSveTipke();
       omoguciTipku(afinaButton, false);
       postaviKalkulator(ImenaKalkulatora.AFINA_SIFRA);
+      srednjiStupac.requestFocus();
     });
     hillovaButton.addActionListener(e -> {
       omoguciSveTipke();
       omoguciTipku(hillovaButton, false);
       postaviKalkulator(ImenaKalkulatora.HILLOVA_SIFRA);
+      srednjiStupac.requestFocus();
     });
     vigenerovaButton.addActionListener(e -> {
       omoguciSveTipke();
       omoguciTipku(vigenerovaButton, false);
       postaviKalkulator(ImenaKalkulatora.VIGENEROVA_SIFRA);
+      srednjiStupac.requestFocus();
     });
     playfairovaButton.addActionListener(e -> {
       omoguciSveTipke();
       omoguciTipku(playfairovaButton, false);
       postaviKalkulator(ImenaKalkulatora.PLAYFAIROVA_SIFRA);
+      srednjiStupac.requestFocus();
     });
     stupcanaButton.addActionListener(e -> {
       omoguciSveTipke();
       omoguciTipku(stupcanaButton, false);
       postaviKalkulator(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA);
+      srednjiStupac.requestFocus();
     });
     rsaButton.addActionListener(e -> {
       omoguciSveTipke();
       omoguciTipku(rsaButton, false);
       postaviKalkulator(ImenaKalkulatora.RSA_SIFRA);
+      srednjiStupac.requestFocus();
     });
     elgamalButton.addActionListener(e -> {
       omoguciSveTipke();
       omoguciTipku(elgamalButton, false);
       postaviKalkulator(ImenaKalkulatora.EL_GAMALOVA_SIFRA);
+      srednjiStupac.requestFocus();
     });
     analizaTekstaButton.addActionListener(e -> {
       omoguciSveTipke();
       omoguciTipku(analizaTekstaButton, false);
       postaviKalkulator(ImenaKalkulatora.ANALIZA_TEKSTA);
+      srednjiStupac.requestFocus();
     });
     stupcanaButton.addActionListener(e -> {
       omoguciSveTipke();
       omoguciTipku(stupcanaButton, false);
       postaviKalkulator(ImenaKalkulatora.STUPCANA_TRANSPOZICIJA);
+      srednjiStupac.requestFocus();
     });
+    uvodnaStranicaButton.addActionListener(e -> {
+      omoguciSveTipke();
+      omoguciTipku(uvodnaStranicaButton, false);
+      postaviKalkulator(ImenaKalkulatora.UVODNA_STRANICA);
+      srednjiStupac.requestFocus();
+    });
+
+    uvodnaStranicaButton.doClick();
   }
 
   public void actionPerformed(ActionEvent ae) {
