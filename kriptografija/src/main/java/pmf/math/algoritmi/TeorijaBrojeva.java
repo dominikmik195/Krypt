@@ -19,7 +19,6 @@ public class TeorijaBrojeva {
       }
       red++;
       ostatak = modularnoPotenciranje(element, red, modulo);
-      System.out.println("r " + red + "    ost " + ostatak);
     }
     return red;
   }
