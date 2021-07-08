@@ -1,14 +1,14 @@
 package pmf.math;
 
+import java.net.URL;
 import javax.swing.SwingUtilities;
 import pmf.math.router.Router;
 
-import java.io.File;
-
 public class MainClass {
   static {
-    File lib = new File("kriptografija/lib/TeorijaBrojeva.dll");
-    System.load(lib.getAbsolutePath());
+    URL url = MainClass.class.getClassLoader().getResource("TeorijaBrojeva.dll");
+    assert url != null;
+    System.load(url.getPath());
   }
   public static void main(String[] args) {
     Router router = new Router();
