@@ -49,134 +49,137 @@ public class ElGamalKalkulator {
 
   public ElGamalKalkulator(Konzola _konzola) {
     konzola = _konzola;
-    prikaziTrenutni();
-    provjeriTipkeLijevoDesno();
+    SwingUtilities.invokeLater(() -> {
+      prikaziTrenutni();
+      provjeriTipkeLijevoDesno();
 
-    sifrirajButton.addActionListener(
-            e ->  new Thread(() -> {
-              onemoguciSucelje();
-              stroj.setOK(true);
-              stroj.reinicijalizirajPoruke();
-              int[] PAB = dohvatiPAB();
-              if(PAB[3] == 0) {
-                stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
-                stroj.setOK(false);
-              }
-              int tB = dohvatiVarijablu(4);
-              if(tB < 0 && stroj.isOK()) {
-                stroj.prosiriPoruku(vratiGresku(4, tB));
-                stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
-                stroj.setOK(false);
-              }
-              int broj = dohvatiVarijablu(5);
-              if(broj < 0 && stroj.isOK()) {
-                stroj.prosiriPoruku(vratiGresku(5, broj));
-                stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
-                stroj.setOK(false);
-              }
+      sifrirajButton.addActionListener(
+          e ->  new Thread(() -> {
+            onemoguciSucelje();
+            stroj.setOK(true);
+            stroj.reinicijalizirajPoruke();
+            int[] PAB = dohvatiPAB();
+            if(PAB[3] == 0) {
+              stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
+              stroj.setOK(false);
+            }
+            int tB = dohvatiVarijablu(4);
+            if(tB < 0 && stroj.isOK()) {
+              stroj.prosiriPoruku(vratiGresku(4, tB));
+              stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
+              stroj.setOK(false);
+            }
+            int broj = dohvatiVarijablu(5);
+            if(broj < 0 && stroj.isOK()) {
+              stroj.prosiriPoruku(vratiGresku(5, broj));
+              stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
+              stroj.setOK(false);
+            }
 
-              stroj.prostBroj = PAB[0];
-              stroj.alfa = PAB[1];
-              stroj.beta = PAB[2];
-              stroj.setTajniBroj(tB);
-              stroj.setOtvoreniTekst(broj);
+            stroj.prostBroj = PAB[0];
+            stroj.alfa = PAB[1];
+            stroj.beta = PAB[2];
+            stroj.setTajniBroj(tB);
+            stroj.setOtvoreniTekst(broj);
 
-              SwingUtilities.invokeLater(() -> {
-                if(!stroj.dohvatiPoruke().equals("")) konzola.ispisiPoruku(stroj.dohvatiPoruke());
-                if(stroj.isOK()) {
-                  stroj.sifriraj();
-                  sifratArea.setText(String.valueOf(stroj.vratiSifrat()));
-                  konzola.ispisiPoruku("Šifriranje uspješno!");
-                  stroj.setTajniKljuc(dohvatiVarijablu(1));
-                  noviElement(stroj.prostBroj, stroj.getTajniKljuc(), stroj.alfa, stroj.beta, stroj.getTajniBroj());
-                }
-                else
-                  konzola.ispisiGresku("Šifriranje neuspješno!");
-                omoguciSucelje();
-              });
-            }).start()
-    );
-
-    desifrirajButton.addActionListener(
-            e -> new Thread(() -> {
-              onemoguciSucelje();
-              stroj.setOK(true);
-              stroj.reinicijalizirajPoruke();
-              int[] PAB = dohvatiPAB();
-              if(PAB[3] == 0) {
-                stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
-                stroj.setOK(false);
-              }
-              int tK = dohvatiVarijablu(1);
-              if(tK < 0 && stroj.isOK()) {
-                stroj.prosiriPoruku(vratiGresku(1, tK));
-                stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
-                stroj.setOK(false);
-              }
+            SwingUtilities.invokeLater(() -> {
+              if(!stroj.dohvatiPoruke().equals("")) konzola.ispisiPoruku(stroj.dohvatiPoruke());
               if(stroj.isOK()) {
-                try {
-                  String sifra = sifratArea.getText().strip();
-                  if (!ObradaUnosaElGamal.provjeriSifru(sifra)) {
-                    stroj.prosiriPoruku("Krivi format šifre!");
-                    stroj.setOK(false);
-                  }
-                  else {
-                    stroj.prostBroj = PAB[0];
-                    stroj.alfa = PAB[1];
-                    stroj.beta = PAB[2];
-                    stroj.setTajniKljuc(tK);
-                    stroj.pohraniSifrat(sifra);
-                    stroj.prosiriPoruku("Dešifriranje uspješno!");
-                  }
-                } catch (StringIndexOutOfBoundsException | NumberFormatException ex) {
+                stroj.sifriraj();
+                sifratArea.setText(String.valueOf(stroj.vratiSifrat()));
+                konzola.ispisiPoruku("Šifriranje uspješno!");
+                stroj.setTajniKljuc(dohvatiVarijablu(1));
+                noviElement(stroj.prostBroj, stroj.getTajniKljuc(), stroj.alfa, stroj.beta, stroj.getTajniBroj());
+              }
+              else
+                konzola.ispisiGresku("Šifriranje neuspješno!");
+              omoguciSucelje();
+            });
+          }).start()
+      );
+
+      desifrirajButton.addActionListener(
+          e -> new Thread(() -> {
+            onemoguciSucelje();
+            stroj.setOK(true);
+            stroj.reinicijalizirajPoruke();
+            int[] PAB = dohvatiPAB();
+            if(PAB[3] == 0) {
+              stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
+              stroj.setOK(false);
+            }
+            int tK = dohvatiVarijablu(1);
+            if(tK < 0 && stroj.isOK()) {
+              stroj.prosiriPoruku(vratiGresku(1, tK));
+              stroj.prosiriPoruku("Daljnji nastavak nije moguć!");
+              stroj.setOK(false);
+            }
+            if(stroj.isOK()) {
+              try {
+                String sifra = sifratArea.getText().strip();
+                if (!ObradaUnosaElGamal.provjeriSifru(sifra)) {
                   stroj.prosiriPoruku("Krivi format šifre!");
                   stroj.setOK(false);
                 }
-              }
-              SwingUtilities.invokeLater(() -> {
-                konzola.ispisiPoruku(stroj.dohvatiPoruke());
-                if(stroj.isOK()) {
-                  otvoreniTekstArea.setText(String.valueOf(stroj.desifriraj()));
-                  stroj.setTajniBroj(dohvatiVarijablu(4));
-                  noviElement(stroj.prostBroj, stroj.getTajniKljuc(), stroj.alfa, stroj.beta, stroj.getTajniBroj());
+                else {
+                  stroj.prostBroj = PAB[0];
+                  stroj.alfa = PAB[1];
+                  stroj.beta = PAB[2];
+                  stroj.setTajniKljuc(tK);
+                  stroj.pohraniSifrat(sifra);
+                  stroj.prosiriPoruku("Dešifriranje uspješno!");
                 }
-                else
-                  konzola.ispisiGresku("Neuspjelo dešifriranje!");
-                omoguciSucelje();
-              });
-            }).start());
-    provjeriIIspraviButton.addActionListener(e -> provjeriIIspravi());
-    ocistiPoljaButton.addActionListener(e -> {
-      prostBrojField.setText("");
-      tajniKljucField.setText("");
-      alfaField.setText("");
-      betaField.setText("");
-      tajniBrojField.setText("");
-      otvoreniTekstArea.setText("");
-      sifratArea.setText("");
+              } catch (StringIndexOutOfBoundsException | NumberFormatException ex) {
+                stroj.prosiriPoruku("Krivi format šifre!");
+                stroj.setOK(false);
+              }
+            }
+            SwingUtilities.invokeLater(() -> {
+              konzola.ispisiPoruku(stroj.dohvatiPoruke());
+              if(stroj.isOK()) {
+                otvoreniTekstArea.setText(String.valueOf(stroj.desifriraj()));
+                stroj.setTajniBroj(dohvatiVarijablu(4));
+                noviElement(stroj.prostBroj, stroj.getTajniKljuc(), stroj.alfa, stroj.beta, stroj.getTajniBroj());
+              }
+              else
+                konzola.ispisiGresku("Neuspjelo dešifriranje!");
+              omoguciSucelje();
+            });
+          }).start());
+      provjeriIIspraviButton.addActionListener(e -> provjeriIIspravi());
+      ocistiPoljaButton.addActionListener(e -> {
+        prostBrojField.setText("");
+        tajniKljucField.setText("");
+        alfaField.setText("");
+        betaField.setText("");
+        tajniBrojField.setText("");
+        otvoreniTekstArea.setText("");
+        sifratArea.setText("");
+      });
+
+      desnoButton.addActionListener(e -> {
+        trenutniPrikaz++;
+        prikaziTrenutni();
+        provjeriTipkeLijevoDesno();
+      });
+
+      lijevoButton.addActionListener(e -> {
+        trenutniPrikaz--;
+        prikaziTrenutni();
+        provjeriTipkeLijevoDesno();
+      });
+
+      odaberiPodatkeButton.addActionListener(e -> {
+        prostBrojField.setText(pbBazaLabel.getText());
+        tajniKljucField.setText(tkBazaLabel.getText());
+        alfaField.setText(alfaBazaLabel.getText());
+        betaField.setText(betaBazaLabel.getText());
+        tajniBrojField.setText(tbBazaLabel.getText());
+      });
+
+      prekidButton.addActionListener(e -> ElGamalKriptosustav.prekid = true);
     });
 
-    desnoButton.addActionListener(e -> {
-      trenutniPrikaz++;
-      prikaziTrenutni();
-      provjeriTipkeLijevoDesno();
-    });
-
-    lijevoButton.addActionListener(e -> {
-      trenutniPrikaz--;
-      prikaziTrenutni();
-      provjeriTipkeLijevoDesno();
-    });
-
-    odaberiPodatkeButton.addActionListener(e -> {
-      prostBrojField.setText(pbBazaLabel.getText());
-      tajniKljucField.setText(tkBazaLabel.getText());
-      alfaField.setText(alfaBazaLabel.getText());
-      betaField.setText(betaBazaLabel.getText());
-      tajniBrojField.setText(tbBazaLabel.getText());
-    });
-
-    prekidButton.addActionListener(e -> ElGamalKriptosustav.prekid = true);
   }
 
   private int dohvatiVarijablu(int kod) {

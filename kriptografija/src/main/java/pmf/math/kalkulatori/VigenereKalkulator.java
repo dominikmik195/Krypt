@@ -60,10 +60,12 @@ public class VigenereKalkulator {
 
   public VigenereKalkulator(Konzola konzola) {
     mojaKonzola = konzola;
-    postaviTipke();
-    postaviRubove();
-    osvjeziFavorite();
-    omoguciSucelje();
+    SwingUtilities.invokeLater(() -> {
+      postaviTipke();
+      postaviRubove();
+      osvjeziFavorite();
+      omoguciSucelje();
+    });
   }
 
   private void postaviTipke() {

@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -29,8 +30,10 @@ public class Konzola {
   private String podnaslov = "";
 
   public Konzola() {
-    postaviTipke();
-    postaviRubove();
+    SwingUtilities.invokeLater(() -> {
+      postaviTipke();
+      postaviRubove();
+    });
   }
 
   public void ispisiPoruku(String poruka){
