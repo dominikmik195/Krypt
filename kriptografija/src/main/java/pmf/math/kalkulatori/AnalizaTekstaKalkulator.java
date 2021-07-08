@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
@@ -55,8 +56,10 @@ public class AnalizaTekstaKalkulator {
 
   public AnalizaTekstaKalkulator(Konzola konzola) {
     mojaKonzola = konzola;
-    postaviTipke();
-    postaviRubove();
+    SwingUtilities.invokeLater(() -> {
+      postaviTipke();
+      postaviRubove();
+    });
   }
 
   public void postaviTipke() {

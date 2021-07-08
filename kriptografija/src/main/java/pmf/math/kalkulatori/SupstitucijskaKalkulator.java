@@ -63,41 +63,43 @@ public class SupstitucijskaKalkulator {
 
   public SupstitucijskaKalkulator(Konzola konzola) {
     this.konzola = konzola;
-    napuniTextFields();
-    postaviTextFields();
-    osvjeziPovijest();
+    SwingUtilities.invokeLater(() -> {
+      napuniTextFields();
+      postaviTextFields();
+      osvjeziPovijest();
 
-    sifrirajButton.addActionListener(new Sifriraj());
-    desifrirajButton.addActionListener(new Desifriraj());
+      sifrirajButton.addActionListener(new Sifriraj());
+      desifrirajButton.addActionListener(new Desifriraj());
 
-    // Brisanje unosa i postavljanje na identitetu.
-    ocistiButton.addActionListener(e -> ocistiKljuc());
-    ocistiSveButton.addActionListener(e -> ocistiPolja());
-    identitetaButton.addActionListener(
-        e -> {
-          for (int i = 0; i < 26; i++) textFields[i].setValue(Abeceda.uSlovo(i));
-          azurirajSlovaLabele();
-          for (int i = 0; i < 26; i++) textFields[i].setBackground(Color.white);
-        });
-
-    // Sva napisana slova se automatski prebacuju u velika. Ažuriramo label preostalih slova.
-    for (JFormattedTextField tf : textFields) {
-      tf.addKeyListener(
-          new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {}
-
-            @Override
-            public void keyPressed(KeyEvent e) {}
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-              tf.setText(tf.getText().toUpperCase());
-              azurirajSlovaLabele();
-              obojajDuplikate();
-            }
+      // Brisanje unosa i postavljanje na identitetu.
+      ocistiButton.addActionListener(e -> ocistiKljuc());
+      ocistiSveButton.addActionListener(e -> ocistiPolja());
+      identitetaButton.addActionListener(
+          e -> {
+            for (int i = 0; i < 26; i++) textFields[i].setValue(Abeceda.uSlovo(i));
+            azurirajSlovaLabele();
+            for (int i = 0; i < 26; i++) textFields[i].setBackground(Color.white);
           });
-    }
+
+      // Sva napisana slova se automatski prebacuju u velika. Ažuriramo label preostalih slova.
+      for (JFormattedTextField tf : textFields) {
+        tf.addKeyListener(
+            new KeyListener() {
+              @Override
+              public void keyTyped(KeyEvent e) {}
+
+              @Override
+              public void keyPressed(KeyEvent e) {}
+
+              @Override
+              public void keyReleased(KeyEvent e) {
+                tf.setText(tf.getText().toUpperCase());
+                azurirajSlovaLabele();
+                obojajDuplikate();
+              }
+            });
+      }
+    });
   }
 
   private void obojajDuplikate() {

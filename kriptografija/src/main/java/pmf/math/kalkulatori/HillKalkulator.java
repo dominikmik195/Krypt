@@ -64,8 +64,10 @@ public class HillKalkulator {
 
   public HillKalkulator(Konzola konzola) {
     mojaKonzola = konzola;
-    postaviTipke();
-    postaviRubove();
+    SwingUtilities.invokeLater(() -> {
+      postaviTipke();
+      postaviRubove();
+    });
   }
 
   private void postaviTipke() {

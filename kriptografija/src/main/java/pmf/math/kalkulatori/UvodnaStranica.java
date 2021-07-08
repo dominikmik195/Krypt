@@ -8,13 +8,17 @@ import java.io.IOException;
 import java.util.Objects;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class UvodnaStranica {
 
   public JPanel glavniPanel;
 
   public UvodnaStranica() {
-    glavniPanel = new JBackgroundPanel();
+    SwingUtilities.invokeLater(() -> {
+      glavniPanel = new JBackgroundPanel();
+      glavniPanel.revalidate();
+    });
   }
 }
 

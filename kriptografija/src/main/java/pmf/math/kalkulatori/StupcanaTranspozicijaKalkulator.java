@@ -34,23 +34,25 @@ public class StupcanaTranspozicijaKalkulator {
     konzola = _konzola;
     spinnerVector = new Vector<>();
     povijestTipke = new Vector<>();
-    stupciSpinner.setValue(2);
-    GridLayout spinnerLayout = new GridLayout(2, 10, 2, 2);
-    spinnerlPanel.setLayout(spinnerLayout);
-    sifratArea.setWrapStyleWord(true);
-    sifratArea.setLineWrap(true);
-    otvoreniTekstArea.setWrapStyleWord(true);
-    otvoreniTekstArea.setLineWrap(true);
-    for (int i = 0; i < 2; i++) {
-      JSpinner novi = new JSpinner(new SpinnerNumberModel(i + 1, 1, 2, 1));
-      postaviKljucSpinner(novi);
-      novi.setMinimumSize(new Dimension(50, 10));
-      spinnerVector.add(novi);
-      spinnerlPanel.add(novi);
-    }
-    povijestPanel.setLayout(new GridLayout(5, 1));
-    postaviTipke();
-    prikaziPovijest();
+    SwingUtilities.invokeLater(() -> {
+      stupciSpinner.setValue(2);
+      GridLayout spinnerLayout = new GridLayout(2, 10, 2, 2);
+      spinnerlPanel.setLayout(spinnerLayout);
+      sifratArea.setWrapStyleWord(true);
+      sifratArea.setLineWrap(true);
+      otvoreniTekstArea.setWrapStyleWord(true);
+      otvoreniTekstArea.setLineWrap(true);
+      for (int i = 0; i < 2; i++) {
+        JSpinner novi = new JSpinner(new SpinnerNumberModel(i + 1, 1, 2, 1));
+        postaviKljucSpinner(novi);
+        novi.setMinimumSize(new Dimension(50, 10));
+        spinnerVector.add(novi);
+        spinnerlPanel.add(novi);
+      }
+      povijestPanel.setLayout(new GridLayout(5, 1));
+      postaviTipke();
+      prikaziPovijest();
+    });
   }
 
   private void postaviTipke() {

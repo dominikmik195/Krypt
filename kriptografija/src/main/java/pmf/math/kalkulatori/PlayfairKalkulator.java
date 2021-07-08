@@ -17,6 +17,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import pmf.math.baza.dao.PlayfairDAO;
@@ -54,9 +55,12 @@ public class PlayfairKalkulator {
 
   public PlayfairKalkulator(Konzola konzola) {
     mojaKonzola = konzola;
-    postaviTipke();
-    postaviRubove();
-    osvjeziFavorite();
+    SwingUtilities.invokeLater(() -> {
+      postaviTipke();
+      postaviRubove();
+      osvjeziFavorite();
+    });
+
   }
 
   private void postaviTipke() {

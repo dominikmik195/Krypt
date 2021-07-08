@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import javax.swing.SwingUtilities;
 import pmf.math.baza.BazaPodataka;
 import pmf.math.kalkulatori.*;
 import pmf.math.konstante.ImenaKalkulatora;
@@ -60,18 +61,17 @@ public class Router extends JPanel implements ActionListener {
           new StupcanaTranspozicijaKalkulator(konzola);
   private final UvodnaStranica uvodnaStranica = new UvodnaStranica();
 
-  private final int sirinaOpisa = 420;
-  private final int sirinaKonzole = 330;
-
   public void Main() {
-    stvoriGUI();
+    SwingUtilities.invokeLater(this::stvoriGUI);
   }
 
   private void postaviRouter() {
-    postaviOpis();
-    postaviKalkulator();
-    postaviKonzolu();
-    postaviTipke();
+    SwingUtilities.invokeLater(() -> {
+      postaviOpis();
+      postaviKalkulator();
+      postaviKonzolu();
+      postaviTipke();
+    });
   }
 
   private void stvoriGUI() {
@@ -82,7 +82,6 @@ public class Router extends JPanel implements ActionListener {
     myFrame.pack();
     myFrame.setLocationRelativeTo(null);
     myFrame.setResizable(false);
-    myFrame.setVisible(true);
     try {
       myFrame.setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/logo.png"))));
     } catch (IOException e) {
@@ -91,6 +90,7 @@ public class Router extends JPanel implements ActionListener {
 
     konzola.ispisiPoruku("Uspješno pokrenuta aplikacija!");
     konzola.ispisiGresku("Ovako izgleda ispis greške...");
+    SwingUtilities.invokeLater(() -> myFrame.setVisible(true));
   }
 
   private void postaviOpis() {
